@@ -100,15 +100,7 @@
             </el-icon>
           </el-button>
           
-          <el-breadcrumb separator="/" class="breadcrumb">
-            <el-breadcrumb-item 
-              v-for="item in breadcrumbList" 
-              :key="item.path"
-              :to="item.path"
-            >
-              {{ item.title }}
-            </el-breadcrumb-item>
-          </el-breadcrumb>
+          <EnhancedBreadcrumb />
         </div>
         
         <div class="header-right">
@@ -221,6 +213,7 @@ import {
 } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 import { useDebounce, useThrottle } from '@/utils/debounce'
+import EnhancedBreadcrumb from '@/components/EnhancedBreadcrumb.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -231,23 +224,7 @@ const unreadCount = ref(5)
 
 const userInfo = computed(() => userStore.userInfo)
 
-// 面包屑导航
-const breadcrumbList = computed(() => {
-  const matched = route.matched.filter(item => item.meta && item.meta.title)
-  const first = matched[0]
-  
-  if (!first || first.name === 'Dashboard') {
-    return [{ title: '首页', path: '/dashboard' }]
-  }
-  
-  return [
-    { title: '首页', path: '/dashboard' },
-    ...matched.map(item => ({
-      title: item.meta.title,
-      path: item.path
-    }))
-  ]
-})
+// 原面包屑导航逻辑已移至 EnhancedBreadcrumb 组件
 
 // 模拟通知数据
 const notifications = ref([

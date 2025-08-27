@@ -107,15 +107,7 @@
             <el-icon size="20"><Menu /></el-icon>
           </el-button>
           
-          <el-breadcrumb separator="/" class="breadcrumb">
-            <el-breadcrumb-item 
-              v-for="item in breadcrumbList" 
-              :key="item.path"
-              :to="item.path"
-            >
-              {{ item.title }}
-            </el-breadcrumb-item>
-          </el-breadcrumb>
+          <EnhancedBreadcrumb />
         </div>
         
         <div class="header-right">
@@ -228,6 +220,7 @@ import {
 
 import { useUserStore } from '@/stores/user'
 import { useDebounce, useThrottle } from '@/utils/debounce'
+import EnhancedBreadcrumb from '@/components/EnhancedBreadcrumb.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -245,49 +238,7 @@ const notifications = ref([
 // 计算属性
 const currentRoute = computed(() => route.path)
 
-// 面包屑映射缓存
-const breadcrumbMap = {
-  '/admin': { title: '管理后台', path: '/admin' },
-  '/admin/dashboard': { title: '仪表盘', path: '/admin/dashboard' },
-  '/admin/employees': { title: '员工管理', path: '/admin/employees' },
-  '/admin/departments': { title: '部门管理', path: '/admin/departments' },
-  '/admin/roles': { title: '角色权限', path: '/admin/roles' },
-  '/admin/attendance': { title: '考勤管理', path: '/admin/attendance' },
-  '/admin/attendance/records': { title: '考勤记录', path: '/admin/attendance/records' },
-  '/admin/attendance/rules': { title: '考勤规则', path: '/admin/attendance/rules' },
-  '/admin/attendance/statistics': { title: '考勤统计', path: '/admin/attendance/statistics' },
-  '/admin/leave': { title: '请假管理', path: '/admin/leave' },
-  '/admin/leave/applications': { title: '请假申请', path: '/admin/leave/applications' },
-  '/admin/leave/approval': { title: '审批管理', path: '/admin/leave/approval' },
-  '/admin/leave/statistics': { title: '请假统计', path: '/admin/leave/statistics' },
-  '/admin/announcements': { title: '公告管理', path: '/admin/announcements' },
-  '/admin/workflow': { title: '审批流程管理', path: '/admin/workflow' },
-  '/admin/reports': { title: '数据报表', path: '/admin/reports' },
-  '/admin/reports/attendance': { title: '考勤报表', path: '/admin/reports/attendance' },
-  '/admin/reports/leave': { title: '请假报表', path: '/admin/reports/leave' },
-  '/admin/reports/performance': { title: '绩效报表', path: '/admin/reports/performance' },
-  '/admin/system': { title: '系统设置', path: '/admin/system' },
-  '/admin/system/config': { title: '系统配置', path: '/admin/system/config' },
-  '/admin/system/logs': { title: '操作日志', path: '/admin/system/logs' },
-  '/admin/system/backup': { title: '数据备份', path: '/admin/system/backup' },
-  '/admin/profile': { title: '个人信息', path: '/admin/profile' }
-}
-
-const breadcrumbList = computed(() => {
-  const pathArray = route.path.split('/').filter(item => item)
-  const breadcrumbs = []
-      
-  let currentPath = ''
-  pathArray.forEach((item) => {
-    currentPath += '/' + item
-    const breadcrumb = breadcrumbMap[currentPath]
-    if (breadcrumb) {
-      breadcrumbs.push(breadcrumb)
-    }
-  })
-      
-  return breadcrumbs.length > 0 ? breadcrumbs : [{ title: '管理后台', path: '/admin' }]
-})
+// 原面包屑导航逻辑已移至 EnhancedBreadcrumb 组件
 
 // 方法 - 添加防抖优化
 const toggleSidebar = useDebounce(() => {
