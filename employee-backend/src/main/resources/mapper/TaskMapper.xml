@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.office.employee.mapper.TaskMapper">
+
+    <!-- 复杂查询任务 -->
+    <select id="selectTasksWithConditions" resultType="com.office.employee.entity.Task">
+        SELECT * FROM tasks
+        WHERE 1=1
+        <if test="title != null and title != ''">
+            AND title LIKE CONCAT('%', #{title}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        <if test="priority != null and priority != ''">
+            AND priority = #{priority}
+        </if>
+        <if test="assigneeId != null">
+            AND assignee_id = #{assigneeId}
+        </if>
+        <if test="creatorId != null">
+            AND creator_id = #{creatorId}
+        </if>
+        <if test="startDate != null">
+            AND due_date &gt;= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND due_date &lt;= #{endDate}
+        </if>
+        ORDER BY 
+            CASE priority 
+                WHEN 'urgent' THEN 1 
+                WHEN 'high' THEN 2 
+                WHEN 'medium' THEN 3 
+                WHEN 'low' THEN 4 
+            END,
+            is_urgent DESC,
+            due_date ASC,
+            create_time DESC
+    </select>
+
+</mapper>
