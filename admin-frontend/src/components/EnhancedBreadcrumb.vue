@@ -11,7 +11,16 @@
         >
           <div class="breadcrumb-content">
             <el-icon v-if="item.icon" class="breadcrumb-icon">
-              <component :is="item.icon" />
+              <DataBoard v-if="item.icon === 'DataBoard'" />
+              <User v-else-if="item.icon === 'User'" />
+              <OfficeBuilding v-else-if="item.icon === 'OfficeBuilding'" />
+              <Clock v-else-if="item.icon === 'Clock'" />
+              <Calendar v-else-if="item.icon === 'Calendar'" />
+              <Bell v-else-if="item.icon === 'Bell'" />
+              <Setting v-else-if="item.icon === 'Setting'" />
+              <DataAnalysis v-else-if="item.icon === 'DataAnalysis'" />
+              <House v-else-if="item.icon === 'House'" />
+              <Document v-else />
             </el-icon>
             <span class="breadcrumb-text">{{ item.title }}</span>
           </div>
@@ -40,7 +49,6 @@
           placement="bottom-end"
           :width="320"
           trigger="click"
-          popper-class="breadcrumb-history-popover"
         >
           <template #reference>
             <el-tooltip content="访问历史" placement="bottom">
@@ -64,7 +72,15 @@
                 @click="navigateTo(route.path)"
               >
                 <el-icon class="history-icon">
-                  <component :is="route.icon" />
+                  <DataBoard v-if="route.icon === 'DataBoard'" />
+                  <User v-else-if="route.icon === 'User'" />
+                  <OfficeBuilding v-else-if="route.icon === 'OfficeBuilding'" />
+                  <Clock v-else-if="route.icon === 'Clock'" />
+                  <Calendar v-else-if="route.icon === 'Calendar'" />
+                  <Bell v-else-if="route.icon === 'Bell'" />
+                  <Setting v-else-if="route.icon === 'Setting'" />
+                  <DataAnalysis v-else-if="route.icon === 'DataAnalysis'" />
+                  <Document v-else />
                 </el-icon>
                 <div class="history-content">
                   <div class="history-title">{{ route.title }}</div>
@@ -85,7 +101,6 @@
           placement="bottom-end"
           :width="320"
           trigger="click"
-          popper-class="breadcrumb-favorites-popover"
         >
           <template #reference>
             <el-tooltip content="收藏夹" placement="bottom">
@@ -125,7 +140,15 @@
                   >
                     <div class="favorite-main" @click="navigateTo(route.path)">
                       <el-icon class="favorite-icon">
-                        <component :is="route.icon" />
+                        <DataBoard v-if="route.icon === 'DataBoard'" />
+                        <User v-else-if="route.icon === 'User'" />
+                        <OfficeBuilding v-else-if="route.icon === 'OfficeBuilding'" />
+                        <Clock v-else-if="route.icon === 'Clock'" />
+                        <Calendar v-else-if="route.icon === 'Calendar'" />
+                        <Bell v-else-if="route.icon === 'Bell'" />
+                        <Setting v-else-if="route.icon === 'Setting'" />
+                        <DataAnalysis v-else-if="route.icon === 'DataAnalysis'" />
+                        <Document v-else />
                       </el-icon>
                       <span class="favorite-title">{{ route.title }}</span>
                     </div>
@@ -184,7 +207,13 @@ import {
   Upload,
   TrendCharts,
   Document,
-  FolderOpened
+  FolderOpened,
+  Folder,
+  Right,
+  Delete,
+  Download,
+  Plus,
+  Edit
 } from '@element-plus/icons-vue'
 
 const route = useRoute()

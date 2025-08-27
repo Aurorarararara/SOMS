@@ -29,7 +29,14 @@
                   >
                     <div class="route-option">
                       <el-icon class="route-icon">
-                        <component :is="info.icon" />
+                        <Clock v-if="info.icon === 'Clock'" />
+                        <Calendar v-else-if="info.icon === 'Calendar'" />
+                        <Bell v-else-if="info.icon === 'Bell'" />
+                        <User v-else-if="info.icon === 'User'" />
+                        <Edit v-else-if="info.icon === 'Edit'" />
+                        <List v-else-if="info.icon === 'List'" />
+                        <Odometer v-else-if="info.icon === 'Odometer'" />
+                        <Document v-else />
                       </el-icon>
                       <span class="route-title">{{ info.title }}</span>
                       <span class="route-path">{{ path }}</span>
@@ -98,7 +105,14 @@
               >
                 <div class="item-content">
                   <el-icon class="item-icon">
-                    <component :is="route.icon" />
+                    <Clock v-if="route.icon === 'Clock'" />
+                    <Calendar v-else-if="route.icon === 'Calendar'" />
+                    <Bell v-else-if="route.icon === 'Bell'" />
+                    <User v-else-if="route.icon === 'User'" />
+                    <Edit v-else-if="route.icon === 'Edit'" />
+                    <List v-else-if="route.icon === 'List'" />
+                    <Odometer v-else-if="route.icon === 'Odometer'" />
+                    <Document v-else />
                   </el-icon>
                   <div class="item-info">
                     <div class="item-title">{{ route.title }}</div>
@@ -181,7 +195,14 @@ import {
   Folder,
   Right,
   Edit,
-  Star
+  Star,
+  Clock,
+  Calendar,
+  Bell,
+  User,
+  List,
+  Odometer,
+  Document
 } from '@element-plus/icons-vue'
 
 const props = defineProps({
