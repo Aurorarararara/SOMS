@@ -51,11 +51,13 @@
           trigger="click"
         >
           <template #reference>
-            <el-tooltip content="访问历史" placement="bottom">
-              <el-button text class="action-btn">
-                <el-icon><Clock /></el-icon>
-              </el-button>
-            </el-tooltip>
+            <div>
+              <el-tooltip content="访问历史" placement="bottom">
+                <el-button text class="action-btn">
+                  <el-icon><Clock /></el-icon>
+                </el-button>
+              </el-tooltip>
+            </div>
           </template>
           
           <div class="history-panel">
@@ -103,17 +105,19 @@
           trigger="click"
         >
           <template #reference>
-            <el-tooltip content="收藏夹" placement="bottom">
-              <el-button text class="action-btn">
-                <el-icon><Collection /></el-icon>
-                <el-badge 
-                  v-if="favoriteRoutes.length > 0" 
-                  :value="favoriteRoutes.length" 
-                  :max="99"
-                  class="favorite-badge"
-                />
-              </el-button>
-            </el-tooltip>
+            <div>
+              <el-tooltip content="收藏夹" placement="bottom">
+                <el-button text class="action-btn">
+                  <el-icon><Collection /></el-icon>
+                  <el-badge
+                    v-if="favoriteRoutes.length > 0"
+                    :value="favoriteRoutes.length"
+                    :max="99"
+                    class="favorite-badge"
+                  />
+                </el-button>
+              </el-tooltip>
+            </div>
           </template>
           
           <div class="favorites-panel">
