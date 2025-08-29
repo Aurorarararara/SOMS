@@ -22,62 +22,62 @@
         >
           <el-menu-item index="/dashboard">
             <el-icon><Odometer /></el-icon>
-            <template #title>工作台</template>
+            <template #title>{{ $t('nav.dashboard') }}</template>
           </el-menu-item>
 
           <el-sub-menu index="/attendance">
             <template #title>
               <el-icon><Clock /></el-icon>
-              <span>考勤管理</span>
+              <span>{{ $t('nav.attendance') }}</span>
             </template>
-            <el-menu-item index="/attendance">我的考勤</el-menu-item>
-            <el-menu-item index="/attendance/records">考勤记录</el-menu-item>
+            <el-menu-item index="/attendance">{{ $t('nav.attendance') }}</el-menu-item>
+            <el-menu-item index="/attendance/records">{{ $t('nav.attendanceRecords') }}</el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu index="/leave">
             <template #title>
               <el-icon><Calendar /></el-icon>
-              <span>请假管理</span>
+              <span>{{ $t('nav.leave') }}</span>
             </template>
-            <el-menu-item index="/leave">请假申请</el-menu-item>
-            <el-menu-item index="/leave/records">申请记录</el-menu-item>
+            <el-menu-item index="/leave">{{ $t('nav.leave') }}</el-menu-item>
+            <el-menu-item index="/leave/records">{{ $t('nav.leaveRecords') }}</el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu index="/collaborative">
             <template #title>
               <el-icon><EditPen /></el-icon>
-              <span>协同办公</span>
+              <span>{{ $t('nav.collaborative') }}</span>
             </template>
-            <el-menu-item index="/collaborative">协同首页</el-menu-item>
-            <el-menu-item index="/collaborative/richtext">富文本编辑</el-menu-item>
-            <el-menu-item index="/collaborative/markdown">Markdown编辑</el-menu-item>
-            <el-menu-item index="/collaborative/code">代码编辑</el-menu-item>
-            <el-menu-item index="/collaborative/table">表格编辑</el-menu-item>
-            <el-menu-item index="/collaborative/demo">功能演示</el-menu-item>
+            <el-menu-item index="/collaborative">{{ $t('nav.collaborative') }}</el-menu-item>
+            <el-menu-item index="/collaborative/richtext">{{ $t('nav.richtext') }}</el-menu-item>
+            <el-menu-item index="/collaborative/markdown">{{ $t('nav.markdown') }}</el-menu-item>
+            <el-menu-item index="/collaborative/code">{{ $t('nav.code') }}</el-menu-item>
+            <el-menu-item index="/collaborative/table">{{ $t('nav.table') }}</el-menu-item>
+            <el-menu-item index="/collaborative/demo">{{ $t('nav.collaborativeDemo') }}</el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu index="/tasks">
             <template #title>
               <el-icon><Notebook /></el-icon>
-              <span>任务管理</span>
+              <span>{{ $t('nav.tasks') }}</span>
             </template>
-            <el-menu-item index="/tasks">我的任务</el-menu-item>
-            <el-menu-item index="/tasks/create">创建任务</el-menu-item>
+            <el-menu-item index="/tasks">{{ $t('nav.tasks') }}</el-menu-item>
+            <el-menu-item index="/tasks/create">{{ $t('nav.createTask') }}</el-menu-item>
           </el-sub-menu>
 
           <el-menu-item index="/schedule">
             <el-icon><Calendar /></el-icon>
-            <template #title>日程管理</template>
+            <template #title>{{ $t('nav.schedule') }}</template>
           </el-menu-item>
 
           <el-menu-item index="/notifications">
             <el-icon><Bell /></el-icon>
-            <template #title>公告通知</template>
+            <template #title>{{ $t('nav.notifications') }}</template>
           </el-menu-item>
 
           <el-menu-item index="/profile">
             <el-icon><User /></el-icon>
-            <template #title>个人信息</template>
+            <template #title>{{ $t('nav.profile') }}</template>
           </el-menu-item>
         </el-menu>
       </div>
@@ -167,7 +167,7 @@
               </el-avatar>
               <div class="user-details" v-if="!isCollapse">
                 <div class="user-name">{{ userInfo.realName }}</div>
-                <div class="user-role">员工</div>
+                <div class="user-role">{{ $t('user.employee') }}</div>
               </div>
               <el-icon class="dropdown-icon"><ArrowDown /></el-icon>
             </div>
@@ -175,15 +175,15 @@
               <el-dropdown-menu>
                 <el-dropdown-item command="profile">
                   <el-icon><User /></el-icon>
-                  个人信息
+                  {{ $t('user.profile') }}
                 </el-dropdown-item>
                 <el-dropdown-item command="settings">
                   <el-icon><Setting /></el-icon>
-                  系统设置
+                  {{ $t('user.settings') }}
                 </el-dropdown-item>
                 <el-dropdown-item divided command="logout">
                   <el-icon><SwitchButton /></el-icon>
-                  退出登录
+                  {{ $t('user.logout') }}
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -208,6 +208,7 @@
 <script setup>
 import { ref, computed, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   OfficeBuilding, Odometer, Clock, Timer, Document, Calendar, EditPen,
@@ -221,6 +222,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { t: $t } = useI18n()
 const userStore = useUserStore()
 
 const isCollapse = ref(false)

@@ -22,73 +22,73 @@
         >
           <el-menu-item index="/admin/dashboard">
             <el-icon><DataBoard /></el-icon>
-            <template #title>仪表盘</template>
+            <template #title>{{ $t('nav.dashboard') }}</template>
           </el-menu-item>
           
           <el-sub-menu index="/admin/user">
             <template #title>
               <el-icon><User /></el-icon>
-              <span>用户管理</span>
+              <span>{{ $t('nav.employees') }}</span>
             </template>
-            <el-menu-item index="/admin/employees">员工管理</el-menu-item>
-            <el-menu-item index="/admin/departments">部门管理</el-menu-item>
-            <el-menu-item index="/admin/roles">角色权限</el-menu-item>
+            <el-menu-item index="/admin/employees">{{ $t('nav.employees') }}</el-menu-item>
+            <el-menu-item index="/admin/departments">{{ $t('nav.departments') }}</el-menu-item>
+            <el-menu-item index="/admin/roles">{{ $t('nav.roles') }}</el-menu-item>
           </el-sub-menu>
           
           <el-sub-menu index="/admin/attendance">
             <template #title>
               <el-icon><Clock /></el-icon>
-              <span>考勤管理</span>
+              <span>{{ $t('nav.attendanceRecords') }}</span>
             </template>
-            <el-menu-item index="/admin/attendance/records">考勤记录</el-menu-item>
-            <el-menu-item index="/admin/attendance/rules">考勤规则</el-menu-item>
-            <el-menu-item index="/admin/attendance/statistics">考勤统计</el-menu-item>
+            <el-menu-item index="/admin/attendance/records">{{ $t('nav.attendanceRecords') }}</el-menu-item>
+            <el-menu-item index="/admin/attendance/rules">{{ $t('nav.attendanceRules') }}</el-menu-item>
+            <el-menu-item index="/admin/attendance/statistics">{{ $t('nav.attendanceStatistics') }}</el-menu-item>
           </el-sub-menu>
           
           <el-sub-menu index="/admin/leave">
             <template #title>
               <el-icon><DocumentRemove /></el-icon>
-              <span>请假管理</span>
+              <span>{{ $t('nav.leaveApplications') }}</span>
             </template>
-            <el-menu-item index="/admin/leave/applications">请假申请</el-menu-item>
-            <el-menu-item index="/admin/leave/approval">审批管理</el-menu-item>
-            <el-menu-item index="/admin/leave/statistics">请假统计</el-menu-item>
+            <el-menu-item index="/admin/leave/applications">{{ $t('nav.leaveApplications') }}</el-menu-item>
+            <el-menu-item index="/admin/leave/approval">{{ $t('nav.leaveApproval') }}</el-menu-item>
+            <el-menu-item index="/admin/leave/statistics">{{ $t('nav.leaveStatistics') }}</el-menu-item>
           </el-sub-menu>
           
           <el-menu-item index="/admin/announcements">
             <el-icon><Bell /></el-icon>
-            <template #title>公告管理</template>
+            <template #title>{{ $t('nav.announcements') }}</template>
           </el-menu-item>
-          
+
           <el-menu-item index="/admin/workflow">
             <el-icon><Operation /></el-icon>
-            <template #title>审批流程</template>
+            <template #title>{{ $t('nav.workflow') }}</template>
           </el-menu-item>
           
           <el-sub-menu index="/admin/reports">
             <template #title>
               <el-icon><DataAnalysis /></el-icon>
-              <span>数据报表</span>
+              <span>{{ $t('nav.attendanceReports') }}</span>
             </template>
-            <el-menu-item index="/admin/reports/attendance">考勤报表</el-menu-item>
-            <el-menu-item index="/admin/reports/leave">请假报表</el-menu-item>
-            <el-menu-item index="/admin/reports/performance">绩效报表</el-menu-item>
+            <el-menu-item index="/admin/reports/attendance">{{ $t('nav.attendanceReports') }}</el-menu-item>
+            <el-menu-item index="/admin/reports/leave">{{ $t('nav.leaveReports') }}</el-menu-item>
+            <el-menu-item index="/admin/reports/performance">{{ $t('nav.performanceReports') }}</el-menu-item>
           </el-sub-menu>
           
           <el-sub-menu index="/admin/system">
             <template #title>
               <el-icon><Setting /></el-icon>
-              <span>系统设置</span>
+              <span>{{ $t('nav.systemConfig') }}</span>
             </template>
-            <el-menu-item index="/admin/system/config">系统配置</el-menu-item>
-            <el-menu-item index="/admin/system/logs">操作日志</el-menu-item>
-            <el-menu-item index="/admin/system/backup">数据备份</el-menu-item>
+            <el-menu-item index="/admin/system/config">{{ $t('nav.systemConfig') }}</el-menu-item>
+            <el-menu-item index="/admin/system/logs">{{ $t('nav.operationLogs') }}</el-menu-item>
+            <el-menu-item index="/admin/system/backup">{{ $t('nav.dataBackup') }}</el-menu-item>
           </el-sub-menu>
-          
+
           <!-- 添加组织架构图菜单项 -->
           <el-menu-item index="/admin/organization/chart">
             <el-icon><OfficeBuilding /></el-icon>
-            <template #title>组织架构图</template>
+            <template #title>{{ $t('nav.organizationChart') }}</template>
           </el-menu-item>
         </el-menu>
       </div>
@@ -181,15 +181,15 @@
               <el-dropdown-menu>
                 <el-dropdown-item @click="$router.push('/admin/profile')">
                   <el-icon><User /></el-icon>
-                  个人信息
+                  {{ $t('user.profile') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="$router.push('/admin/settings')">
                   <el-icon><Setting /></el-icon>
-                  系统设置
+                  {{ $t('user.settings') }}
                 </el-dropdown-item>
                 <el-dropdown-item divided @click="handleLogout">
                   <el-icon><SwitchButton /></el-icon>
-                  退出登录
+                  {{ $t('user.logout') }}
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -214,6 +214,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   Setting, DataBoard, User, Clock, DocumentRemove, Bell, DataAnalysis,
@@ -228,6 +229,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { t: $t } = useI18n()
 const userStore = useUserStore()
 
 // 响应式数据

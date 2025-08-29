@@ -94,7 +94,9 @@ export default {
     phone: 'Phone',
     department: 'Department',
     position: 'Position',
-    joinDate: 'Join Date'
+    joinDate: 'Join Date',
+    employee: 'Employee',
+    admin: 'Administrator'
   },
 
   // Attendance Management

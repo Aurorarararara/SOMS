@@ -94,7 +94,9 @@ export default {
     phone: '手机号',
     department: '部门',
     position: '职位',
-    joinDate: '入职日期'
+    joinDate: '入职日期',
+    employee: '员工',
+    admin: '管理员'
   },
 
   // 考勤管理
