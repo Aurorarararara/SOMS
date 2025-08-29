@@ -4,8 +4,8 @@
     <div class="page-header">
       <div class="header-content">
         <div class="header-left">
-          <h1 class="page-title">个人信息</h1>
-          <p class="page-subtitle">管理您的个人资料和账户设置</p>
+          <h1 class="page-title">{{ $t('profile.title') }}</h1>
+          <p class="page-subtitle">{{ $t('profile.subtitle') }}</p>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
               </el-avatar>
               <div class="avatar-overlay" @click="showAvatarDialog = true">
                 <el-icon><Camera /></el-icon>
-                <span>更换头像</span>
+                <span>{{ $t('profile.changeAvatar') }}</span>
               </div>
             </div>
           </div>
@@ -35,15 +35,15 @@
           <div class="profile-stats">
             <div class="stat-item">
               <div class="stat-value">{{ workStats.workDays }}</div>
-              <div class="stat-label">工作天数</div>
+              <div class="stat-label">{{ $t('profile.workDays') }}</div>
             </div>
             <div class="stat-item">
               <div class="stat-value">{{ workStats.projects }}</div>
-              <div class="stat-label">参与项目</div>
+              <div class="stat-label">{{ $t('profile.projects') }}</div>
             </div>
             <div class="stat-item">
               <div class="stat-value">{{ workStats.score }}</div>
-              <div class="stat-label">综合评分</div>
+              <div class="stat-label">{{ $t('profile.overallScore') }}</div>
             </div>
           </div>
         </div>
@@ -63,18 +63,18 @@
                 class="profile-form"
               >
                 <div class="form-section">
-                  <h4>基础资料</h4>
+                  <h4>{{ $t('profile.basicInfo') }}</h4>
                   <el-row :gutter="24">
                     <el-col :span="12">
-                      <el-form-item label="姓名" prop="name">
-                        <el-input v-model="basicForm.name" placeholder="请输入姓名" />
+                      <el-form-item :label="$t('profile.name')" prop="name">
+                        <el-input v-model="basicForm.name" :placeholder="$t('profile.enterName')" />
                       </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                      <el-form-item label="性别" prop="gender">
+                      <el-form-item :label="$t('profile.gender')" prop="gender">
                         <el-radio-group v-model="basicForm.gender">
-                          <el-radio label="男">男</el-radio>
-                          <el-radio label="女">女</el-radio>
+                          <el-radio label="男">{{ $t('profile.male') }}</el-radio>
+                          <el-radio label="女">{{ $t('profile.female') }}</el-radio>
                         </el-radio-group>
                       </el-form-item>
                     </el-col>
@@ -82,11 +82,11 @@
                   
                   <el-row :gutter="24">
                     <el-col :span="12">
-                      <el-form-item label="出生日期" prop="birthday">
+                      <el-form-item :label="$t('profile.birthday')" prop="birthday">
                         <el-date-picker
                           v-model="basicForm.birthday"
                           type="date"
-                          placeholder="选择出生日期"
+                          :placeholder="$t('profile.selectBirthday')"
                           format="YYYY-MM-DD"
                           value-format="YYYY-MM-DD"
                           style="width: 100%"
@@ -94,56 +94,56 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                      <el-form-item label="身份证号" prop="idCard">
-                        <el-input v-model="basicForm.idCard" placeholder="请输入身份证号" />
+                      <el-form-item :label="$t('profile.idCard')" prop="idCard">
+                        <el-input v-model="basicForm.idCard" :placeholder="$t('profile.enterIdCard')" />
                       </el-form-item>
                     </el-col>
                   </el-row>
                 </div>
 
                 <div class="form-section">
-                  <h4>联系方式</h4>
+                  <h4>{{ $t('profile.contactInfo') }}</h4>
                   <el-row :gutter="24">
                     <el-col :span="12">
-                      <el-form-item label="手机号码" prop="phone">
-                        <el-input v-model="basicForm.phone" placeholder="请输入手机号码" />
+                      <el-form-item :label="$t('profile.phone')" prop="phone">
+                        <el-input v-model="basicForm.phone" :placeholder="$t('profile.enterPhone')" />
                       </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                      <el-form-item label="邮箱地址" prop="email">
-                        <el-input v-model="basicForm.email" placeholder="请输入邮箱地址" />
+                      <el-form-item :label="$t('profile.email')" prop="email">
+                        <el-input v-model="basicForm.email" :placeholder="$t('profile.enterEmail')" />
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  
-                  <el-form-item label="家庭住址" prop="address">
-                    <el-input v-model="basicForm.address" placeholder="请输入家庭住址" />
+
+                  <el-form-item :label="$t('profile.address')" prop="address">
+                    <el-input v-model="basicForm.address" :placeholder="$t('profile.enterAddress')" />
                   </el-form-item>
                 </div>
 
                 <div class="form-section">
-                  <h4>工作信息</h4>
+                  <h4>{{ $t('profile.workInfo') }}</h4>
                   <el-row :gutter="24">
                     <el-col :span="12">
-                      <el-form-item label="员工编号">
+                      <el-form-item :label="$t('profile.employeeId')">
                         <el-input :value="userInfo.code" readonly />
                       </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                      <el-form-item label="入职日期">
+                      <el-form-item :label="$t('profile.hireDate')">
                         <el-input :value="userInfo.hireDate" readonly />
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  
+
                   <el-row :gutter="24">
                     <el-col :span="12">
-                      <el-form-item label="所属部门">
+                      <el-form-item :label="$t('profile.department')">
                         <el-input :value="userInfo.department?.name" readonly />
                       </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                      <el-form-item label="职位">
+                      <el-form-item :label="$t('profile.position')">
                         <el-input :value="userInfo.position" readonly />
                       </el-form-item>
                     </el-col>
@@ -172,28 +172,28 @@
                   label-width="120px"
                   class="password-form"
                 >
-                  <el-form-item label="当前密码" prop="oldPassword">
-                    <el-input 
-                      v-model="passwordForm.oldPassword" 
-                      type="password" 
-                      placeholder="请输入当前密码"
-                      show-password 
+                  <el-form-item :label="$t('profile.currentPassword')" prop="oldPassword">
+                    <el-input
+                      v-model="passwordForm.oldPassword"
+                      type="password"
+                      :placeholder="$t('profile.enterCurrentPassword')"
+                      show-password
                     />
                   </el-form-item>
-                  <el-form-item label="新密码" prop="newPassword">
-                    <el-input 
-                      v-model="passwordForm.newPassword" 
-                      type="password" 
-                      placeholder="请输入新密码"
-                      show-password 
+                  <el-form-item :label="$t('profile.newPassword')" prop="newPassword">
+                    <el-input
+                      v-model="passwordForm.newPassword"
+                      type="password"
+                      :placeholder="$t('profile.enterNewPassword')"
+                      show-password
                     />
                   </el-form-item>
-                  <el-form-item label="确认密码" prop="confirmPassword">
-                    <el-input 
-                      v-model="passwordForm.confirmPassword" 
-                      type="password" 
-                      placeholder="请再次输入新密码"
-                      show-password 
+                  <el-form-item :label="$t('profile.confirmPassword')" prop="confirmPassword">
+                    <el-input
+                      v-model="passwordForm.confirmPassword"
+                      type="password"
+                      :placeholder="$t('profile.enterConfirmPassword')"
+                      show-password
                     />
                   </el-form-item>
                   <div class="form-actions">
@@ -362,11 +362,13 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import { Camera, Plus } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 import { userApi } from '@/api/user'
 
+const { t: $t } = useI18n()
 const userStore = useUserStore()
 
 // 响应式数据

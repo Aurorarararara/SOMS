@@ -4,13 +4,13 @@
     <div class="page-header">
       <div class="header-content">
         <div class="header-left">
-          <h1 class="page-title">考勤管理</h1>
-          <p class="page-subtitle">查看和管理您的考勤记录</p>
+          <h1 class="page-title">{{ $t('attendance.title') }}</h1>
+          <p class="page-subtitle">{{ $t('attendance.subtitle') }}</p>
         </div>
         <div class="header-right">
           <el-button type="primary" @click="showAttendanceDialog = true">
             <el-icon><Plus /></el-icon>
-            手动打卡
+            {{ $t('attendance.manualPunch') }}
           </el-button>
         </div>
       </div>
@@ -36,15 +36,15 @@
               <el-icon size="32"><Clock /></el-icon>
             </div>
             <div class="action-content">
-              <h3>上班打卡</h3>
-              <p>{{ todayRecord?.checkInTime || '未打卡' }}</p>
+              <h3>{{ $t('attendance.checkIn') }}</h3>
+              <p>{{ todayRecord?.checkInTime || $t('attendance.notPunched') }}</p>
               <el-button 
                 type="primary" 
                 :disabled="!!todayRecord?.checkInTime"
                 @click="handleCheckIn"
                 class="action-btn"
               >
-                {{ todayRecord?.checkInTime ? '已打卡' : '立即打卡' }}
+                {{ todayRecord?.checkInTime ? $t('attendance.punched') : $t('attendance.punchNow') }}
               </el-button>
             </div>
           </div>
@@ -54,15 +54,15 @@
               <el-icon size="32"><Timer /></el-icon>
             </div>
             <div class="action-content">
-              <h3>下班打卡</h3>
-              <p>{{ todayRecord?.checkOutTime || '未打卡' }}</p>
+              <h3>{{ $t('attendance.checkOut') }}</h3>
+              <p>{{ todayRecord?.checkOutTime || $t('attendance.notPunched') }}</p>
               <el-button 
                 type="success" 
                 :disabled="!todayRecord?.checkInTime || !!todayRecord?.checkOutTime"
                 @click="handleCheckOut"
                 class="action-btn"
               >
-                {{ todayRecord?.checkOutTime ? '已打卡' : '立即打卡' }}
+                {{ todayRecord?.checkOutTime ? $t('attendance.punched') : $t('attendance.punchNow') }}
               </el-button>
             </div>
           </div>
@@ -167,7 +167,7 @@
             height="400"
             :default-sort="{ prop: 'date', order: 'descending' }"
           >
-            <el-table-column prop="date" label="日期" width="120" sortable>
+            <el-table-column prop="date" :label="$t('attendance.date')" width="120" sortable>
               <template #default="{ row }">
                 <div class="date-cell">
                   <div class="date-text">{{ formatDate(row.date) }}</div>
@@ -176,7 +176,7 @@
               </template>
             </el-table-column>
             
-            <el-table-column prop="checkInTime" label="上班时间" width="120">
+            <el-table-column prop="checkInTime" :label="$t('attendance.checkInTime')" width="120">
               <template #default="{ row }">
                 <span :class="{ 'late-time': isLate(row.checkInTime) }">
                   {{ row.checkInTime || '-' }}
@@ -184,19 +184,19 @@
               </template>
             </el-table-column>
             
-            <el-table-column prop="checkOutTime" label="下班时间" width="120">
+            <el-table-column prop="checkOutTime" :label="$t('attendance.checkOutTime')" width="120">
               <template #default="{ row }">
                 {{ row.checkOutTime || '-' }}
               </template>
             </el-table-column>
             
-            <el-table-column prop="workHours" label="工作时长" width="100">
+            <el-table-column prop="workHours" :label="$t('attendance.workHours')" width="100">
               <template #default="{ row }">
                 {{ row.workHours ? row.workHours + 'h' : '-' }}
               </template>
             </el-table-column>
             
-            <el-table-column prop="status" label="状态" width="100">
+            <el-table-column prop="status" :label="$t('attendance.status')" width="100">
               <template #default="{ row }">
                 <el-tag :type="getStatusTagType(row.status)">
                   {{ getStatusText(row.status) }}
@@ -204,13 +204,13 @@
               </template>
             </el-table-column>
             
-            <el-table-column prop="remark" label="备注" min-width="200">
+            <el-table-column prop="remark" :label="$t('attendance.remark')" min-width="200">
               <template #default="{ row }">
                 {{ row.remark || '-' }}
               </template>
             </el-table-column>
             
-            <el-table-column label="操作" width="120" fixed="right">
+            <el-table-column :label="$t('common.actions')" width="120" fixed="right">
               <template #default="{ row }">
                 <el-button 
                   text 
@@ -218,7 +218,7 @@
                   @click="viewDetail(row)"
                   size="small"
                 >
-                  详情
+                  {{ $t('attendance.detail') }}
                 </el-button>
                 <el-button 
                   text 
@@ -261,14 +261,14 @@
         :rules="attendanceRules"
         label-width="100px"
       >
-        <el-form-item label="打卡类型" prop="type">
+        <el-form-item :label="$t('attendance.punchType')" prop="type">
           <el-radio-group v-model="attendanceForm.type">
-            <el-radio :label="1">上班打卡</el-radio>
-            <el-radio :label="2">下班打卡</el-radio>
+            <el-radio :label="1">{{ $t('attendance.checkIn') }}</el-radio>
+            <el-radio :label="2">{{ $t('attendance.checkOut') }}</el-radio>
           </el-radio-group>
         </el-form-item>
         
-        <el-form-item label="打卡时间" prop="time">
+        <el-form-item :label="$t('attendance.punchTime')" prop="time">
           <el-time-picker
             v-model="attendanceForm.time"
             format="HH:mm:ss"
@@ -278,12 +278,12 @@
           />
         </el-form-item>
         
-        <el-form-item label="备注" prop="remark">
+        <el-form-item :label="$t('attendance.remark')" prop="remark">
           <el-input
             v-model="attendanceForm.remark"
             type="textarea"
             rows="3"
-            placeholder="请输入备注（可选）"
+            :placeholder="$t('attendance.remarkPlaceholder')"
             maxlength="200"
             show-word-limit
           />
@@ -331,8 +331,8 @@
             </el-tag>
           </div>
           <div class="detail-item">
-            <label>备注</label>
-            <span>{{ selectedRecord.remark || '无' }}</span>
+            <label>{{ $t('attendance.remark') }}</label>
+            <span>{{ selectedRecord.remark || $t('common.none') }}</span>
           </div>
         </div>
       </div>
@@ -342,12 +342,15 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   Plus, Clock, Timer, Sunny, Calendar, Warning, TrendCharts,
   Download
 } from '@element-plus/icons-vue'
 import { attendanceApi } from '@/api/attendance'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)
@@ -405,36 +408,36 @@ const currentTime = computed(() => {
 // 方法
 const handleCheckIn = async () => {
   try {
-    await ElMessageBox.confirm('确认上班打卡吗？', '考勤打卡', {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
+    await ElMessageBox.confirm($t('attendance.confirmCheckIn'), $t('attendance.title'), {
+      confirmButtonText: $t('common.confirm'),
+      cancelButtonText: $t('common.cancel'),
       type: 'info'
     })
 
     await attendanceApi.checkIn()
-    ElMessage.success('上班打卡成功！')
+    ElMessage.success($t('attendance.checkInSuccess'))
     loadTodayRecord()
   } catch (error) {
     if (error !== 'cancel') {
-      ElMessage.error('打卡失败，请重试')
+      ElMessage.error($t('attendance.punchFailed'))
     }
   }
 }
 
 const handleCheckOut = async () => {
   try {
-    await ElMessageBox.confirm('确认下班打卡吗？', '考勤打卡', {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
+    await ElMessageBox.confirm($t('attendance.confirmCheckOut'), $t('attendance.title'), {
+      confirmButtonText: $t('common.confirm'),
+      cancelButtonText: $t('common.cancel'),
       type: 'info'
     })
 
     await attendanceApi.checkOut()
-    ElMessage.success('下班打卡成功！')
+    ElMessage.success($t('attendance.checkOutSuccess'))
     loadTodayRecord()
   } catch (error) {
     if (error !== 'cancel') {
-      ElMessage.error('打卡失败，请重试')
+      ElMessage.error($t('attendance.punchFailed'))
     }
   }
 }

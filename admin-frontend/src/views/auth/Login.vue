@@ -18,16 +18,16 @@
               <el-icon size="40"><Setting /></el-icon>
             </div>
             <div class="brand-text">
-              <h1>管理平台</h1>
-              <p>智能办公管理系统</p>
+              <h1>{{ $t('login.adminPlatform') }}</h1>
+              <p>{{ $t('login.systemTitle') }}</p>
             </div>
           </div>
         </div>
         
         <div class="login-form-wrapper">
           <div class="form-title">
-            <h2>管理员登录</h2>
-            <p>使用管理员账户登录系统</p>
+            <h2>{{ $t('login.adminLogin') }}</h2>
+            <p>{{ $t('login.adminLoginPrompt') }}</p>
           </div>
           
           <el-form 
@@ -42,7 +42,7 @@
                 <el-icon class="input-icon"><User /></el-icon>
                 <el-input
                   v-model="loginForm.username"
-                  placeholder="管理员账号"
+                  :placeholder="$t('login.adminAccount')"
                   size="large"
                   class="login-input"
                   clearable
@@ -56,7 +56,7 @@
                 <el-input
                   v-model="loginForm.password"
                   type="password"
-                  placeholder="登录密码"
+                  :placeholder="$t('user.password')"
                   size="large"
                   class="login-input"
                   show-password
@@ -69,7 +69,7 @@
               <div class="captcha-wrapper">
                 <el-input
                   v-model="loginForm.captcha"
-                  placeholder="请输入验证码"
+                  :placeholder="$t('login.enterCaptcha')"
                   size="large"
                   class="captcha-input"
                   clearable
@@ -80,14 +80,14 @@
                 </el-input>
                 <div class="captcha-image" @click="refreshCaptcha">
                   <canvas ref="captchaCanvas" width="120" height="40"></canvas>
-                  <div class="refresh-hint">点击刷新</div>
+                  <div class="refresh-hint">{{ $t('login.clickRefresh') }}</div>
                 </div>
               </div>
             </el-form-item>
             
             <div class="login-options">
-              <el-checkbox v-model="loginForm.rememberMe">记住登录状态</el-checkbox>
-              <el-button text type="primary">忘记密码？</el-button>
+              <el-checkbox v-model="loginForm.rememberMe">{{ $t('user.rememberMe') }}</el-checkbox>
+              <el-button text type="primary">{{ $t('user.forgotPassword') }}</el-button>
             </div>
             
             <el-button 
@@ -97,7 +97,7 @@
               :loading="loading"
               @click="handleLogin"
             >
-              {{ loading ? '登录中...' : '立即登录' }}
+              {{ loading ? $t('login.loggingIn') : $t('user.login') }}
             </el-button>
           </el-form>
         </div>
@@ -116,11 +116,13 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import { User, Lock, Key, Setting } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
+const { t: $t } = useI18n()
 const userStore = useUserStore()
 
 // 响应式数据

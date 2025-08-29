@@ -4,13 +4,13 @@
     <div class="page-header">
       <div class="header-content">
         <div class="header-left">
-          <h1 class="page-title">请假管理</h1>
-          <p class="page-subtitle">申请请假并查看申请记录</p>
+          <h1 class="page-title">{{ $t('leave.title') }}</h1>
+          <p class="page-subtitle">{{ $t('leave.subtitle') }}</p>
         </div>
         <div class="header-right">
           <el-button type="primary" @click="showLeaveDialog = true">
             <el-icon><Plus /></el-icon>
-            申请请假
+            {{ $t('leave.apply') }}
           </el-button>
         </div>
       </div>
@@ -24,9 +24,9 @@
             <el-icon><Clock /></el-icon>
           </div>
           <div class="stat-content">
-            <div class="stat-title">待审批</div>
+            <div class="stat-title">{{ $t('leave.pending') }}</div>
             <div class="stat-value">{{ leaveStats.pending }}</div>
-            <div class="stat-subtitle">申请</div>
+            <div class="stat-subtitle">{{ $t('leave.applications') }}</div>
           </div>
         </div>
 
@@ -35,9 +35,9 @@
             <el-icon><SuccessFilled /></el-icon>
           </div>
           <div class="stat-content">
-            <div class="stat-title">已批准</div>
+            <div class="stat-title">{{ $t('leave.approved') }}</div>
             <div class="stat-value">{{ leaveStats.approved }}</div>
-            <div class="stat-subtitle">申请</div>
+            <div class="stat-subtitle">{{ $t('leave.applications') }}</div>
           </div>
         </div>
 
@@ -46,7 +46,7 @@
             <el-icon><CloseBold /></el-icon>
           </div>
           <div class="stat-content">
-            <div class="stat-title">已拒绝</div>
+            <div class="stat-title">{{ $t('leave.rejected') }}</div>
             <div class="stat-value">{{ leaveStats.rejected }}</div>
             <div class="stat-subtitle">申请</div>
           </div>
@@ -81,31 +81,31 @@
 
         <div class="records-table">
           <el-table :data="leaveRecords" v-loading="loading" height="400">
-            <el-table-column prop="leaveType" label="类型" width="100">
+            <el-table-column prop="leaveType" :label="$t('leave.type')" width="100">
               <template #default="{ row }">
                 <el-tag :type="getLeaveTypeTagType(row.leaveType)">
                   {{ row.leaveType }}
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="startDate" label="开始日期" width="120" />
-            <el-table-column prop="endDate" label="结束日期" width="120" />
-            <el-table-column prop="days" label="天数" width="80">
+            <el-table-column prop="startDate" :label="$t('leave.startDate')" width="120" />
+            <el-table-column prop="endDate" :label="$t('leave.endDate')" width="120" />
+            <el-table-column prop="days" :label="$t('leave.days')" width="80">
               <template #default="{ row }">{{ row.days }} 天</template>
             </el-table-column>
-            <el-table-column prop="reason" label="请假事由" min-width="200" />
-            <el-table-column prop="status" label="状态" width="100">
+            <el-table-column prop="reason" :label="$t('leave.reason')" min-width="200" />
+            <el-table-column prop="status" :label="$t('leave.status')" width="100">
               <template #default="{ row }">
                 <el-tag :type="getStatusTagType(row.status)">
                   {{ getStatusText(row.status) }}
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="操作" width="200" fixed="right">
+            <el-table-column :label="$t('common.actions')" width="200" fixed="right">
               <template #default="{ row }">
-                <el-button text type="primary" @click="viewDetail(row)" size="small">详情</el-button>
-                <el-button text type="warning" @click="editLeave(row)" size="small" v-if="row.status === 0">修改</el-button>
-                <el-button text type="danger" @click="cancelLeave(row)" size="small" v-if="row.status === 0">撤销</el-button>
+                <el-button text type="primary" @click="viewDetail(row)" size="small">{{ $t('leave.detail') }}</el-button>
+                <el-button text type="warning" @click="editLeave(row)" size="small" v-if="row.status === 0">{{ $t('common.edit') }}</el-button>
+                <el-button text type="danger" @click="cancelLeave(row)" size="small" v-if="row.status === 0">{{ $t('common.cancel') }}</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -150,8 +150,8 @@
       </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="showLeaveDialog = false">取消</el-button>
-          <el-button type="primary" @click="submitLeave" :loading="submitting">提交申请</el-button>
+          <el-button @click="showLeaveDialog = false">{{ $t('common.cancel') }}</el-button>
+          <el-button type="primary" @click="submitLeave" :loading="submitting">{{ $t('leave.submitApplication') }}</el-button>
         </span>
       </template>
     </el-dialog>
@@ -160,9 +160,12 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Plus, Clock, SuccessFilled, CloseBold, DataAnalysis } from '@element-plus/icons-vue'
 import { leaveApi } from '@/api/leave'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)
@@ -232,13 +235,13 @@ const editLeave = (leave) => {
 
 const cancelLeave = async (leave) => {
   try {
-    await ElMessageBox.confirm('确认撤销此请假申请吗？', '撤销申请', {
-      confirmButtonText: '确认撤销',
-      cancelButtonText: '取消',
+    await ElMessageBox.confirm($t('leave.confirmCancel'), $t('leave.cancelApplication'), {
+      confirmButtonText: $t('leave.confirmCancel'),
+      cancelButtonText: $t('common.cancel'),
       type: 'warning'
     })
     await leaveApi.cancelLeave(leave.id)
-    ElMessage.success('撤销申请成功！')
+    ElMessage.success($t('leave.cancelSuccess'))
     loadLeaveRecords()
   } catch (error) {
     if (error !== 'cancel') {

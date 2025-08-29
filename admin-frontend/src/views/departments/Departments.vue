@@ -2,34 +2,34 @@
   <div class="departments-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2 class="page-title">部门管理</h2>
+      <h2 class="page-title">{{ $t('nav.departments') }}</h2>
       <el-button type="primary" @click="showAddDialog = true">
         <el-icon><Plus /></el-icon>
-        新增部门
+        {{ $t('departments.addDepartment') }}
       </el-button>
     </div>
 
     <!-- 部门列表 -->
     <el-card class="table-card">
       <el-table :data="departments" v-loading="loading" stripe>
-        <el-table-column prop="id" label="部门ID" width="80" />
-        <el-table-column prop="name" label="部门名称" width="200" />
-        <el-table-column prop="description" label="部门描述" min-width="300" />
-        <el-table-column prop="managerName" label="部门经理" width="120" />
-        <el-table-column prop="employeeCount" label="员工数量" width="100" />
-        <el-table-column label="状态" width="80">
+        <el-table-column prop="id" :label="$t('departments.departmentId')" width="80" />
+        <el-table-column prop="name" :label="$t('departments.departmentName')" width="200" />
+        <el-table-column prop="description" :label="$t('departments.description')" min-width="300" />
+        <el-table-column prop="managerName" :label="$t('departments.manager')" width="120" />
+        <el-table-column prop="employeeCount" :label="$t('departments.employeeCount')" width="100" />
+        <el-table-column :label="$t('departments.status')" width="80">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">
-              {{ row.status === 1 ? '正常' : '停用' }}
+              {{ row.status === 1 ? $t('departments.normal') : $t('departments.disabled') }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column label="操作" width="200" fixed="right">
+        <el-table-column prop="createTime" :label="$t('departments.createTime')" width="180" />
+        <el-table-column :label="$t('common.actions')" width="200" fixed="right">
           <template #default="{ row }">
-            <el-button link type="primary" @click="viewDepartment(row)">查看</el-button>
-            <el-button link type="primary" @click="editDepartment(row)">编辑</el-button>
-            <el-button link type="danger" @click="deleteDepartment(row)">删除</el-button>
+            <el-button link type="primary" @click="viewDepartment(row)">{{ $t('common.view') }}</el-button>
+            <el-button link type="primary" @click="editDepartment(row)">{{ $t('common.edit') }}</el-button>
+            <el-button link type="danger" @click="deleteDepartment(row)">{{ $t('common.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -38,15 +38,15 @@
     <!-- 新增/编辑部门对话框 -->
     <el-dialog 
       v-model="showAddDialog" 
-      :title="isEdit ? '编辑部门' : '新增部门'" 
+      :title="isEdit ? $t('departments.editDepartment') : $t('departments.addDepartment')"
       width="500px"
       @close="resetForm"
     >
       <el-form :model="departmentForm" :rules="formRules" ref="formRef" label-width="100px">
-        <el-form-item label="部门名称" prop="name">
-          <el-input v-model="departmentForm.name" placeholder="请输入部门名称" />
+        <el-form-item :label="$t('departments.departmentName')" prop="name">
+          <el-input v-model="departmentForm.name" :placeholder="$t('departments.enterDepartmentName')" />
         </el-form-item>
-        <el-form-item label="部门描述" prop="description">
+        <el-form-item :label="$t('departments.description')" prop="description">
           <el-input 
             v-model="departmentForm.description" 
             type="textarea" 
@@ -122,9 +122,12 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { departmentApi, employeeApi } from '@/api/employee'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

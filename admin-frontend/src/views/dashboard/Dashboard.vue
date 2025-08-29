@@ -9,7 +9,7 @@
               <el-icon size="40"><User /></el-icon>
             </div>
             <div class="card-info">
-              <div class="card-title">总员工数</div>
+              <div class="card-title">{{ $t('dashboard.totalEmployees') }}</div>
               <div class="card-value">{{ stats.totalEmployees }}</div>
             </div>
           </div>
@@ -22,7 +22,7 @@
               <el-icon size="40"><Clock /></el-icon>
             </div>
             <div class="card-info">
-              <div class="card-title">今日出勤</div>
+              <div class="card-title">{{ $t('dashboard.todayAttendance') }}</div>
               <div class="card-value">{{ typeof stats.todayAttendance === 'object' ? (stats.todayAttendance.total || 0) : stats.todayAttendance }}</div>
             </div>
           </div>
@@ -35,7 +35,7 @@
               <el-icon size="40"><DocumentCopy /></el-icon>
             </div>
             <div class="card-info">
-              <div class="card-title">待审批请假</div>
+              <div class="card-title">{{ $t('dashboard.pendingLeave') }}</div>
               <div class="card-value">{{ stats.pendingLeave }}</div>
             </div>
           </div>
@@ -48,7 +48,7 @@
               <el-icon size="40"><OfficeBuilding /></el-icon>
             </div>
             <div class="card-info">
-              <div class="card-title">部门数量</div>
+              <div class="card-title">{{ $t('dashboard.totalDepartments') }}</div>
               <div class="card-value">{{ stats.totalDepartments }}</div>
             </div>
           </div>
@@ -62,7 +62,7 @@
         <el-card class="chart-card">
           <template #header>
             <div class="card-header">
-              <span class="chart-title">考勤统计</span>
+              <span class="chart-title">{{ $t('dashboard.attendanceStats') }}</span>
               <el-date-picker
                 v-model="attendanceDate"
                 type="month"
@@ -80,7 +80,7 @@
       <el-col :span="12">
         <el-card class="chart-card">
           <template #header>
-            <span class="chart-title">部门人员分布</span>
+            <span class="chart-title">{{ $t('dashboard.departmentDistribution') }}</span>
           </template>
           <div ref="departmentChart" class="chart-container"></div>
         </el-card>
@@ -92,7 +92,7 @@
       <el-col :span="8">
         <el-card class="activity-card">
           <template #header>
-            <span class="activity-title">最新公告</span>
+            <span class="activity-title">{{ $t('dashboard.latestAnnouncements') }}</span>
           </template>
           <div class="activity-list">
             <div v-for="announcement in recentAnnouncements" :key="announcement.id" class="activity-item">
@@ -108,7 +108,7 @@
       <el-col :span="8">
         <el-card class="activity-card">
           <template #header>
-            <span class="activity-title">待处理事项</span>
+            <span class="activity-title">{{ $t('dashboard.pendingTasks') }}</span>
           </template>
           <div class="activity-list">
             <div v-for="task in pendingTasks" :key="task.id" class="activity-item">
@@ -116,7 +116,7 @@
               <div class="activity-time">{{ formatTime(task.createTime) }}</div>
             </div>
             <div v-if="pendingTasks.length === 0" class="empty-state">
-              暂无待处理事项
+              {{ $t('dashboard.noPendingTasks') }}
             </div>
           </div>
         </el-card>
@@ -124,7 +124,7 @@
       <el-col :span="8">
         <el-card class="activity-card">
           <template #header>
-            <span class="activity-title">系统消息</span>
+            <span class="activity-title">{{ $t('dashboard.systemMessages') }}</span>
           </template>
           <div class="activity-list">
             <div v-for="message in systemMessages" :key="message.id" class="activity-item">
@@ -132,7 +132,7 @@
               <div class="activity-time">{{ formatTime(message.createTime) }}</div>
             </div>
             <div v-if="systemMessages.length === 0" class="empty-state">
-              暂无系统消息
+              {{ $t('dashboard.noSystemMessages') }}
             </div>
           </div>
         </el-card>
@@ -143,10 +143,13 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { User, Clock, DocumentCopy, OfficeBuilding } from '@element-plus/icons-vue'
 import * as echarts from 'echarts'
 import { dashboardApi } from '@/api/dashboard'
 import { ElMessage } from 'element-plus'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const stats = reactive({
@@ -448,7 +451,7 @@ const loadDepartmentChart = async () => {
         
         const option = {
           title: {
-            text: '部门人员分布',
+            text: $t('dashboard.departmentDistribution'),
             left: 'center',
             textStyle: {
               fontSize: 14,
@@ -506,7 +509,7 @@ const loadDepartmentChart = async () => {
         
         const defaultOption = {
           title: {
-            text: '部门人员分布',
+            text: $t('dashboard.departmentDistribution'),
             left: 'center',
             textStyle: {
               fontSize: 14,

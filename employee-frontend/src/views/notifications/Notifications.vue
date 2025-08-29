@@ -4,13 +4,13 @@
     <div class="page-header">
       <div class="header-content">
         <div class="header-left">
-          <h1 class="page-title">公告通知</h1>
-          <p class="page-subtitle">查看公司最新公告和通知信息</p>
+          <h1 class="page-title">{{ $t('notifications.title') }}</h1>
+          <p class="page-subtitle">{{ $t('notifications.subtitle') }}</p>
         </div>
         <div class="header-right">
           <el-button @click="markAllAsRead" :disabled="unreadCount === 0">
             <el-icon><Check /></el-icon>
-            全部标记已读
+            {{ $t('notifications.markAllRead') }}
           </el-button>
         </div>
       </div>
@@ -24,7 +24,7 @@
             <el-icon><Bell /></el-icon>
           </div>
           <div class="stat-content">
-            <div class="stat-title">全部通知</div>
+            <div class="stat-title">{{ $t('notifications.allNotifications') }}</div>
             <div class="stat-value">{{ totalCount }}</div>
           </div>
         </div>
@@ -33,7 +33,7 @@
             <el-icon><Message /></el-icon>
           </div>
           <div class="stat-content">
-            <div class="stat-title">未读通知</div>
+            <div class="stat-title">{{ $t('notifications.unreadNotifications') }}</div>
             <div class="stat-value">{{ unreadCount }}</div>
           </div>
         </div>
@@ -42,7 +42,7 @@
             <el-icon><Warning /></el-icon>
           </div>
           <div class="stat-content">
-            <div class="stat-title">重要通知</div>
+            <div class="stat-title">{{ $t('notifications.importantNotifications') }}</div>
             <div class="stat-value">{{ importantCount }}</div>
           </div>
         </div>
@@ -54,28 +54,28 @@
       <div class="filter-card">
         <div class="filter-content">
           <div class="filter-item">
-            <span class="filter-label">状态：</span>
+            <span class="filter-label">{{ $t('notifications.status') }}：</span>
             <el-radio-group v-model="filterStatus" @change="loadNotifications">
-              <el-radio-button label="">全部</el-radio-button>
-              <el-radio-button label="unread">未读</el-radio-button>
-              <el-radio-button label="read">已读</el-radio-button>
+              <el-radio-button label="">{{ $t('common.all') }}</el-radio-button>
+              <el-radio-button label="unread">{{ $t('notifications.unread') }}</el-radio-button>
+              <el-radio-button label="read">{{ $t('notifications.read') }}</el-radio-button>
             </el-radio-group>
           </div>
           <div class="filter-item">
-            <span class="filter-label">级别：</span>
-            <el-select v-model="filterLevel" placeholder="选择级别" clearable @change="loadNotifications">
-              <el-option label="紧急" value="紧急" />
-              <el-option label="重要" value="重要" />
-              <el-option label="一般" value="一般" />
+            <span class="filter-label">{{ $t('notifications.level') }}：</span>
+            <el-select v-model="filterLevel" :placeholder="$t('notifications.selectLevel')" clearable @change="loadNotifications">
+              <el-option :label="$t('notifications.urgent')" value="紧急" />
+              <el-option :label="$t('notifications.important')" value="重要" />
+              <el-option :label="$t('notifications.normal')" value="一般" />
             </el-select>
           </div>
           <div class="filter-item">
-            <span class="filter-label">类型：</span>
-            <el-select v-model="filterType" placeholder="选择类型" clearable @change="loadNotifications">
-              <el-option label="系统通知" value="系统通知" />
-              <el-option label="公司公告" value="公司公告" />
-              <el-option label="部门通知" value="部门通知" />
-              <el-option label="个人消息" value="个人消息" />
+            <span class="filter-label">{{ $t('notifications.type') }}：</span>
+            <el-select v-model="filterType" :placeholder="$t('notifications.selectType')" clearable @change="loadNotifications">
+              <el-option :label="$t('notifications.systemNotification')" value="系统通知" />
+              <el-option :label="$t('notifications.companyAnnouncement')" value="公司公告" />
+              <el-option :label="$t('notifications.departmentNotification')" value="部门通知" />
+              <el-option :label="$t('notifications.personalMessage')" value="个人消息" />
             </el-select>
           </div>
         </div>
@@ -240,11 +240,14 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   Check, Bell, Message, Warning, DocumentRemove, Document
 } from '@element-plus/icons-vue'
 import { announcementApi } from '@/api/announcement'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

@@ -4,13 +4,13 @@
     <div class="page-header">
       <div class="header-content">
         <div class="header-left">
-          <h1 class="page-title">日程管理</h1>
-          <p class="page-subtitle">管理您的工作日程和安排</p>
+          <h1 class="page-title">{{ $t('nav.schedule') }}</h1>
+          <p class="page-subtitle">{{ $t('schedule.subtitle') }}</p>
         </div>
         <div class="header-right">
           <el-button type="primary" @click="showEventDialog = true">
             <el-icon><Plus /></el-icon>
-            新建日程
+            {{ $t('schedule.createEvent') }}
           </el-button>
         </div>
       </div>
@@ -22,16 +22,16 @@
         <div class="calendar-header">
           <div class="view-controls">
             <el-button-group>
-              <el-button :type="currentView === 'month' ? 'primary' : ''" @click="currentView = 'month'">月视图</el-button>
-              <el-button :type="currentView === 'week' ? 'primary' : ''" @click="currentView = 'week'">周视图</el-button>
-              <el-button :type="currentView === 'day' ? 'primary' : ''" @click="currentView = 'day'">日视图</el-button>
+              <el-button :type="currentView === 'month' ? 'primary' : ''" @click="currentView = 'month'">{{ $t('schedule.monthView') }}</el-button>
+              <el-button :type="currentView === 'week' ? 'primary' : ''" @click="currentView = 'week'">{{ $t('schedule.weekView') }}</el-button>
+              <el-button :type="currentView === 'day' ? 'primary' : ''" @click="currentView = 'day'">{{ $t('schedule.dayView') }}</el-button>
             </el-button-group>
           </div>
           <div class="date-navigation">
             <el-button @click="previousPeriod" circle><el-icon><ArrowLeft /></el-icon></el-button>
             <span class="current-date">{{ currentDateText }}</span>
             <el-button @click="nextPeriod" circle><el-icon><ArrowRight /></el-icon></el-button>
-            <el-button @click="goToday" type="primary" plain>今天</el-button>
+            <el-button @click="goToday" type="primary" plain>{{ $t('schedule.today') }}</el-button>
           </div>
         </div>
 
@@ -180,8 +180,11 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Plus, ArrowLeft, ArrowRight, Calendar } from '@element-plus/icons-vue'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const currentView = ref('month')
@@ -211,7 +214,7 @@ const eventRules = {
 }
 
 // 计算属性
-const weekdays = ['日', '一', '二', '三', '四', '五', '六']
+const weekdays = computed(() => [$t('schedule.sun'), $t('schedule.mon'), $t('schedule.tue'), $t('schedule.wed'), $t('schedule.thu'), $t('schedule.fri'), $t('schedule.sat')])
 
 const currentDateText = computed(() => {
   if (currentView.value === 'month') {

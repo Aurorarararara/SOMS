@@ -2,11 +2,11 @@
   <div class="attendance-statistics-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2 class="page-title">考勤统计</h2>
+      <h2 class="page-title">{{ $t('nav.attendanceStatistics') }}</h2>
       <div class="header-actions">
         <el-button type="primary" @click="exportStatistics">
           <el-icon><Download /></el-icon>
-          导出统计
+          {{ $t('attendanceStatistics.exportStatistics') }}
         </el-button>
       </div>
     </div>
@@ -22,7 +22,7 @@
               </div>
               <div class="stat-info">
                 <div class="stat-value">{{ overviewData.normalCount }}</div>
-                <div class="stat-label">正常出勤</div>
+                <div class="stat-label">{{ $t('attendanceStatistics.normalAttendance') }}</div>
               </div>
             </div>
           </el-card>
@@ -35,7 +35,7 @@
               </div>
               <div class="stat-info">
                 <div class="stat-value">{{ overviewData.lateCount }}</div>
-                <div class="stat-label">迟到次数</div>
+                <div class="stat-label">{{ $t('attendanceStatistics.lateCount') }}</div>
               </div>
             </div>
           </el-card>
@@ -48,7 +48,7 @@
               </div>
               <div class="stat-info">
                 <div class="stat-value">{{ overviewData.absentCount }}</div>
-                <div class="stat-label">旷工次数</div>
+                <div class="stat-label">{{ $t('attendanceStatistics.absentCount') }}</div>
               </div>
             </div>
           </el-card>
@@ -61,7 +61,7 @@
               </div>
               <div class="stat-info">
                 <div class="stat-value">{{ overviewData.leaveCount }}</div>
-                <div class="stat-label">请假次数</div>
+                <div class="stat-label">{{ $t('attendanceStatistics.leaveCount') }}</div>
               </div>
             </div>
           </el-card>
@@ -72,7 +72,7 @@
     <!-- 筛选条件 -->
     <el-card class="filter-card">
       <el-form :model="filterForm" inline>
-        <el-form-item label="统计范围:">
+        <el-form-item :label="$t('attendanceStatistics.statisticsRange') + ':'">
           <el-date-picker
             v-model="filterForm.dateRange"
             type="monthrange"
@@ -144,8 +144,11 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Download, CircleCheck, Clock, WarningFilled, DocumentRemove } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

@@ -1,24 +1,27 @@
 <template>
   <div class="reports-performance-container">
     <div class="page-header">
-      <h2 class="page-title">绩效报表</h2>
+      <h2 class="page-title">{{ $t('reportsPerformance.performanceReport') }}</h2>
       <el-button type="primary">
         <el-icon><Document /></el-icon>
-        生成绩效报表
+        {{ $t('reportsPerformance.generatePerformanceReport') }}
       </el-button>
     </div>
 
     <el-card>
       <div class="chart-placeholder">
         <el-icon size="64" color="#c0c4cc"><DataAnalysis /></el-icon>
-        <p>绩效分析图表展示区域</p>
+        <p>{{ $t('reportsPerformance.chartPlaceholder') }}</p>
       </div>
     </el-card>
   </div>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { Document, DataAnalysis } from '@element-plus/icons-vue'
+
+const { t: $t } = useI18n()
 </script>
 
 <style scoped>

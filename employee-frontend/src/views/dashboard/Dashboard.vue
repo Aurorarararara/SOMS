@@ -5,9 +5,9 @@
       <div class="welcome-content">
         <div class="greeting-info">
           <h1 class="welcome-title">
-            {{ greetingText }}，{{ userStore.userInfo?.realName || '用户' }}！
+            {{ greetingText }}，{{ userStore.userInfo?.realName || $t('user.user') }}！
           </h1>
-          <p class="welcome-subtitle">今天是 {{ currentDate }}，期待您的高效工作</p>
+          <p class="welcome-subtitle">{{ $t('dashboard.todayIs') }} {{ currentDate }}，{{ $t('dashboard.expectEfficient') }}</p>
         </div>
         <div class="quick-stats">
           <div class="stat-card">
@@ -16,7 +16,7 @@
             </div>
             <div class="stat-info">
               <div class="stat-number">{{ attendanceStats.workDays }}</div>
-              <div class="stat-label">本月出勤</div>
+              <div class="stat-label">{{ $t('dashboard.monthlyAttendance') }}</div>
             </div>
           </div>
           <div class="stat-card">
@@ -25,7 +25,7 @@
             </div>
             <div class="stat-info">
               <div class="stat-number">{{ attendanceStats.workHours }}h</div>
-              <div class="stat-label">工作时长</div>
+              <div class="stat-label">{{ $t('dashboard.workHours') }}</div>
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
         <!-- 快捷操作卡片 -->
         <div class="quick-actions-card">
           <div class="card-header">
-            <h3>快捷操作</h3>
+            <h3>{{ $t('dashboard.quickActions') }}</h3>
             <el-icon><Operation /></el-icon>
           </div>
           <div class="actions-grid">
@@ -65,21 +65,21 @@
         <!-- 考勤打卡卡片 -->
         <div class="attendance-card">
           <div class="card-header">
-            <h3>今日考勤</h3>
+            <h3>{{ $t('dashboard.todayAttendance') }}</h3>
             <el-icon><Clock /></el-icon>
           </div>
           <div class="attendance-content">
             <div class="attendance-status">
               <div class="status-item">
-                <div class="status-label">上班打卡</div>
+                <div class="status-label">{{ $t('dashboard.clockIn') }}</div>
                 <div class="status-value" :class="{ 'checked-in': todayAttendance?.checkInTime }">
-                  {{ todayAttendance?.checkInTime || '未打卡' }}
+                  {{ todayAttendance?.checkInTime || $t('dashboard.notClockedIn') }}
                 </div>
               </div>
               <div class="status-item">
-                <div class="status-label">下班打卡</div>
+                <div class="status-label">{{ $t('dashboard.clockOut') }}</div>
                 <div class="status-value" :class="{ 'checked-out': todayAttendance?.checkOutTime }">
-                  {{ todayAttendance?.checkOutTime || '未打卡' }}
+                  {{ todayAttendance?.checkOutTime || $t('dashboard.notClockedOut') }}
                 </div>
               </div>
             </div>
@@ -99,7 +99,7 @@
         <!-- 本月统计 -->
         <div class="statistics-card">
           <div class="card-header">
-            <h3>本月统计</h3>
+            <h3>{{ $t('dashboard.monthlyStats') }}</h3>
             <el-icon><DataAnalysis /></el-icon>
           </div>
           <div class="stats-grid">
@@ -109,7 +109,7 @@
               </div>
               <div class="stat-info">
                 <div class="stat-number">{{ monthlyStats.attendanceDays }}</div>
-                <div class="stat-text">出勤天数</div>
+                <div class="stat-text">{{ $t('dashboard.normalDays') }}</div>
               </div>
             </div>
             <div class="stat-card">
@@ -118,7 +118,7 @@
               </div>
               <div class="stat-info">
                 <div class="stat-number">{{ monthlyStats.lateDays }}</div>
-                <div class="stat-text">迟到次数</div>
+                <div class="stat-text">{{ $t('dashboard.lateDays') }}</div>
               </div>
             </div>
             <div class="stat-card">
@@ -127,7 +127,7 @@
               </div>
               <div class="stat-info">
                 <div class="stat-number">{{ monthlyStats.leaveDays }}</div>
-                <div class="stat-text">请假天数</div>
+                <div class="stat-text">{{ $t('dashboard.leaveDays') }}</div>
               </div>
             </div>
             <div class="stat-card">
@@ -136,7 +136,7 @@
               </div>
               <div class="stat-info">
                 <div class="stat-number">{{ monthlyStats.workHours }}h</div>
-                <div class="stat-text">工作时长</div>
+                <div class="stat-text">{{ $t('dashboard.workHours') }}</div>
               </div>
             </div>
           </div>
@@ -148,9 +148,9 @@
         <!-- 最新公告 -->
         <div class="announcements-card">
           <div class="card-header">
-            <h3>最新公告</h3>
+            <h3>{{ $t('dashboard.latestAnnouncements') }}</h3>
             <el-button text @click="$router.push('/notifications')">
-              查看更多 <el-icon><ArrowRight /></el-icon>
+              {{ $t('dashboard.viewMore') }} <el-icon><ArrowRight /></el-icon>
             </el-button>
           </div>
           <div class="announcements-list">
@@ -180,7 +180,7 @@
             </div>
             <div v-if="recentAnnouncements.length === 0" class="empty-state">
               <el-icon><DocumentRemove /></el-icon>
-              <p>暂无公告</p>
+              <p>{{ $t('dashboard.noAnnouncements') }}</p>
             </div>
           </div>
         </div>
@@ -188,9 +188,9 @@
         <!-- 待办事项 -->
         <div class="todo-card">
           <div class="card-header">
-            <h3>待办事项</h3>
+            <h3>{{ $t('dashboard.todoItems') }}</h3>
             <el-button text @click="$router.push('/schedule')">
-              管理日程 <el-icon><ArrowRight /></el-icon>
+              {{ $t('dashboard.manageSchedule') }} <el-icon><ArrowRight /></el-icon>
             </el-button>
           </div>
           <div class="todo-list">
@@ -207,7 +207,7 @@
             </div>
             <div v-if="todoItems.length === 0" class="empty-state">
               <el-icon><SuccessFilled /></el-icon>
-              <p>所有任务已完成</p>
+              <p>{{ $t('dashboard.allTasksCompleted') }}</p>
             </div>
           </div>
         </div>
@@ -215,7 +215,7 @@
         <!-- 天气信息 -->
         <div class="weather-card">
           <div class="card-header">
-            <h3>今日天气</h3>
+            <h3>{{ $t('dashboard.todayWeather') }}</h3>
             <el-icon><Sunny /></el-icon>
           </div>
           <div class="weather-content">
@@ -230,11 +230,11 @@
             </div>
             <div class="weather-details">
               <div class="detail-item">
-                <span>湿度</span>
+                <span>{{ $t('dashboard.humidity') }}</span>
                 <span>{{ weather.humidity }}%</span>
               </div>
               <div class="detail-item">
-                <span>风速</span>
+                <span>{{ $t('dashboard.windSpeed') }}</span>
                 <span>{{ weather.windSpeed }} km/h</span>
               </div>
             </div>
@@ -248,6 +248,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/user'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
@@ -259,6 +260,7 @@ import { leaveApi } from '@/api/leave'
 import { announcementApi } from '@/api/announcement'
 
 const router = useRouter()
+const { t: $t } = useI18n()
 const userStore = useUserStore()
 
 // 响应式数据
@@ -292,9 +294,9 @@ const weather = reactive({
 // 计算属性
 const greetingText = computed(() => {
   const hour = new Date().getHours()
-  if (hour < 12) return '早上好'
-  if (hour < 18) return '下午好'
-  return '晚上好'
+  if (hour < 12) return $t('dashboard.goodMorning')
+  if (hour < 18) return $t('dashboard.goodAfternoon')
+  return $t('dashboard.goodEvening')
 })
 
 const currentDate = computed(() => {
@@ -307,40 +309,40 @@ const currentDate = computed(() => {
 })
 
 // 快捷操作配置
-const quickActions = [
+const quickActions = computed(() => [
   {
     key: 'attendance',
-    title: '考勤打卡',
-    desc: '上下班打卡',
+    title: $t('dashboard.clockIn'),
+    desc: $t('dashboard.clockInDesc'),
     icon: 'Clock',
     color: '#e3f2fd',
     iconColor: '#1976d2'
   },
   {
     key: 'leave',
-    title: '请假申请',
-    desc: '提交请假申请',
+    title: $t('dashboard.leaveApplication'),
+    desc: $t('dashboard.leaveApplicationDesc'),
     icon: 'DocumentRemove',
     color: '#fff3e0',
     iconColor: '#f57c00'
   },
   {
     key: 'schedule',
-    title: '日程管理',
-    desc: '查看我的日程',
+    title: $t('nav.schedule'),
+    desc: $t('dashboard.scheduleDesc'),
     icon: 'Calendar',
     color: '#f3e5f5',
     iconColor: '#7b1fa2'
   },
   {
     key: 'profile',
-    title: '个人信息',
-    desc: '更新个人资料',
+    title: $t('nav.profile'),
+    desc: $t('dashboard.profileDesc'),
     icon: 'User',
     color: '#e8f5e8',
     iconColor: '#388e3c'
   }
-]
+])
 
 // 方法
 const handleQuickAction = (action) => {

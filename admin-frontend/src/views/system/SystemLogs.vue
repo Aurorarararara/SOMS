@@ -1,21 +1,21 @@
 <template>
   <div class="system-logs-container">
     <div class="page-header">
-      <h2 class="page-title">操作日志</h2>
+      <h2 class="page-title">{{ $t('nav.systemLogs') }}</h2>
       <el-button type="primary">
         <el-icon><Download /></el-icon>
-        导出日志
+        {{ $t('systemLogs.exportLogs') }}
       </el-button>
     </div>
 
     <el-card>
       <el-table :data="logs" v-loading="loading" stripe>
-        <el-table-column prop="id" label="日志ID" width="80" />
-        <el-table-column prop="username" label="操作用户" width="120" />
-        <el-table-column prop="action" label="操作类型" width="120" />
-        <el-table-column prop="description" label="操作描述" min-width="200" />
-        <el-table-column prop="ip" label="IP地址" width="140" />
-        <el-table-column prop="time" label="操作时间" width="180" />
+        <el-table-column prop="id" :label="$t('systemLogs.logId')" width="80" />
+        <el-table-column prop="username" :label="$t('systemLogs.operationUser')" width="120" />
+        <el-table-column prop="action" :label="$t('systemLogs.operationType')" width="120" />
+        <el-table-column prop="description" :label="$t('systemLogs.operationDescription')" min-width="200" />
+        <el-table-column prop="ip" :label="$t('systemLogs.ipAddress')" width="140" />
+        <el-table-column prop="time" :label="$t('systemLogs.operationTime')" width="180" />
       </el-table>
     </el-card>
   </div>
@@ -23,7 +23,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Download } from '@element-plus/icons-vue'
+
+const { t: $t } = useI18n()
 
 const loading = ref(false)
 const logs = ref([])

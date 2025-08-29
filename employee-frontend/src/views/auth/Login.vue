@@ -8,20 +8,20 @@
             <OfficeBuilding />
           </el-icon>
         </div>
-        <h1 class="brand-title">智慧办公系统</h1>
-        <p class="brand-subtitle">提升企业办公效率，实现智能化管理</p>
+        <h1 class="brand-title">{{ $t('login.systemTitle') }}</h1>
+        <p class="brand-subtitle">{{ $t('login.systemSubtitle') }}</p>
         <div class="feature-list">
           <div class="feature-item">
             <el-icon><UserFilled /></el-icon>
-            <span>专业的人事管理</span>
+            <span>{{ $t('login.feature1') }}</span>
           </div>
           <div class="feature-item">
             <el-icon><Timer /></el-icon>
-            <span>高效的考勤统计</span>
+            <span>{{ $t('login.feature2') }}</span>
           </div>
           <div class="feature-item">
             <el-icon><DataAnalysis /></el-icon>
-            <span>实时的数据分析</span>
+            <span>{{ $t('login.feature3') }}</span>
           </div>
         </div>
       </div>
@@ -31,8 +31,8 @@
     <div class="login-section">
       <div class="login-form-wrapper">
         <div class="login-header">
-          <h2 class="login-title">登录员工端</h2>
-          <p class="login-subtitle">请输入您的用户名和密码</p>
+          <h2 class="login-title">{{ $t('login.employeeLogin') }}</h2>
+          <p class="login-subtitle">{{ $t('login.loginPrompt') }}</p>
         </div>
 
         <el-form
@@ -46,7 +46,7 @@
           <el-form-item prop="username">
             <el-input
               v-model="loginForm.username"
-              placeholder="请输入用户名"
+              :placeholder="$t('user.username')"
               clearable
               class="form-input"
             >
@@ -60,7 +60,7 @@
             <el-input
               v-model="loginForm.password"
               type="password"
-              placeholder="请输入密码"
+              :placeholder="$t('user.password')"
               show-password
               clearable
               class="form-input"
@@ -78,16 +78,16 @@
               :loading="loading"
               @click="handleLogin"
             >
-              <span v-if="!loading">立即登录</span>
-              <span v-else>登录中...</span>
+              <span v-if="!loading">{{ $t('user.login') }}</span>
+              <span v-else>{{ $t('login.loggingIn') }}</span>
             </el-button>
           </el-form-item>
         </el-form>
 
         <div class="login-footer">
           <div class="help-links">
-            <a href="#" class="help-link">忘记密码？</a>
-            <a href="#" class="help-link">联系管理员</a>
+            <a href="#" class="help-link">{{ $t('user.forgotPassword') }}</a>
+            <a href="#" class="help-link">{{ $t('login.contactAdmin') }}</a>
           </div>
         </div>
       </div>
@@ -98,11 +98,13 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import { User, Lock, OfficeBuilding, UserFilled, Timer, DataAnalysis } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
+const { t: $t } = useI18n()
 const userStore = useUserStore()
 
 const loginFormRef = ref(null)

@@ -4,18 +4,18 @@
       <div class="header-content">
         <h1 class="page-title">
           <el-icon class="title-icon"><Operation /></el-icon>
-          任务管理中心
+          {{ $t('nav.tasks') }}
         </h1>
-        <p class="page-subtitle">智能任务分配与进度跟踪</p>
+        <p class="page-subtitle">{{ $t('taskManagement.subtitle') }}</p>
       </div>
       <div class="header-actions">
         <el-button type="primary" @click="showCreateTaskDialog = true">
           <el-icon><Plus /></el-icon>
-          新建任务
+          {{ $t('taskManagement.createTask') }}
         </el-button>
         <el-button @click="exportTasks">
           <el-icon><Download /></el-icon>
-          导出任务
+          {{ $t('taskManagement.exportTasks') }}
         </el-button>
       </div>
     </div>
@@ -29,7 +29,7 @@
           </div>
           <div class="stat-content">
             <div class="stat-number">{{ taskStats.pending }}</div>
-            <div class="stat-label">待处理任务</div>
+            <div class="stat-label">{{ $t('taskManagement.pendingTasks') }}</div>
           </div>
         </div>
         <div class="stat-card">
@@ -38,7 +38,7 @@
           </div>
           <div class="stat-content">
             <div class="stat-number">{{ taskStats.processing }}</div>
-            <div class="stat-label">进行中任务</div>
+            <div class="stat-label">{{ $t('taskManagement.processingTasks') }}</div>
           </div>
         </div>
         <div class="stat-card">
@@ -47,7 +47,7 @@
           </div>
           <div class="stat-content">
             <div class="stat-number">{{ taskStats.completed }}</div>
-            <div class="stat-label">已完成任务</div>
+            <div class="stat-label">{{ $t('taskManagement.completedTasks') }}</div>
           </div>
         </div>
         <div class="stat-card">
@@ -56,7 +56,7 @@
           </div>
           <div class="stat-content">
             <div class="stat-number">{{ taskStats.overdue }}</div>
-            <div class="stat-label">逾期任务</div>
+            <div class="stat-label">{{ $t('taskManagement.overdueTasks') }}</div>
           </div>
         </div>
       </div>
@@ -66,7 +66,7 @@
         <div class="filter-left">
           <el-input
             v-model="searchQuery"
-            placeholder="搜索任务标题、负责人..."
+            :placeholder="$t('taskManagement.searchPlaceholder')"
             style="width: 300px"
             clearable
           >
@@ -74,21 +74,21 @@
               <el-icon><Search /></el-icon>
             </template>
           </el-input>
-          <el-select v-model="filterStatus" placeholder="任务状态" style="width: 150px" clearable>
-            <el-option label="待处理" value="pending" />
-            <el-option label="进行中" value="processing" />
-            <el-option label="已完成" value="completed" />
-            <el-option label="已逾期" value="overdue" />
+          <el-select v-model="filterStatus" :placeholder="$t('taskManagement.taskStatus')" style="width: 150px" clearable>
+            <el-option :label="$t('taskManagement.pending')" value="pending" />
+            <el-option :label="$t('taskManagement.processing')" value="processing" />
+            <el-option :label="$t('taskManagement.completed')" value="completed" />
+            <el-option :label="$t('taskManagement.overdue')" value="overdue" />
           </el-select>
-          <el-select v-model="filterPriority" placeholder="优先级" style="width: 150px" clearable>
-            <el-option label="紧急" value="urgent" />
-            <el-option label="高" value="high" />
-            <el-option label="中" value="medium" />
-            <el-option label="低" value="low" />
+          <el-select v-model="filterPriority" :placeholder="$t('taskManagement.priority')" style="width: 150px" clearable>
+            <el-option :label="$t('taskManagement.urgent')" value="urgent" />
+            <el-option :label="$t('taskManagement.high')" value="high" />
+            <el-option :label="$t('taskManagement.medium')" value="medium" />
+            <el-option :label="$t('taskManagement.low')" value="low" />
           </el-select>
         </div>
         <div class="filter-right">
-          <el-button @click="resetFilters">重置筛选</el-button>
+          <el-button @click="resetFilters">{{ $t('taskManagement.resetFilters') }}</el-button>
         </div>
       </div>
 
@@ -176,6 +176,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { 
   Operation, Plus, Download, Clock, Loading, Check, Warning, 
@@ -183,6 +184,8 @@ import {
 } from '@element-plus/icons-vue'
 import TaskFormDialog from './components/TaskFormDialog.vue'
 import CommentDialog from './components/CommentDialog.vue'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

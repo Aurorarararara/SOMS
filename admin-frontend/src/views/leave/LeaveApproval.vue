@@ -2,12 +2,12 @@
   <div class="leave-approval-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2 class="page-title">审批管理</h2>
+      <h2 class="page-title">{{ $t('nav.leaveApproval') }}</h2>
       <div class="header-actions">
         <el-badge :value="pendingCount" class="pending-badge">
           <el-button type="primary" @click="showPendingOnly = !showPendingOnly">
             <el-icon><Bell /></el-icon>
-            {{ showPendingOnly ? '显示全部' : '待审批' }}
+            {{ showPendingOnly ? $t('leaveApproval.showAll') : $t('leaveApproval.pending') }}
           </el-button>
         </el-badge>
       </div>
@@ -20,7 +20,7 @@
           <el-card class="stat-card pending">
             <div class="stat-content">
               <div class="stat-value">{{ stats.pending }}</div>
-              <div class="stat-label">待审批</div>
+              <div class="stat-label">{{ $t('leaveApproval.pending') }}</div>
             </div>
           </el-card>
         </el-col>
@@ -28,7 +28,7 @@
           <el-card class="stat-card approved">
             <div class="stat-content">
               <div class="stat-value">{{ stats.approved }}</div>
-              <div class="stat-label">已通过</div>
+              <div class="stat-label">{{ $t('leaveApproval.approved') }}</div>
             </div>
           </el-card>
         </el-col>
@@ -36,7 +36,7 @@
           <el-card class="stat-card rejected">
             <div class="stat-content">
               <div class="stat-value">{{ stats.rejected }}</div>
-              <div class="stat-label">已拒绝</div>
+              <div class="stat-label">{{ $t('leaveApproval.rejected') }}</div>
             </div>
           </el-card>
         </el-col>
@@ -44,7 +44,7 @@
           <el-card class="stat-card total">
             <div class="stat-content">
               <div class="stat-value">{{ stats.total }}</div>
-              <div class="stat-label">总申请</div>
+              <div class="stat-label">{{ $t('leaveApproval.totalApplications') }}</div>
             </div>
           </el-card>
         </el-col>
@@ -55,51 +55,51 @@
     <el-card class="table-card">
       <el-table :data="approvals" v-loading="loading" stripe>
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="id" label="申请ID" width="80" />
-        <el-table-column prop="applicantName" label="申请人" width="100" />
-        <el-table-column prop="departmentName" label="部门" width="120" />
-        <el-table-column label="请假类型" width="100">
+        <el-table-column prop="id" :label="$t('leaveApproval.applicationId')" width="80" />
+        <el-table-column prop="applicantName" :label="$t('leaveApproval.applicant')" width="100" />
+        <el-table-column prop="departmentName" :label="$t('leaveApproval.department')" width="120" />
+        <el-table-column :label="$t('leaveApproval.leaveType')" width="100">
           <template #default="{ row }">
             <el-tag :type="getLeaveTypeColor(row.leaveType)">
               {{ getLeaveTypeText(row.leaveType) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="duration" label="请假时间" width="200" />
-        <el-table-column prop="days" label="天数" width="80" align="center" />
-        <el-table-column label="优先级" width="100">
+        <el-table-column prop="duration" :label="$t('leaveApproval.leaveDuration')" width="200" />
+        <el-table-column prop="days" :label="$t('leaveApproval.days')" width="80" align="center" />
+        <el-table-column :label="$t('leaveApproval.priority')" width="100">
           <template #default="{ row }">
             <el-tag :type="getPriorityColor(row.priority)" size="small">
               {{ getPriorityText(row.priority) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="applyTime" label="申请时间" width="160" />
-        <el-table-column label="状态" width="100">
+        <el-table-column prop="applyTime" :label="$t('leaveApproval.applicationTime')" width="160" />
+        <el-table-column :label="$t('leaveApproval.status')" width="100">
           <template #default="{ row }">
             <el-tag :type="getStatusColor(row.status)">
               {{ getStatusText(row.status) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180" fixed="right">
+        <el-table-column :label="$t('common.actions')" width="180" fixed="right">
           <template #default="{ row }">
-            <el-button link type="primary" @click="viewDetails(row)">详情</el-button>
-            <el-button 
-              link 
-              type="success" 
+            <el-button link type="primary" @click="viewDetails(row)">{{ $t('leaveApproval.details') }}</el-button>
+            <el-button
+              link
+              type="success"
               v-if="row.status === 'pending'"
               @click="quickApprove(row)"
             >
-              通过
+              {{ $t('leaveApproval.approve') }}
             </el-button>
-            <el-button 
-              link 
-              type="warning" 
+            <el-button
+              link
+              type="warning"
               v-if="row.status === 'pending'"
               @click="quickReject(row)"
             >
-              拒绝
+              {{ $t('leaveApproval.reject') }}
             </el-button>
           </template>
         </el-table-column>
@@ -205,8 +205,11 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Bell } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

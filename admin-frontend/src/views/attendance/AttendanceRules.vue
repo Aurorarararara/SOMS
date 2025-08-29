@@ -2,35 +2,35 @@
   <div class="attendance-rules-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2 class="page-title">考勤规则</h2>
+      <h2 class="page-title">{{ $t('nav.attendanceRules') }}</h2>
       <el-button type="primary" @click="showAddDialog = true">
         <el-icon><Plus /></el-icon>
-        新增规则
+        {{ $t('attendanceRules.addRule') }}
       </el-button>
     </div>
 
     <!-- 考勤规则列表 -->
     <el-card class="table-card">
       <el-table :data="rules" v-loading="loading" stripe>
-        <el-table-column prop="id" label="规则ID" width="80" />
-        <el-table-column prop="name" label="规则名称" width="150" />
-        <el-table-column prop="workStartTime" label="上班时间" width="120" />
-        <el-table-column prop="workEndTime" label="下班时间" width="120" />
-        <el-table-column prop="lateThreshold" label="迟到阈值" width="100" />
-        <el-table-column prop="earlyThreshold" label="早退阈值" width="100" />
-        <el-table-column prop="applicableDepartments" label="适用部门" min-width="200" />
-        <el-table-column label="状态" width="80">
+        <el-table-column prop="id" :label="$t('attendanceRules.ruleId')" width="80" />
+        <el-table-column prop="name" :label="$t('attendanceRules.ruleName')" width="150" />
+        <el-table-column prop="workStartTime" :label="$t('attendanceRules.workStartTime')" width="120" />
+        <el-table-column prop="workEndTime" :label="$t('attendanceRules.workEndTime')" width="120" />
+        <el-table-column prop="lateThreshold" :label="$t('attendanceRules.lateThreshold')" width="100" />
+        <el-table-column prop="earlyThreshold" :label="$t('attendanceRules.earlyThreshold')" width="100" />
+        <el-table-column prop="applicableDepartments" :label="$t('attendanceRules.applicableDepartments')" min-width="200" />
+        <el-table-column :label="$t('attendanceRules.status')" width="80">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">
-              {{ row.status === 1 ? '启用' : '禁用' }}
+              {{ row.status === 1 ? $t('attendanceRules.enabled') : $t('attendanceRules.disabled') }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200" fixed="right">
+        <el-table-column :label="$t('common.actions')" width="200" fixed="right">
           <template #default="{ row }">
-            <el-button link type="primary" @click="viewRule(row)">查看</el-button>
-            <el-button link type="primary" @click="editRule(row)">编辑</el-button>
-            <el-button link type="danger" @click="deleteRule(row)">删除</el-button>
+            <el-button link type="primary" @click="viewRule(row)">{{ $t('common.view') }}</el-button>
+            <el-button link type="primary" @click="editRule(row)">{{ $t('common.edit') }}</el-button>
+            <el-button link type="danger" @click="deleteRule(row)">{{ $t('common.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -39,13 +39,13 @@
     <!-- 新增/编辑规则对话框 -->
     <el-dialog 
       v-model="showAddDialog" 
-      :title="isEdit ? '编辑规则' : '新增规则'" 
+      :title="isEdit ? $t('attendanceRules.editRule') : $t('attendanceRules.addRule')"
       width="600px"
       @close="resetForm"
     >
       <el-form :model="ruleForm" :rules="formRules" ref="formRef" label-width="120px">
-        <el-form-item label="规则名称" prop="name">
-          <el-input v-model="ruleForm.name" placeholder="请输入规则名称" />
+        <el-form-item :label="$t('attendanceRules.ruleName')" prop="name">
+          <el-input v-model="ruleForm.name" :placeholder="$t('attendanceRules.enterRuleName')" />
         </el-form-item>
         <el-row :gutter="20">
           <el-col :span="12">
@@ -125,8 +125,11 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

@@ -21,7 +21,7 @@
               <House v-else-if="item.icon === 'House'" />
               <Document v-else />
             </el-icon>
-            <span class="breadcrumb-text">{{ item.title }}</span>
+            <span class="breadcrumb-text">{{ item.isI18nKey ? $t(item.title) : item.title }}</span>
           </div>
         </el-breadcrumb-item>
       </el-breadcrumb>
@@ -29,9 +29,9 @@
       <!-- 操作按钮组 -->
       <div class="breadcrumb-actions">
         <!-- 收藏按钮 -->
-        <el-tooltip :content="isCurrentFavorite ? '取消收藏' : '收藏此页面'" placement="bottom">
-          <el-button 
-            text 
+        <el-tooltip :content="isCurrentFavorite ? $t('breadcrumb.removeFromFavorites') : $t('breadcrumb.addToFavorites')" placement="bottom">
+          <el-button
+            text
             :type="isCurrentFavorite ? 'warning' : 'default'"
             @click="toggleFavorite"
             class="action-btn"
@@ -51,7 +51,7 @@
         >
           <template #reference>
             <div>
-              <el-tooltip content="访问历史" placement="bottom">
+              <el-tooltip :content="$t('breadcrumb.visitHistory')" placement="bottom">
                 <el-button text class="action-btn">
                   <el-icon><Clock /></el-icon>
                 </el-button>
@@ -104,7 +104,7 @@
         >
           <template #reference>
             <div>
-              <el-tooltip content="收藏夹" placement="bottom">
+              <el-tooltip :content="$t('breadcrumb.favorites')" placement="bottom">
                 <el-button text class="action-btn">
                   <el-icon><Collection /></el-icon>
                   <el-badge
@@ -279,7 +279,7 @@ const openFavoriteManager = () => {
 const removeFromFavorites = (path) => {
   const success = breadcrumbStore.removeFromFavorites(path)
   if (success) {
-    ElMessage.success('已移除收藏')
+    ElMessage.success($t('breadcrumb.favoriteRemoved'))
   }
 }
 
@@ -290,11 +290,11 @@ const formatTime = (timestamp) => {
   const hours = Math.floor(diff / (1000 * 60 * 60))
   const days = Math.floor(diff / (1000 * 60 * 60 * 24))
 
-  if (minutes < 1) return '刚刚'
-  if (minutes < 60) return `${minutes}分钟前`
-  if (hours < 24) return `${hours}小时前`
-  if (days < 7) return `${days}天前`
-  
+  if (minutes < 1) return $t('breadcrumb.justNow')
+  if (minutes < 60) return $t('breadcrumb.minutesAgo', { minutes })
+  if (hours < 24) return $t('breadcrumb.hoursAgo', { hours })
+  if (days < 7) return $t('breadcrumb.daysAgo', { days })
+
   return new Date(timestamp).toLocaleDateString()
 }
 

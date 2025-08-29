@@ -2,36 +2,36 @@
   <div class="announcements-manage-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2 class="page-title">公告管理</h2>
+      <h2 class="page-title">{{ $t('nav.announcements') }}</h2>
       <el-button type="primary" @click="showAddDialog = true">
         <el-icon><Plus /></el-icon>
-        发布公告
+        {{ $t('announcementsManage.publishAnnouncement') }}
       </el-button>
     </div>
 
     <!-- 搜索和筛选 -->
     <el-card class="search-card">
       <el-form :model="searchForm" inline>
-        <el-form-item label="公告标题:">
-          <el-input v-model="searchForm.title" placeholder="请输入公告标题" clearable />
+        <el-form-item :label="$t('announcementsManage.announcementTitle') + ':'">
+          <el-input v-model="searchForm.title" :placeholder="$t('announcementsManage.enterTitle')" clearable />
         </el-form-item>
-        <el-form-item label="公告类型:">
-          <el-select v-model="searchForm.type" placeholder="请选择类型" clearable>
-            <el-option label="通知公告" value="notice" />
-            <el-option label="新闻动态" value="news" />
-            <el-option label="制度规定" value="policy" />
-            <el-option label="其他" value="other" />
+        <el-form-item :label="$t('announcementsManage.announcementType') + ':'">
+          <el-select v-model="searchForm.type" :placeholder="$t('announcementsManage.selectType')" clearable>
+            <el-option :label="$t('announcementsManage.notice')" value="notice" />
+            <el-option :label="$t('announcementsManage.news')" value="news" />
+            <el-option :label="$t('announcementsManage.policy')" value="policy" />
+            <el-option :label="$t('announcementsManage.other')" value="other" />
           </el-select>
         </el-form-item>
-        <el-form-item label="发布状态:">
-          <el-select v-model="searchForm.status" placeholder="请选择状态" clearable>
-            <el-option label="已发布" :value="1" />
-            <el-option label="未发布" :value="0" />
+        <el-form-item :label="$t('announcementsManage.publishStatus') + ':'">
+          <el-select v-model="searchForm.status" :placeholder="$t('announcementsManage.selectStatus')" clearable>
+            <el-option :label="$t('announcementsManage.published')" :value="1" />
+            <el-option :label="$t('announcementsManage.unpublished')" :value="0" />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="loadAnnouncements">搜索</el-button>
-          <el-button @click="resetSearch">重置</el-button>
+          <el-button type="primary" @click="loadAnnouncements">{{ $t('common.search') }}</el-button>
+          <el-button @click="resetSearch">{{ $t('common.reset') }}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -40,29 +40,29 @@
     <el-card class="table-card">
       <el-table :data="announcements" v-loading="loading" stripe>
         <el-table-column prop="id" label="ID" width="60" />
-        <el-table-column prop="title" label="公告标题" min-width="200" show-overflow-tooltip />
-        <el-table-column label="公告类型" width="120">
+        <el-table-column prop="title" :label="$t('announcementsManage.announcementTitle')" min-width="200" show-overflow-tooltip />
+        <el-table-column :label="$t('announcementsManage.announcementType')" width="120">
           <template #default="{ row }">
             <el-tag :type="getTypeColor(row.type)">
               {{ getTypeText(row.type) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="summary" label="内容摘要" min-width="250" show-overflow-tooltip />
-        <el-table-column prop="publisherName" label="发布人" width="100" />
-        <el-table-column label="发布状态" width="100">
+        <el-table-column prop="summary" :label="$t('announcementsManage.contentSummary')" min-width="250" show-overflow-tooltip />
+        <el-table-column prop="publisherName" :label="$t('announcementsManage.publisher')" width="100" />
+        <el-table-column :label="$t('announcementsManage.publishStatus')" width="100">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'info'">
-              {{ row.status === 1 ? '已发布' : '未发布' }}
+              {{ row.status === 1 ? $t('announcementsManage.published') : $t('announcementsManage.unpublished') }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="publishTime" label="发布时间" width="160" />
-        <el-table-column prop="readCount" label="阅读量" width="80" />
-        <el-table-column label="操作" width="200" fixed="right">
+        <el-table-column prop="publishTime" :label="$t('announcementsManage.publishTime')" width="160" />
+        <el-table-column prop="readCount" :label="$t('announcementsManage.readCount')" width="80" />
+        <el-table-column :label="$t('common.actions')" width="200" fixed="right">
           <template #default="{ row }">
-            <el-button link type="primary" @click="viewAnnouncement(row)">查看</el-button>
-            <el-button link type="primary" @click="editAnnouncement(row)">编辑</el-button>
+            <el-button link type="primary" @click="viewAnnouncement(row)">{{ $t('common.view') }}</el-button>
+            <el-button link type="primary" @click="editAnnouncement(row)">{{ $t('common.edit') }}</el-button>
             <el-button 
               link 
               :type="row.status === 1 ? 'warning' : 'success'" 
@@ -175,8 +175,11 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

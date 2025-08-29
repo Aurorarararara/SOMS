@@ -2,33 +2,33 @@
   <div class="employees-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2 class="page-title">员工管理</h2>
+      <h2 class="page-title">{{ $t('nav.employees') }}</h2>
       <el-button type="primary" @click="showAddDialog = true">
         <el-icon><Plus /></el-icon>
-        新增员工
+        {{ $t('employees.addEmployee') }}
       </el-button>
     </div>
 
     <!-- 搜索和筛选 -->
     <el-card class="search-card">
       <el-form :model="searchForm" inline>
-        <el-form-item label="员工姓名:">
-          <el-input v-model="searchForm.realName" placeholder="请输入员工姓名" clearable />
+        <el-form-item :label="$t('employees.employeeName') + ':'">
+          <el-input v-model="searchForm.realName" :placeholder="$t('employees.enterEmployeeName')" clearable />
         </el-form-item>
-        <el-form-item label="所属部门:">
-          <el-select v-model="searchForm.departmentId" placeholder="请选择部门" clearable>
+        <el-form-item :label="$t('employees.department') + ':'">
+          <el-select v-model="searchForm.departmentId" :placeholder="$t('employees.selectDepartment')" clearable>
             <el-option v-for="dept in departments" :key="dept.id" :label="dept.name" :value="dept.id" />
           </el-select>
         </el-form-item>
-        <el-form-item label="员工状态:">
-          <el-select v-model="searchForm.status" placeholder="请选择状态" clearable>
-            <el-option label="在职" :value="1" />
-            <el-option label="离职" :value="0" />
+        <el-form-item :label="$t('employees.employeeStatus') + ':'">
+          <el-select v-model="searchForm.status" :placeholder="$t('employees.selectStatus')" clearable>
+            <el-option :label="$t('employees.active')" :value="1" />
+            <el-option :label="$t('employees.inactive')" :value="0" />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="loadEmployees">搜索</el-button>
-          <el-button @click="resetSearch">重置</el-button>
+          <el-button type="primary" @click="loadEmployees">{{ $t('common.search') }}</el-button>
+          <el-button @click="resetSearch">{{ $t('common.reset') }}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -36,17 +36,17 @@
     <!-- 员工列表 -->
     <el-card class="table-card">
       <el-table :data="employees" v-loading="loading" stripe>
-        <el-table-column prop="id" label="员工ID" width="80" />
-        <el-table-column prop="employeeCode" label="员工工号" width="120" />
-        <el-table-column prop="realName" label="姓名" width="100" />
-        <el-table-column prop="email" label="邮箱" width="180" />
-        <el-table-column prop="phone" label="电话" width="130" />
-        <el-table-column prop="departmentName" label="部门" width="120" />
-        <el-table-column prop="position" label="职位" width="120" />
-        <el-table-column label="状态" width="80">
+        <el-table-column prop="id" :label="$t('employees.employeeId')" width="80" />
+        <el-table-column prop="employeeCode" :label="$t('employees.employeeCode')" width="120" />
+        <el-table-column prop="realName" :label="$t('employees.name')" width="100" />
+        <el-table-column prop="email" :label="$t('employees.email')" width="180" />
+        <el-table-column prop="phone" :label="$t('employees.phone')" width="130" />
+        <el-table-column prop="departmentName" :label="$t('employees.department')" width="120" />
+        <el-table-column prop="position" :label="$t('employees.position')" width="120" />
+        <el-table-column :label="$t('employees.status')" width="80">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">
-              {{ row.status === 1 ? '在职' : '离职' }}
+              {{ row.status === 1 ? $t('employees.active') : $t('employees.inactive') }}
             </el-tag>
           </template>
         </el-table-column>
@@ -191,9 +191,12 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { employeeApi, departmentApi } from '@/api/employee'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

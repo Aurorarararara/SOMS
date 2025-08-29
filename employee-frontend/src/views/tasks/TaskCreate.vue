@@ -4,14 +4,14 @@
       <div class="header-content">
         <h1 class="page-title">
           <el-icon class="title-icon"><Plus /></el-icon>
-          创建新任务
+          {{ $t('nav.createTask') }}
         </h1>
-        <p class="page-subtitle">创建并分配新的工作任务</p>
+        <p class="page-subtitle">{{ $t('taskCreate.subtitle') }}</p>
       </div>
       <div class="header-actions">
         <el-button @click="$router.go(-1)">
           <el-icon><ArrowLeft /></el-icon>
-          返回
+          {{ $t('common.back') }}
         </el-button>
       </div>
     </div>
@@ -27,22 +27,22 @@
         >
           <el-row :gutter="24">
             <el-col :span="12">
-              <el-form-item label="任务标题" prop="title">
-                <el-input 
-                  v-model="taskForm.title" 
-                  placeholder="请输入任务标题"
+              <el-form-item :label="$t('taskCreate.taskTitle')" prop="title">
+                <el-input
+                  v-model="taskForm.title"
+                  :placeholder="$t('taskCreate.enterTaskTitle')"
                   maxlength="100"
                   show-word-limit
                 />
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="优先级" prop="priority">
-                <el-select v-model="taskForm.priority" placeholder="选择优先级" style="width: 100%">
-                  <el-option label="紧急" value="urgent" />
-                  <el-option label="高" value="high" />
-                  <el-option label="中" value="medium" />
-                  <el-option label="低" value="low" />
+              <el-form-item :label="$t('taskCreate.priority')" prop="priority">
+                <el-select v-model="taskForm.priority" :placeholder="$t('taskCreate.selectPriority')" style="width: 100%">
+                  <el-option :label="$t('taskManagement.urgent')" value="urgent" />
+                  <el-option :label="$t('taskManagement.high')" value="high" />
+                  <el-option :label="$t('taskManagement.medium')" value="medium" />
+                  <el-option :label="$t('taskManagement.low')" value="low" />
                 </el-select>
               </el-form-item>
             </el-col>
@@ -50,10 +50,10 @@
 
           <el-row :gutter="24">
             <el-col :span="12">
-              <el-form-item label="负责人" prop="assignee">
-                <el-select 
-                  v-model="taskForm.assignee" 
-                  placeholder="选择负责人" 
+              <el-form-item :label="$t('taskCreate.assignee')" prop="assignee">
+                <el-select
+                  v-model="taskForm.assignee"
+                  :placeholder="$t('taskCreate.selectAssignee')"
                   style="width: 100%"
                   filterable
                   remote
@@ -78,11 +78,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="截止时间" prop="dueDate">
+              <el-form-item :label="$t('taskCreate.dueDate')" prop="dueDate">
                 <el-date-picker
                   v-model="taskForm.dueDate"
                   type="datetime"
-                  placeholder="选择截止时间"
+                  :placeholder="$t('taskCreate.selectDueDate')"
                   style="width: 100%"
                   :disabled-date="disabledDate"
                 />
@@ -90,12 +90,12 @@
             </el-col>
           </el-row>
 
-          <el-form-item label="任务描述" prop="description">
+          <el-form-item :label="$t('taskCreate.taskDescription')" prop="description">
             <el-input
               v-model="taskForm.description"
               type="textarea"
               :rows="6"
-              placeholder="请详细描述任务内容、要求和注意事项..."
+              :placeholder="$t('taskCreate.enterTaskDescription')"
               maxlength="500"
               show-word-limit
             />
@@ -183,12 +183,14 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   Plus, ArrowLeft, Check, Document, Refresh, UploadFilled
 } from '@element-plus/icons-vue'
 
 const router = useRouter()
+const { t: $t } = useI18n()
 
 // 响应式数据
 const taskFormRef = ref()

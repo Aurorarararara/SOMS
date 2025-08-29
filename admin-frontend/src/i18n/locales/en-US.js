@@ -32,6 +32,12 @@ export default {
     upload: 'Upload'
   },
 
+  // Layout
+  layout: {
+    refreshPage: 'Refresh Page',
+    toggleFullscreen: 'Toggle Fullscreen'
+  },
+
   // Navigation Menu
   nav: {
     dashboard: 'Dashboard',
@@ -55,7 +61,8 @@ export default {
     systemConfig: 'System Configuration',
     operationLogs: 'Operation Logs',
     dataBackup: 'Data Backup',
-    profile: 'Profile'
+    profile: 'Profile',
+    adminBackend: 'Admin Backend'
   },
 
   // Breadcrumb Navigation
@@ -104,6 +111,283 @@ export default {
     active: 'Active',
     inactive: 'Inactive',
     permissions: 'Permissions'
+  },
+
+  // Dashboard
+  dashboard: {
+    totalEmployees: 'Total Employees',
+    todayAttendance: 'Today\'s Attendance',
+    pendingLeave: 'Pending Leave',
+    totalDepartments: 'Total Departments',
+    attendanceStats: 'Attendance Statistics',
+    departmentDistribution: 'Department Personnel Distribution',
+    selectMonth: 'Select Month',
+    quickActions: 'Quick Actions',
+    latestAnnouncements: 'Latest Announcements',
+    viewMore: 'View More',
+    pendingTasks: 'Pending Tasks',
+    systemMessages: 'System Messages',
+    noPendingTasks: 'No pending tasks',
+    noSystemMessages: 'No system messages'
+  },
+
+  // Employee Management
+  employees: {
+    addEmployee: 'Add Employee',
+    employeeName: 'Employee Name',
+    enterEmployeeName: 'Enter employee name',
+    department: 'Department',
+    selectDepartment: 'Select department',
+    employeeStatus: 'Employee Status',
+    selectStatus: 'Select status',
+    active: 'Active',
+    inactive: 'Inactive',
+    employeeId: 'Employee ID',
+    employeeCode: 'Employee Code',
+    name: 'Name',
+    email: 'Email',
+    phone: 'Phone',
+    position: 'Position',
+    status: 'Status'
+  },
+
+  // Department Management
+  departments: {
+    addDepartment: 'Add Department',
+    editDepartment: 'Edit Department',
+    departmentId: 'Department ID',
+    departmentName: 'Department Name',
+    description: 'Description',
+    manager: 'Manager',
+    employeeCount: 'Employee Count',
+    status: 'Status',
+    createTime: 'Create Time',
+    normal: 'Normal',
+    disabled: 'Disabled',
+    enterDepartmentName: 'Enter department name'
+  },
+
+  // Role Management
+  roles: {
+    addRole: 'Add Role',
+    editRole: 'Edit Role',
+    roleId: 'Role ID',
+    roleName: 'Role Name',
+    roleCode: 'Role Code',
+    description: 'Description',
+    status: 'Status',
+    createTime: 'Create Time',
+    enabled: 'Enabled',
+    disabled: 'Disabled',
+    permissions: 'Permissions',
+    enterRoleName: 'Enter role name',
+    enterRoleCode: 'Enter role code'
+  },
+
+  // Attendance Rules
+  attendanceRules: {
+    addRule: 'Add Rule',
+    editRule: 'Edit Rule',
+    ruleId: 'Rule ID',
+    ruleName: 'Rule Name',
+    workStartTime: 'Work Start Time',
+    workEndTime: 'Work End Time',
+    lateThreshold: 'Late Threshold',
+    earlyThreshold: 'Early Threshold',
+    applicableDepartments: 'Applicable Departments',
+    status: 'Status',
+    enabled: 'Enabled',
+    disabled: 'Disabled',
+    enterRuleName: 'Enter rule name'
+  },
+
+  // Attendance Statistics
+  attendanceStatistics: {
+    exportStatistics: 'Export Statistics',
+    normalAttendance: 'Normal Attendance',
+    lateCount: 'Late Count',
+    absentCount: 'Absent Count',
+    leaveCount: 'Leave Count',
+    statisticsRange: 'Statistics Range'
+  },
+
+  // Leave Applications
+  leaveApplications: {
+    exportApplications: 'Export Applications',
+    applicant: 'Applicant',
+    enterApplicantName: 'Enter applicant name',
+    leaveType: 'Leave Type',
+    selectLeaveType: 'Select leave type',
+    sickLeave: 'Sick Leave',
+    personalLeave: 'Personal Leave',
+    annualLeave: 'Annual Leave',
+    marriageLeave: 'Marriage Leave',
+    maternityLeave: 'Maternity Leave',
+    bereavementLeave: 'Bereavement Leave',
+    applicationStatus: 'Application Status',
+    selectStatus: 'Select status',
+    pending: 'Pending',
+    approved: 'Approved',
+    rejected: 'Rejected',
+    cancelled: 'Cancelled',
+    applicationDate: 'Application Date',
+    startDate: 'Start Date',
+    endDate: 'End Date',
+    applicationId: 'Application ID',
+    employeeCode: 'Employee Code',
+    department: 'Department',
+    leaveDays: 'Leave Days',
+    status: 'Status',
+    applicationTime: 'Application Time',
+    reason: 'Reason',
+    viewDetails: 'View Details',
+    workflowProgress: 'Workflow Progress'
+  },
+
+  // Leave Approval
+  leaveApproval: {
+    showAll: 'Show All',
+    pending: 'Pending',
+    approved: 'Approved',
+    rejected: 'Rejected',
+    totalApplications: 'Total Applications',
+    applicationId: 'Application ID',
+    applicant: 'Applicant',
+    department: 'Department',
+    leaveType: 'Leave Type',
+    leaveDuration: 'Leave Duration',
+    days: 'Days',
+    priority: 'Priority',
+    applicationTime: 'Application Time',
+    status: 'Status',
+    details: 'Details',
+    approve: 'Approve',
+    reject: 'Reject'
+  },
+
+  // Leave Statistics
+  leaveStatistics: {
+    exportStatistics: 'Export Statistics',
+    statisticsDetails: 'Leave Statistics Details',
+    statisticsPeriod: 'Statistics Period',
+    startMonth: 'Start Month',
+    endMonth: 'End Month',
+    employeeName: 'Employee Name',
+    department: 'Department',
+    sickLeaveDays: 'Sick Leave (Days)',
+    personalLeaveDays: 'Personal Leave (Days)',
+    annualLeaveDays: 'Annual Leave (Days)',
+    totalLeaveDays: 'Total Leave (Days)',
+    leaveRate: 'Leave Rate',
+    viewDetails: 'View Details',
+    totalEmployees: 'Total Employees',
+    monthlyLeaveCount: 'Monthly Leave Count',
+    averageLeaveRate: 'Average Leave Rate'
+  },
+
+  // Announcements Management
+  announcementsManage: {
+    publishAnnouncement: 'Publish Announcement',
+    announcementTitle: 'Announcement Title',
+    enterTitle: 'Enter announcement title',
+    announcementType: 'Announcement Type',
+    selectType: 'Select type',
+    notice: 'Notice',
+    news: 'News',
+    policy: 'Policy',
+    other: 'Other',
+    publishStatus: 'Publish Status',
+    selectStatus: 'Select status',
+    published: 'Published',
+    unpublished: 'Unpublished',
+    contentSummary: 'Content Summary',
+    publisher: 'Publisher',
+    publishTime: 'Publish Time',
+    readCount: 'Read Count',
+    status: 'Status'
+  },
+
+  // System Configuration
+  systemConfig: {
+    saveConfig: 'Save Configuration',
+    basicSettings: 'Basic Settings',
+    systemName: 'System Name',
+    systemVersion: 'System Version',
+    adminEmail: 'Admin Email',
+    attendanceSettings: 'Attendance Settings',
+    standardWorkHours: 'Standard Work Hours',
+    hoursPerDay: 'hours/day',
+    lateThreshold: 'Late Threshold',
+    minutes: 'minutes'
+  },
+
+  // System Logs
+  systemLogs: {
+    exportLogs: 'Export Logs',
+    logId: 'Log ID',
+    operationUser: 'Operation User',
+    operationType: 'Operation Type',
+    operationDescription: 'Operation Description',
+    ipAddress: 'IP Address',
+    operationTime: 'Operation Time'
+  },
+
+  // System Backup
+  systemBackup: {
+    createBackup: 'Create Backup',
+    backupId: 'Backup ID',
+    backupName: 'Backup Name',
+    fileSize: 'File Size',
+    createTime: 'Create Time',
+    backupDescription: 'Backup Description',
+    download: 'Download',
+    restore: 'Restore'
+  },
+
+  // Attendance Reports
+  reportsAttendance: {
+    attendanceReport: 'Attendance Report',
+    generateReport: 'Generate Report',
+    reportType: 'Report Type',
+    monthlyReport: 'Monthly Report',
+    quarterlyReport: 'Quarterly Report',
+    yearlyReport: 'Yearly Report',
+    statisticsRange: 'Statistics Range',
+    startMonth: 'Start Month',
+    endMonth: 'End Month',
+    queryReport: 'Query Report',
+    chartPlaceholder: 'Attendance trend chart display area',
+    reportLoadingInProgress: 'Report loading function in development...',
+    reportGenerationInProgress: 'Report generation function in development...'
+  },
+
+  // Leave Reports
+  reportsLeave: {
+    leaveReport: 'Leave Report',
+    exportReport: 'Export Report',
+    chartPlaceholder: 'Leave statistics chart display area'
+  },
+
+  // Performance Reports
+  reportsPerformance: {
+    performanceReport: 'Performance Report',
+    generatePerformanceReport: 'Generate Performance Report',
+    chartPlaceholder: 'Performance analysis chart display area'
+  },
+
+  // Login Page
+  login: {
+    systemTitle: 'Smart Office Management System',
+    adminPlatform: 'Admin Platform',
+    adminLogin: 'Administrator Login',
+    adminLoginPrompt: 'Login with administrator account',
+    adminAccount: 'Admin Account',
+    enterCaptcha: 'Enter Captcha',
+    clickRefresh: 'Click to Refresh',
+    loggingIn: 'Logging in...',
+    loginSuccess: 'Login successful!',
+    loginFailed: 'Login failed, please check account and password',
+    captchaError: 'Captcha error'
   },
 
   // Employee Management

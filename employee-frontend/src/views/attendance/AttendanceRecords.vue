@@ -4,14 +4,14 @@
       <div class="header-content">
         <h1 class="page-title">
           <el-icon class="title-icon"><Clock /></el-icon>
-          考勤记录
+          {{ $t('nav.attendanceRecords') }}
         </h1>
-        <p class="page-subtitle">查看个人考勤历史记录</p>
+        <p class="page-subtitle">{{ $t('attendanceRecords.subtitle') }}</p>
       </div>
       <div class="header-actions">
         <el-button type="primary" @click="exportRecords">
           <el-icon><Download /></el-icon>
-          导出记录
+          {{ $t('attendanceRecords.exportRecords') }}
         </el-button>
       </div>
     </div>
@@ -21,37 +21,37 @@
       <el-card class="filter-card">
         <div class="filter-form">
           <el-form :model="filterForm" :inline="true" size="default">
-            <el-form-item label="日期范围">
+            <el-form-item :label="$t('attendanceRecords.dateRange')">
               <el-date-picker
                 v-model="filterForm.dateRange"
                 type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('common.to')"
+                :start-placeholder="$t('attendanceRecords.startDate')"
+                :end-placeholder="$t('attendanceRecords.endDate')"
                 format="YYYY-MM-DD"
                 value-format="YYYY-MM-DD"
                 style="width: 280px"
                 @change="handleDateChange"
               />
             </el-form-item>
-            <el-form-item label="考勤状态">
-              <el-select v-model="filterForm.status" placeholder="选择状态" style="width: 140px" @change="loadRecords">
-                <el-option label="全部" value="" />
-                <el-option label="正常" value="normal" />
-                <el-option label="迟到" value="late" />
-                <el-option label="早退" value="early" />
-                <el-option label="缺勤" value="absent" />
-                <el-option label="请假" value="leave" />
+            <el-form-item :label="$t('attendanceRecords.attendanceStatus')">
+              <el-select v-model="filterForm.status" :placeholder="$t('attendanceRecords.selectStatus')" style="width: 140px" @change="loadRecords">
+                <el-option :label="$t('common.all')" value="" />
+                <el-option :label="$t('attendanceRecords.normal')" value="normal" />
+                <el-option :label="$t('attendanceRecords.late')" value="late" />
+                <el-option :label="$t('attendanceRecords.early')" value="early" />
+                <el-option :label="$t('attendanceRecords.absent')" value="absent" />
+                <el-option :label="$t('attendanceRecords.onLeave')" value="leave" />
               </el-select>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="loadRecords">
                 <el-icon><Search /></el-icon>
-                查询
+                {{ $t('common.search') }}
               </el-button>
               <el-button @click="resetFilter">
                 <el-icon><Refresh /></el-icon>
-                重置
+                {{ $t('common.reset') }}
               </el-button>
             </el-form-item>
           </el-form>
@@ -63,7 +63,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-number">{{ statistics.normalDays }}</div>
-            <div class="stat-label">正常天数</div>
+            <div class="stat-label">{{ $t('attendanceRecords.normalDays') }}</div>
           </div>
           <div class="stat-icon normal">
             <el-icon><Check /></el-icon>
@@ -72,7 +72,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-number">{{ statistics.lateDays }}</div>
-            <div class="stat-label">迟到次数</div>
+            <div class="stat-label">{{ $t('attendanceRecords.lateDays') }}</div>
           </div>
           <div class="stat-icon late">
             <el-icon><Clock /></el-icon>
@@ -81,7 +81,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-number">{{ statistics.earlyDays }}</div>
-            <div class="stat-label">早退次数</div>
+            <div class="stat-label">{{ $t('attendanceRecords.earlyDays') }}</div>
           </div>
           <div class="stat-icon early">
             <el-icon><Timer /></el-icon>
@@ -90,7 +90,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-number">{{ statistics.absentDays }}</div>
-            <div class="stat-label">缺勤天数</div>
+            <div class="stat-label">{{ $t('attendanceRecords.absentDays') }}</div>
           </div>
           <div class="stat-icon absent">
             <el-icon><Warning /></el-icon>
@@ -102,8 +102,8 @@
       <el-card class="table-card">
         <template #header>
           <div class="card-header">
-            <span class="card-title">考勤记录</span>
-            <span class="record-count">共 {{ total }} 条记录</span>
+            <span class="card-title">{{ $t('attendanceRecords.attendanceRecords') }}</span>
+            <span class="record-count">{{ $t('attendanceRecords.totalRecords', { count: total }) }}</span>
           </div>
         </template>
 
@@ -113,61 +113,61 @@
           style="width: 100%"
           :header-cell-style="{ background: '#f8f9fa', color: '#495057' }"
         >
-          <el-table-column prop="date" label="日期" width="120" sortable>
+          <el-table-column prop="date" :label="$t('attendanceRecords.date')" width="120" sortable>
             <template #default="scope">
               <span>{{ formatDate(scope.row.date) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="workDay" label="星期" width="80">
+          <el-table-column prop="workDay" :label="$t('attendanceRecords.weekDay')" width="80">
             <template #default="scope">
               <span>{{ getWeekDay(scope.row.date) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="checkInTime" label="上班打卡" width="120">
+          <el-table-column prop="checkInTime" :label="$t('attendanceRecords.checkInTime')" width="120">
             <template #default="scope">
               <span v-if="scope.row.checkInTime" :class="getTimeClass(scope.row, 'in')">
                 {{ scope.row.checkInTime }}
               </span>
-              <span v-else class="no-record">未打卡</span>
+              <span v-else class="no-record">{{ $t('attendanceRecords.noRecord') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="checkOutTime" label="下班打卡" width="120">
+          <el-table-column prop="checkOutTime" :label="$t('attendanceRecords.checkOutTime')" width="120">
             <template #default="scope">
               <span v-if="scope.row.checkOutTime" :class="getTimeClass(scope.row, 'out')">
                 {{ scope.row.checkOutTime }}
               </span>
-              <span v-else class="no-record">未打卡</span>
+              <span v-else class="no-record">{{ $t('attendanceRecords.noRecord') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="workHours" label="工作时长" width="100">
+          <el-table-column prop="workHours" :label="$t('attendanceRecords.workHours')" width="100">
             <template #default="scope">
-              <span v-if="scope.row.workHours">{{ scope.row.workHours }}小时</span>
+              <span v-if="scope.row.workHours">{{ scope.row.workHours }}{{ $t('attendanceRecords.hours') }}</span>
               <span v-else>-</span>
             </template>
           </el-table-column>
-          <el-table-column prop="status" label="考勤状态" width="100">
+          <el-table-column prop="status" :label="$t('attendanceRecords.attendanceStatus')" width="100">
             <template #default="scope">
               <el-tag :type="getStatusType(scope.row.status)" size="small">
                 {{ getStatusText(scope.row.status) }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="location" label="打卡地点" min-width="150">
+          <el-table-column prop="location" :label="$t('attendanceRecords.checkLocation')" min-width="150">
             <template #default="scope">
               <div v-if="scope.row.checkInLocation || scope.row.checkOutLocation">
                 <div v-if="scope.row.checkInLocation" class="location-item">
                   <el-icon class="location-icon"><MapLocation /></el-icon>
-                  上班：{{ scope.row.checkInLocation }}
+                  {{ $t('attendanceRecords.checkIn') }}：{{ scope.row.checkInLocation }}
                 </div>
                 <div v-if="scope.row.checkOutLocation" class="location-item">
                   <el-icon class="location-icon"><MapLocation /></el-icon>
-                  下班：{{ scope.row.checkOutLocation }}
+                  {{ $t('attendanceRecords.checkOut') }}：{{ scope.row.checkOutLocation }}
                 </div>
               </div>
               <span v-else>-</span>
             </template>
           </el-table-column>
-          <el-table-column prop="remark" label="备注" min-width="120">
+          <el-table-column prop="remark" :label="$t('attendanceRecords.remark')" min-width="120">
             <template #default="scope">
               <span v-if="scope.row.remark">{{ scope.row.remark }}</span>
               <span v-else>-</span>
@@ -194,11 +194,14 @@
 
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import {
   Clock, Download, Search, Refresh, Check, Timer, Warning, MapLocation
 } from '@element-plus/icons-vue'
 import { attendanceApi } from '@/api/attendance'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

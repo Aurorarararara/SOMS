@@ -9,28 +9,28 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
   
   // 路径映射配置 - 员工端
   const routeMap = ref({
-    '/dashboard': { title: '个人工作台', icon: 'Odometer', category: '工作台' },
-    '/attendance': { title: '我的考勤', icon: 'Clock', category: '考勤管理' },
-    '/attendance/records': { title: '考勤记录', icon: 'Clock', category: '考勤管理', parent: '/attendance' },
-    '/leave': { title: '请假申请', icon: 'Calendar', category: '请假管理' },
-    '/leave/records': { title: '请假记录', icon: 'Calendar', category: '请假管理', parent: '/leave' },
-    '/schedule': { title: '日程管理', icon: 'Calendar', category: '日程' },
-    '/notifications': { title: '公告通知', icon: 'Bell', category: '通知' },
-    '/notifications/:id': { title: '通知详情', icon: 'Bell', category: '通知', parent: '/notifications' },
-    '/profile': { title: '个人信息', icon: 'User', category: '个人' },
-    '/collaborative': { title: '协同编辑', icon: 'Edit', category: '协同' },
-    '/collaborative/demo': { title: '协同编辑功能演示', icon: 'Edit', category: '协同', parent: '/collaborative' },
-    '/collaborative/richtext': { title: '富文本编辑器', icon: 'Edit', category: '协同', parent: '/collaborative' },
-    '/collaborative/richtext/:id': { title: '富文本编辑器', icon: 'Edit', category: '协同', parent: '/collaborative' },
-    '/collaborative/markdown': { title: 'Markdown编辑器', icon: 'Edit', category: '协同', parent: '/collaborative' },
-    '/collaborative/markdown/:id': { title: 'Markdown编辑器', icon: 'Edit', category: '协同', parent: '/collaborative' },
-    '/collaborative/code': { title: '代码编辑器', icon: 'Edit', category: '协同', parent: '/collaborative' },
-    '/collaborative/code/:id': { title: '代码编辑器', icon: 'Edit', category: '协同', parent: '/collaborative' },
-    '/collaborative/table': { title: '表格编辑器', icon: 'Edit', category: '协同', parent: '/collaborative' },
-    '/collaborative/table/:id': { title: '表格编辑器', icon: 'Edit', category: '协同', parent: '/collaborative' },
-    '/tasks': { title: '任务管理', icon: 'List', category: '任务' },
-    '/tasks/create': { title: '创建任务', icon: 'Plus', category: '任务', parent: '/tasks' },
-    '/tasks/:id': { title: '任务详情', icon: 'Document', category: '任务', parent: '/tasks' }
+    '/dashboard': { title: '个人工作台', i18nKey: 'nav.dashboard', icon: 'Odometer', category: '工作台' },
+    '/attendance': { title: '我的考勤', i18nKey: 'nav.attendance', icon: 'Clock', category: '考勤管理' },
+    '/attendance/records': { title: '考勤记录', i18nKey: 'nav.attendanceRecords', icon: 'Clock', category: '考勤管理', parent: '/attendance' },
+    '/leave': { title: '请假申请', i18nKey: 'nav.leave', icon: 'Calendar', category: '请假管理' },
+    '/leave/records': { title: '请假记录', i18nKey: 'nav.leaveRecords', icon: 'Calendar', category: '请假管理', parent: '/leave' },
+    '/schedule': { title: '日程管理', i18nKey: 'nav.schedule', icon: 'Calendar', category: '日程' },
+    '/notifications': { title: '公告通知', i18nKey: 'nav.notifications', icon: 'Bell', category: '通知' },
+    '/notifications/:id': { title: '通知详情', i18nKey: 'nav.notifications', icon: 'Bell', category: '通知', parent: '/notifications' },
+    '/profile': { title: '个人信息', i18nKey: 'nav.profile', icon: 'User', category: '个人' },
+    '/collaborative': { title: '协同编辑', i18nKey: 'nav.collaborative', icon: 'Edit', category: '协同' },
+    '/collaborative/demo': { title: '协同编辑功能演示', i18nKey: 'nav.collaborativeDemo', icon: 'Edit', category: '协同', parent: '/collaborative' },
+    '/collaborative/richtext': { title: '富文本编辑器', i18nKey: 'nav.richtext', icon: 'Edit', category: '协同', parent: '/collaborative' },
+    '/collaborative/richtext/:id': { title: '富文本编辑器', i18nKey: 'nav.richtext', icon: 'Edit', category: '协同', parent: '/collaborative' },
+    '/collaborative/markdown': { title: 'Markdown编辑器', i18nKey: 'nav.markdown', icon: 'Edit', category: '协同', parent: '/collaborative' },
+    '/collaborative/markdown/:id': { title: 'Markdown编辑器', i18nKey: 'nav.markdown', icon: 'Edit', category: '协同', parent: '/collaborative' },
+    '/collaborative/code': { title: '代码编辑器', i18nKey: 'nav.code', icon: 'Edit', category: '协同', parent: '/collaborative' },
+    '/collaborative/code/:id': { title: '代码编辑器', i18nKey: 'nav.code', icon: 'Edit', category: '协同', parent: '/collaborative' },
+    '/collaborative/table': { title: '表格编辑器', i18nKey: 'nav.table', icon: 'Edit', category: '协同', parent: '/collaborative' },
+    '/collaborative/table/:id': { title: '表格编辑器', i18nKey: 'nav.table', icon: 'Edit', category: '协同', parent: '/collaborative' },
+    '/tasks': { title: '任务管理', i18nKey: 'nav.tasks', icon: 'List', category: '任务' },
+    '/tasks/create': { title: '创建任务', i18nKey: 'nav.createTask', icon: 'Plus', category: '任务', parent: '/tasks' },
+    '/tasks/:id': { title: '任务详情', i18nKey: 'nav.taskDetail', icon: 'Document', category: '任务', parent: '/tasks' }
   })
 
   // 计算属性
@@ -170,12 +170,12 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
     const routeInfo = getRouteInfo(currentPath)
 
     if (!routeInfo) {
-      return [{ title: '首页', path: '/dashboard' }]
+      return [{ title: 'nav.dashboard', path: '/dashboard', isI18nKey: true }]
     }
 
     // 添加首页
     if (currentPath !== '/dashboard') {
-      breadcrumbs.push({ title: '首页', path: '/dashboard', icon: 'House' })
+      breadcrumbs.push({ title: 'nav.dashboard', path: '/dashboard', icon: 'House', isI18nKey: true })
     }
 
     // 构建面包屑路径
@@ -190,10 +190,11 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
 
       // 添加当前路径
       breadcrumbs.push({
-        title: info.title,
+        title: info.i18nKey || info.title,
         path: path,
         icon: info.icon,
-        category: info.category
+        category: info.category,
+        isI18nKey: !!info.i18nKey
       })
     }
 

@@ -2,11 +2,11 @@
   <div class="leave-applications-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2 class="page-title">请假申请</h2>
+      <h2 class="page-title">{{ $t('nav.leaveApplications') }}</h2>
       <div class="header-actions">
         <el-button type="primary" @click="exportApplications">
           <el-icon><Download /></el-icon>
-          导出申请
+          {{ $t('leaveApplications.exportApplications') }}
         </el-button>
       </div>
     </div>
@@ -14,41 +14,41 @@
     <!-- 搜索和筛选 -->
     <el-card class="search-card">
       <el-form :model="searchForm" inline>
-        <el-form-item label="申请人:">
-          <el-input v-model="searchForm.applicantName" placeholder="请输入申请人姓名" clearable />
+        <el-form-item :label="$t('leaveApplications.applicant') + ':'">
+          <el-input v-model="searchForm.applicantName" :placeholder="$t('leaveApplications.enterApplicantName')" clearable />
         </el-form-item>
-        <el-form-item label="请假类型:">
-          <el-select v-model="searchForm.leaveType" placeholder="请选择请假类型" clearable>
-            <el-option label="病假" value="sick" />
-            <el-option label="事假" value="personal" />
-            <el-option label="年假" value="annual" />
-            <el-option label="婚假" value="marriage" />
-            <el-option label="产假" value="maternity" />
-            <el-option label="丧假" value="bereavement" />
+        <el-form-item :label="$t('leaveApplications.leaveType') + ':'">
+          <el-select v-model="searchForm.leaveType" :placeholder="$t('leaveApplications.selectLeaveType')" clearable>
+            <el-option :label="$t('leaveApplications.sickLeave')" value="sick" />
+            <el-option :label="$t('leaveApplications.personalLeave')" value="personal" />
+            <el-option :label="$t('leaveApplications.annualLeave')" value="annual" />
+            <el-option :label="$t('leaveApplications.marriageLeave')" value="marriage" />
+            <el-option :label="$t('leaveApplications.maternityLeave')" value="maternity" />
+            <el-option :label="$t('leaveApplications.bereavementLeave')" value="bereavement" />
           </el-select>
         </el-form-item>
-        <el-form-item label="申请状态:">
-          <el-select v-model="searchForm.status" placeholder="请选择状态" clearable>
-            <el-option label="待审批" value="pending" />
-            <el-option label="已通过" value="approved" />
-            <el-option label="已拒绝" value="rejected" />
-            <el-option label="已撤销" value="cancelled" />
+        <el-form-item :label="$t('leaveApplications.applicationStatus') + ':'">
+          <el-select v-model="searchForm.status" :placeholder="$t('leaveApplications.selectStatus')" clearable>
+            <el-option :label="$t('leaveApplications.pending')" value="pending" />
+            <el-option :label="$t('leaveApplications.approved')" value="approved" />
+            <el-option :label="$t('leaveApplications.rejected')" value="rejected" />
+            <el-option :label="$t('leaveApplications.cancelled')" value="cancelled" />
           </el-select>
         </el-form-item>
-        <el-form-item label="申请日期:">
+        <el-form-item :label="$t('leaveApplications.applicationDate') + ':'">
           <el-date-picker
             v-model="searchForm.dateRange"
             type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            :range-separator="$t('common.to')"
+            :start-placeholder="$t('leaveApplications.startDate')"
+            :end-placeholder="$t('leaveApplications.endDate')"
             format="YYYY-MM-DD"
             value-format="YYYY-MM-DD"
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="loadApplications">搜索</el-button>
-          <el-button @click="resetSearch">重置</el-button>
+          <el-button type="primary" @click="loadApplications">{{ $t('common.search') }}</el-button>
+          <el-button @click="resetSearch">{{ $t('common.reset') }}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -56,39 +56,39 @@
     <!-- 申请列表 -->
     <el-card class="table-card">
       <el-table :data="applications" v-loading="loading" stripe>
-        <el-table-column prop="id" label="申请ID" width="80" />
-        <el-table-column prop="applicantName" label="申请人" width="100" />
-        <el-table-column prop="employeeCode" label="工号" width="100" />
-        <el-table-column prop="departmentName" label="部门" width="120" />
-        <el-table-column label="请假类型" width="100">
+        <el-table-column prop="id" :label="$t('leaveApplications.applicationId')" width="80" />
+        <el-table-column prop="applicantName" :label="$t('leaveApplications.applicant')" width="100" />
+        <el-table-column prop="employeeCode" :label="$t('leaveApplications.employeeCode')" width="100" />
+        <el-table-column prop="departmentName" :label="$t('leaveApplications.department')" width="120" />
+        <el-table-column :label="$t('leaveApplications.leaveType')" width="100">
           <template #default="{ row }">
             <el-tag :type="getLeaveTypeColor(row.leaveType)">
               {{ getLeaveTypeText(row.leaveType) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="startDate" label="开始日期" width="120" />
-        <el-table-column prop="endDate" label="结束日期" width="120" />
-        <el-table-column prop="days" label="请假天数" width="100" align="center" />
-        <el-table-column label="状态" width="100">
+        <el-table-column prop="startDate" :label="$t('leaveApplications.startDate')" width="120" />
+        <el-table-column prop="endDate" :label="$t('leaveApplications.endDate')" width="120" />
+        <el-table-column prop="days" :label="$t('leaveApplications.leaveDays')" width="100" align="center" />
+        <el-table-column :label="$t('leaveApplications.status')" width="100">
           <template #default="{ row }">
             <el-tag :type="getStatusColor(row.status)">
               {{ getStatusText(row.status) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="applyTime" label="申请时间" width="180" />
-        <el-table-column prop="reason" label="请假原因" min-width="150" show-overflow-tooltip />
-        <el-table-column label="操作" width="250" fixed="right">
+        <el-table-column prop="applyTime" :label="$t('leaveApplications.applicationTime')" width="180" />
+        <el-table-column prop="reason" :label="$t('leaveApplications.reason')" min-width="150" show-overflow-tooltip />
+        <el-table-column :label="$t('common.actions')" width="250" fixed="right">
           <template #default="{ row }">
-            <el-button link type="primary" @click="viewApplication(row)">查看详情</el-button>
-            <el-button 
-              link 
-              type="info" 
+            <el-button link type="primary" @click="viewApplication(row)">{{ $t('leaveApplications.viewDetails') }}</el-button>
+            <el-button
+              link
+              type="info"
               v-if="row.workflowInstanceId"
               @click="viewWorkflowProgress(row)"
             >
-              流程进度
+              {{ $t('leaveApplications.workflowProgress') }}
             </el-button>
             <el-button 
               link 
@@ -228,10 +228,13 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Download, Document } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getInstanceHistory, withdrawInstance } from '@/api/workflow'
 import { useUserStore } from '@/stores/user'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

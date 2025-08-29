@@ -1,33 +1,33 @@
 <template>
   <div class="reports-attendance-container">
     <div class="page-header">
-      <h2 class="page-title">考勤报表</h2>
+      <h2 class="page-title">{{ $t('reportsAttendance.attendanceReport') }}</h2>
       <el-button type="primary" @click="generateReport">
         <el-icon><Document /></el-icon>
-        生成报表
+        {{ $t('reportsAttendance.generateReport') }}
       </el-button>
     </div>
 
     <el-card class="filter-card">
       <el-form :model="filterForm" inline>
-        <el-form-item label="报表类型:">
+        <el-form-item :label="$t('reportsAttendance.reportType') + ':'">
           <el-select v-model="filterForm.reportType">
-            <el-option label="月度报表" value="monthly" />
-            <el-option label="季度报表" value="quarterly" />
-            <el-option label="年度报表" value="yearly" />
+            <el-option :label="$t('reportsAttendance.monthlyReport')" value="monthly" />
+            <el-option :label="$t('reportsAttendance.quarterlyReport')" value="quarterly" />
+            <el-option :label="$t('reportsAttendance.yearlyReport')" value="yearly" />
           </el-select>
         </el-form-item>
-        <el-form-item label="统计范围:">
+        <el-form-item :label="$t('reportsAttendance.statisticsRange') + ':'">
           <el-date-picker
             v-model="filterForm.dateRange"
             type="monthrange"
-            range-separator="至"
-            start-placeholder="开始月份"
-            end-placeholder="结束月份"
+            :range-separator="$t('common.to')"
+            :start-placeholder="$t('reportsAttendance.startMonth')"
+            :end-placeholder="$t('reportsAttendance.endMonth')"
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="loadReport">查询报表</el-button>
+          <el-button type="primary" @click="loadReport">{{ $t('reportsAttendance.queryReport') }}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -36,7 +36,7 @@
       <div class="chart-container">
         <div class="chart-placeholder">
           <el-icon size="64" color="#c0c4cc"><TrendCharts /></el-icon>
-          <p>考勤趋势图表展示区域</p>
+          <p>{{ $t('reportsAttendance.chartPlaceholder') }}</p>
         </div>
       </div>
     </el-card>
@@ -45,8 +45,11 @@
 
 <script setup>
 import { reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Document, TrendCharts } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+
+const { t: $t } = useI18n()
 
 const filterForm = reactive({
   reportType: 'monthly',
@@ -54,11 +57,11 @@ const filterForm = reactive({
 })
 
 const loadReport = () => {
-  ElMessage.success('报表加载功能开发中...')
+  ElMessage.success($t('reportsAttendance.reportLoadingInProgress'))
 }
 
 const generateReport = () => {
-  ElMessage.success('报表生成功能开发中...')
+  ElMessage.success($t('reportsAttendance.reportGenerationInProgress'))
 }
 </script>
 

@@ -1,10 +1,10 @@
 <template>
   <div class="leave-statistics-container">
     <div class="page-header">
-      <h2 class="page-title">请假统计</h2>
+      <h2 class="page-title">{{ $t('nav.leaveStatistics') }}</h2>
       <el-button type="primary" @click="exportData">
         <el-icon><Download /></el-icon>
-        导出统计
+        {{ $t('leaveStatistics.exportStatistics') }}
       </el-button>
     </div>
 
@@ -30,31 +30,31 @@
     <!-- 统计表格 -->
     <el-card class="table-card">
       <div class="table-header">
-        <h3>请假统计明细</h3>
+        <h3>{{ $t('leaveStatistics.statisticsDetails') }}</h3>
         <el-form :model="filterForm" inline>
-          <el-form-item label="统计周期:">
+          <el-form-item :label="$t('leaveStatistics.statisticsPeriod') + ':'">
             <el-date-picker
               v-model="filterForm.dateRange"
               type="monthrange"
-              range-separator="至"
-              start-placeholder="开始月份"
-              end-placeholder="结束月份"
+              :range-separator="$t('common.to')"
+              :start-placeholder="$t('leaveStatistics.startMonth')"
+              :end-placeholder="$t('leaveStatistics.endMonth')"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="loadStatistics">查询</el-button>
+            <el-button type="primary" @click="loadStatistics">{{ $t('common.search') }}</el-button>
           </el-form-item>
         </el-form>
       </div>
 
       <el-table :data="statistics" v-loading="loading" stripe>
-        <el-table-column prop="employeeName" label="员工姓名" width="120" />
-        <el-table-column prop="departmentName" label="部门" width="120" />
-        <el-table-column prop="sickLeave" label="病假(天)" width="100" align="center" />
-        <el-table-column prop="personalLeave" label="事假(天)" width="100" align="center" />
-        <el-table-column prop="annualLeave" label="年假(天)" width="100" align="center" />
-        <el-table-column prop="totalLeave" label="总请假(天)" width="120" align="center" />
-        <el-table-column prop="leaveRate" label="请假率" width="100" align="center">
+        <el-table-column prop="employeeName" :label="$t('leaveStatistics.employeeName')" width="120" />
+        <el-table-column prop="departmentName" :label="$t('leaveStatistics.department')" width="120" />
+        <el-table-column prop="sickLeave" :label="$t('leaveStatistics.sickLeaveDays')" width="100" align="center" />
+        <el-table-column prop="personalLeave" :label="$t('leaveStatistics.personalLeaveDays')" width="100" align="center" />
+        <el-table-column prop="annualLeave" :label="$t('leaveStatistics.annualLeaveDays')" width="100" align="center" />
+        <el-table-column prop="totalLeave" :label="$t('leaveStatistics.totalLeaveDays')" width="120" align="center" />
+        <el-table-column prop="leaveRate" :label="$t('leaveStatistics.leaveRate')" width="100" align="center">
           <template #default="{ row }">
             <span :class="{ 
               'high-rate': row.leaveRate > 10, 
@@ -64,9 +64,9 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="120">
+        <el-table-column :label="$t('common.actions')" width="120">
           <template #default="{ row }">
-            <el-button link type="primary" @click="viewDetails(row)">查看详情</el-button>
+            <el-button link type="primary" @click="viewDetails(row)">{{ $t('leaveStatistics.viewDetails') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -75,18 +75,21 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Download, User, Clock, DocumentRemove, TrendCharts } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+
+const { t: $t } = useI18n()
 
 const loading = ref(false)
 const statistics = ref([])
 
-const statsData = reactive([
-  { type: 'primary', icon: 'User', value: 156, label: '总员工数' },
-  { type: 'warning', icon: 'Clock', value: 89, label: '本月请假人数' },
-  { type: 'success', icon: 'DocumentRemove', value: 234, label: '总请假天数' },
-  { type: 'info', icon: 'TrendCharts', value: '8.5%', label: '平均请假率' }
+const statsData = computed(() => [
+  { type: 'primary', icon: 'User', value: 156, label: $t('leaveStatistics.totalEmployees') },
+  { type: 'warning', icon: 'Clock', value: 89, label: $t('leaveStatistics.monthlyLeaveCount') },
+  { type: 'success', icon: 'DocumentRemove', value: 234, label: $t('leaveStatistics.totalLeaveDays') },
+  { type: 'info', icon: 'TrendCharts', value: '8.5%', label: $t('leaveStatistics.averageLeaveRate') }
 ])
 
 const filterForm = reactive({

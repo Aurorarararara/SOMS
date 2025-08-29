@@ -1,24 +1,27 @@
 <template>
   <div class="reports-leave-container">
     <div class="page-header">
-      <h2 class="page-title">请假报表</h2>
+      <h2 class="page-title">{{ $t('reportsLeave.leaveReport') }}</h2>
       <el-button type="primary">
         <el-icon><Document /></el-icon>
-        导出报表
+        {{ $t('reportsLeave.exportReport') }}
       </el-button>
     </div>
 
     <el-card>
       <div class="chart-placeholder">
         <el-icon size="64" color="#c0c4cc"><PieChart /></el-icon>
-        <p>请假统计图表展示区域</p>
+        <p>{{ $t('reportsLeave.chartPlaceholder') }}</p>
       </div>
     </el-card>
   </div>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { Document, PieChart } from '@element-plus/icons-vue'
+
+const { t: $t } = useI18n()
 </script>
 
 <style scoped>

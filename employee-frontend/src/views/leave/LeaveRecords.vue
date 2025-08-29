@@ -4,14 +4,14 @@
       <div class="header-content">
         <h1 class="page-title">
           <el-icon class="title-icon"><Calendar /></el-icon>
-          请假记录
+          {{ $t('nav.leaveRecords') }}
         </h1>
-        <p class="page-subtitle">查看个人请假申请历史记录</p>
+        <p class="page-subtitle">{{ $t('leaveRecords.subtitle') }}</p>
       </div>
       <div class="header-actions">
         <el-button type="primary" @click="$router.push('/leave')">
           <el-icon><Plus /></el-icon>
-          新建请假
+          {{ $t('leaveRecords.newLeave') }}
         </el-button>
       </div>
     </div>
@@ -21,47 +21,47 @@
       <el-card class="filter-card">
         <div class="filter-form">
           <el-form :model="filterForm" :inline="true" size="default">
-            <el-form-item label="申请时间">
+            <el-form-item :label="$t('leaveRecords.applicationTime')">
               <el-date-picker
                 v-model="filterForm.dateRange"
                 type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('common.to')"
+                :start-placeholder="$t('leaveRecords.startDate')"
+                :end-placeholder="$t('leaveRecords.endDate')"
                 format="YYYY-MM-DD"
                 value-format="YYYY-MM-DD"
                 style="width: 280px"
                 @change="loadRecords"
               />
             </el-form-item>
-            <el-form-item label="请假类型">
-              <el-select v-model="filterForm.type" placeholder="选择类型" style="width: 140px" @change="loadRecords">
-                <el-option label="全部" value="" />
-                <el-option label="病假" value="sick" />
-                <el-option label="事假" value="personal" />
-                <el-option label="年假" value="annual" />
-                <el-option label="调休" value="compensatory" />
-                <el-option label="婚假" value="marriage" />
-                <el-option label="产假" value="maternity" />
+            <el-form-item :label="$t('leaveRecords.leaveType')">
+              <el-select v-model="filterForm.type" :placeholder="$t('leaveRecords.selectType')" style="width: 140px" @change="loadRecords">
+                <el-option :label="$t('common.all')" value="" />
+                <el-option :label="$t('leaveRecords.sickLeave')" value="sick" />
+                <el-option :label="$t('leaveRecords.personalLeave')" value="personal" />
+                <el-option :label="$t('leaveRecords.annualLeave')" value="annual" />
+                <el-option :label="$t('leaveRecords.compensatoryLeave')" value="compensatory" />
+                <el-option :label="$t('leaveRecords.marriageLeave')" value="marriage" />
+                <el-option :label="$t('leaveRecords.maternityLeave')" value="maternity" />
               </el-select>
             </el-form-item>
-            <el-form-item label="审批状态">
-              <el-select v-model="filterForm.status" placeholder="选择状态" style="width: 140px" @change="loadRecords">
-                <el-option label="全部" value="" />
-                <el-option label="待审批" value="pending" />
-                <el-option label="已通过" value="approved" />
-                <el-option label="已拒绝" value="rejected" />
-                <el-option label="已撤回" value="cancelled" />
+            <el-form-item :label="$t('leaveRecords.approvalStatus')">
+              <el-select v-model="filterForm.status" :placeholder="$t('leaveRecords.selectStatus')" style="width: 140px" @change="loadRecords">
+                <el-option :label="$t('common.all')" value="" />
+                <el-option :label="$t('leaveRecords.pending')" value="pending" />
+                <el-option :label="$t('leaveRecords.approved')" value="approved" />
+                <el-option :label="$t('leaveRecords.rejected')" value="rejected" />
+                <el-option :label="$t('leaveRecords.cancelled')" value="cancelled" />
               </el-select>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="loadRecords">
                 <el-icon><Search /></el-icon>
-                查询
+                {{ $t('common.search') }}
               </el-button>
               <el-button @click="resetFilter">
                 <el-icon><Refresh /></el-icon>
-                重置
+                {{ $t('common.reset') }}
               </el-button>
             </el-form-item>
           </el-form>
@@ -73,7 +73,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-number">{{ statistics.totalDays }}</div>
-            <div class="stat-label">累计请假天数</div>
+            <div class="stat-label">{{ $t('leaveRecords.totalLeaveDays') }}</div>
           </div>
           <div class="stat-icon total">
             <el-icon><Calendar /></el-icon>
@@ -82,7 +82,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-number">{{ statistics.approvedCount }}</div>
-            <div class="stat-label">已通过申请</div>
+            <div class="stat-label">{{ $t('leaveRecords.approvedApplications') }}</div>
           </div>
           <div class="stat-icon approved">
             <el-icon><Check /></el-icon>
@@ -91,7 +91,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-number">{{ statistics.pendingCount }}</div>
-            <div class="stat-label">待审批申请</div>
+            <div class="stat-label">{{ $t('leaveRecords.pendingApplications') }}</div>
           </div>
           <div class="stat-icon pending">
             <el-icon><Clock /></el-icon>
@@ -100,7 +100,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-number">{{ statistics.remainingDays }}</div>
-            <div class="stat-label">剩余年假天数</div>
+            <div class="stat-label">{{ $t('leaveRecords.remainingAnnualLeave') }}</div>
           </div>
           <div class="stat-icon remaining">
             <el-icon><Sunny /></el-icon>
@@ -112,8 +112,8 @@
       <el-card class="table-card">
         <template #header>
           <div class="card-header">
-            <span class="card-title">请假记录</span>
-            <span class="record-count">共 {{ total }} 条记录</span>
+            <span class="card-title">{{ $t('leaveRecords.leaveRecords') }}</span>
+            <span class="record-count">{{ $t('leaveRecords.totalRecords', { count: total }) }}</span>
           </div>
         </template>
 
@@ -123,50 +123,50 @@
           style="width: 100%"
           :header-cell-style="{ background: '#f8f9fa', color: '#495057' }"
         >
-          <el-table-column prop="type" label="请假类型" width="100">
+          <el-table-column prop="type" :label="$t('leaveRecords.leaveType')" width="100">
             <template #default="scope">
               <el-tag :type="getTypeTagType(scope.row.type)" size="small">
                 {{ getTypeText(scope.row.type) }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="startDate" label="开始日期" width="120" sortable />
-          <el-table-column prop="endDate" label="结束日期" width="120" sortable />
-          <el-table-column prop="days" label="请假天数" width="100" align="center">
+          <el-table-column prop="startDate" :label="$t('leaveRecords.startDate')" width="120" sortable />
+          <el-table-column prop="endDate" :label="$t('leaveRecords.endDate')" width="120" sortable />
+          <el-table-column prop="days" :label="$t('leaveRecords.leaveDays')" width="100" align="center">
             <template #default="scope">
-              <span class="days-text">{{ scope.row.days }}天</span>
+              <span class="days-text">{{ scope.row.days }}{{ $t('leaveRecords.days') }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="reason" label="请假原因" min-width="200">
+          <el-table-column prop="reason" :label="$t('leaveRecords.leaveReason')" min-width="200">
             <template #default="scope">
               <div class="reason-text">{{ scope.row.reason }}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="status" label="审批状态" width="100">
+          <el-table-column prop="status" :label="$t('leaveRecords.approvalStatus')" width="100">
             <template #default="scope">
               <el-tag :type="getStatusTagType(scope.row.status)" size="small">
                 {{ getStatusText(scope.row.status) }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="approver" label="审批人" width="120">
+          <el-table-column prop="approver" :label="$t('leaveRecords.approver')" width="120">
             <template #default="scope">
               <span v-if="scope.row.approver">{{ scope.row.approver }}</span>
               <span v-else class="no-data">-</span>
             </template>
           </el-table-column>
-          <el-table-column prop="approveTime" label="审批时间" width="120">
+          <el-table-column prop="approveTime" :label="$t('leaveRecords.approveTime')" width="120">
             <template #default="scope">
               <span v-if="scope.row.approveTime">{{ formatDate(scope.row.approveTime) }}</span>
               <span v-else class="no-data">-</span>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" label="申请时间" width="120" sortable>
+          <el-table-column prop="createTime" :label="$t('leaveRecords.applicationTime')" width="120" sortable>
             <template #default="scope">
               {{ formatDate(scope.row.createTime) }}
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="120" fixed="right">
+          <el-table-column :label="$t('common.actions')" width="120" fixed="right">
             <template #default="scope">
               <el-button 
                 type="primary" 
@@ -174,16 +174,16 @@
                 @click="viewDetail(scope.row)"
                 link
               >
-                查看
+                {{ $t('common.view') }}
               </el-button>
-              <el-button 
+              <el-button
                 v-if="scope.row.status === 'pending'"
-                type="danger" 
-                size="small" 
+                type="danger"
+                size="small"
                 @click="cancelApplication(scope.row)"
                 link
               >
-                撤回
+                {{ $t('leaveRecords.withdraw') }}
               </el-button>
             </template>
           </el-table-column>
@@ -207,50 +207,50 @@
     <!-- 详情对话框 -->
     <el-dialog
       v-model="detailVisible"
-      title="请假申请详情"
+      :title="$t('leaveRecords.leaveApplicationDetails')"
       width="600px"
       :close-on-click-modal="false"
     >
       <div v-if="currentRecord" class="detail-content">
         <div class="detail-row">
-          <span class="detail-label">请假类型：</span>
+          <span class="detail-label">{{ $t('leaveRecords.leaveType') }}：</span>
           <el-tag :type="getTypeTagType(currentRecord.type)">
             {{ getTypeText(currentRecord.type) }}
           </el-tag>
         </div>
         <div class="detail-row">
-          <span class="detail-label">请假时间：</span>
-          <span>{{ currentRecord.startDate }} 至 {{ currentRecord.endDate }} ({{ currentRecord.days }}天)</span>
+          <span class="detail-label">{{ $t('leaveRecords.leaveTime') }}：</span>
+          <span>{{ currentRecord.startDate }} {{ $t('common.to') }} {{ currentRecord.endDate }} ({{ currentRecord.days }}{{ $t('leaveRecords.days') }})</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">请假原因：</span>
+          <span class="detail-label">{{ $t('leaveRecords.leaveReason') }}：</span>
           <div class="reason-detail">{{ currentRecord.reason }}</div>
         </div>
         <div class="detail-row">
-          <span class="detail-label">申请时间：</span>
+          <span class="detail-label">{{ $t('leaveRecords.applicationTime') }}：</span>
           <span>{{ formatDateTime(currentRecord.createTime) }}</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">审批状态：</span>
+          <span class="detail-label">{{ $t('leaveRecords.approvalStatus') }}：</span>
           <el-tag :type="getStatusTagType(currentRecord.status)">
             {{ getStatusText(currentRecord.status) }}
           </el-tag>
         </div>
         <div v-if="currentRecord.approver" class="detail-row">
-          <span class="detail-label">审批人：</span>
+          <span class="detail-label">{{ $t('leaveRecords.approver') }}：</span>
           <span>{{ currentRecord.approver }}</span>
         </div>
         <div v-if="currentRecord.approveTime" class="detail-row">
-          <span class="detail-label">审批时间：</span>
+          <span class="detail-label">{{ $t('leaveRecords.approveTime') }}：</span>
           <span>{{ formatDateTime(currentRecord.approveTime) }}</span>
         </div>
         <div v-if="currentRecord.approveRemark" class="detail-row">
-          <span class="detail-label">审批意见：</span>
+          <span class="detail-label">{{ $t('leaveRecords.approvalComment') }}：</span>
           <div class="remark-detail">{{ currentRecord.approveRemark }}</div>
         </div>
       </div>
       <template #footer>
-        <el-button @click="detailVisible = false">关闭</el-button>
+        <el-button @click="detailVisible = false">{{ $t('common.close') }}</el-button>
       </template>
     </el-dialog>
   </div>
@@ -259,6 +259,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   Calendar, Plus, Search, Refresh, Check, Clock, Sunny
@@ -266,6 +267,7 @@ import {
 import { leaveApi } from '@/api/leave'
 
 const router = useRouter()
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)
@@ -327,7 +329,7 @@ const loadRecords = async () => {
     
   } catch (error) {
     console.error('加载请假记录失败:', error)
-    ElMessage.error('加载请假记录失败')
+    ElMessage.error($t('leaveRecords.loadRecordsFailed'))
   } finally {
     loading.value = false
   }
@@ -390,9 +392,9 @@ const viewDetail = (record) => {
 
 const cancelApplication = async (record) => {
   try {
-    await ElMessageBox.confirm('确定要撤回这个请假申请吗？', '确认撤回', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
+    await ElMessageBox.confirm($t('leaveRecords.confirmWithdraw'), $t('leaveRecords.confirmWithdrawTitle'), {
+      confirmButtonText: $t('common.confirm'),
+      cancelButtonText: $t('common.cancel'),
       type: 'warning'
     })
     
@@ -400,12 +402,12 @@ const cancelApplication = async (record) => {
     await new Promise(resolve => setTimeout(resolve, 500))
     
     record.status = 'cancelled'
-    ElMessage.success('撤回成功')
+    ElMessage.success($t('leaveRecords.withdrawSuccess'))
     loadRecords()
-    
+
   } catch (error) {
     if (error !== 'cancel') {
-      ElMessage.error('撤回失败')
+      ElMessage.error($t('leaveRecords.withdrawFailed'))
     }
   }
 }
@@ -424,14 +426,14 @@ const getTypeTagType = (type) => {
 
 const getTypeText = (type) => {
   const textMap = {
-    sick: '病假',
-    personal: '事假',
-    annual: '年假',
-    compensatory: '调休',
-    marriage: '婚假',
-    maternity: '产假'
+    sick: $t('leaveRecords.sickLeave'),
+    personal: $t('leaveRecords.personalLeave'),
+    annual: $t('leaveRecords.annualLeave'),
+    compensatory: $t('leaveRecords.compensatoryLeave'),
+    marriage: $t('leaveRecords.marriageLeave'),
+    maternity: $t('leaveRecords.maternityLeave')
   }
-  return textMap[type] || '其他'
+  return textMap[type] || $t('leaveRecords.other')
 }
 
 const getStatusTagType = (status) => {
@@ -446,12 +448,12 @@ const getStatusTagType = (status) => {
 
 const getStatusText = (status) => {
   const textMap = {
-    pending: '待审批',
-    approved: '已通过',
-    rejected: '已拒绝',
-    cancelled: '已撤回'
+    pending: $t('leaveRecords.pending'),
+    approved: $t('leaveRecords.approved'),
+    rejected: $t('leaveRecords.rejected'),
+    cancelled: $t('leaveRecords.cancelled')
   }
-  return textMap[status] || '未知'
+  return textMap[status] || $t('leaveRecords.unknown')
 }
 
 const formatDate = (dateStr) => {

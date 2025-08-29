@@ -1,38 +1,38 @@
 <template>
   <div class="system-config-container">
     <div class="page-header">
-      <h2 class="page-title">系统配置</h2>
+      <h2 class="page-title">{{ $t('nav.systemConfig') }}</h2>
       <el-button type="primary" @click="saveConfig">
         <el-icon><Check /></el-icon>
-        保存配置
+        {{ $t('systemConfig.saveConfig') }}
       </el-button>
     </div>
 
     <el-card>
       <el-tabs v-model="activeTab">
-        <el-tab-pane label="基本设置" name="basic">
+        <el-tab-pane :label="$t('systemConfig.basicSettings')" name="basic">
           <el-form :model="configForm" label-width="150px">
-            <el-form-item label="系统名称:">
+            <el-form-item :label="$t('systemConfig.systemName') + ':'">
               <el-input v-model="configForm.systemName" />
             </el-form-item>
-            <el-form-item label="系统版本:">
+            <el-form-item :label="$t('systemConfig.systemVersion') + ':'">
               <el-input v-model="configForm.systemVersion" />
             </el-form-item>
-            <el-form-item label="管理员邮箱:">
+            <el-form-item :label="$t('systemConfig.adminEmail') + ':'">
               <el-input v-model="configForm.adminEmail" />
             </el-form-item>
           </el-form>
         </el-tab-pane>
         
-        <el-tab-pane label="考勤设置" name="attendance">
+        <el-tab-pane :label="$t('systemConfig.attendanceSettings')" name="attendance">
           <el-form :model="configForm" label-width="150px">
-            <el-form-item label="标准工作时间:">
+            <el-form-item :label="$t('systemConfig.standardWorkHours') + ':'">
               <el-input-number v-model="configForm.workHours" :min="1" :max="12" />
-              <span style="margin-left: 8px;">小时/天</span>
+              <span style="margin-left: 8px;">{{ $t('systemConfig.hoursPerDay') }}</span>
             </el-form-item>
-            <el-form-item label="迟到阈值:">
+            <el-form-item :label="$t('systemConfig.lateThreshold') + ':'">
               <el-input-number v-model="configForm.lateThreshold" :min="1" :max="60" />
-              <span style="margin-left: 8px;">分钟</span>
+              <span style="margin-left: 8px;">{{ $t('systemConfig.minutes') }}</span>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -43,8 +43,11 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Check } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+
+const { t: $t } = useI18n()
 
 const activeTab = ref('basic')
 

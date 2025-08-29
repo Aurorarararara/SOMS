@@ -113,13 +113,13 @@
         <div class="header-right">
           <!-- 快捷操作 -->
           <div class="header-actions">
-            <el-tooltip content="刷新页面" placement="bottom">
+            <el-tooltip :content="$t('layout.refreshPage')" placement="bottom">
               <el-button text @click="refreshPage">
                 <el-icon size="18"><Refresh /></el-icon>
               </el-button>
             </el-tooltip>
             
-            <el-tooltip content="全屏显示" placement="bottom">
+            <el-tooltip :content="$t('layout.toggleFullscreen')" placement="bottom">
               <el-button text @click="toggleFullscreen">
                 <el-icon size="18"><FullScreen /></el-icon>
               </el-button>

@@ -1,25 +1,25 @@
 <template>
   <div class="system-backup-container">
     <div class="page-header">
-      <h2 class="page-title">数据备份</h2>
+      <h2 class="page-title">{{ $t('nav.systemBackup') }}</h2>
       <el-button type="primary" @click="createBackup">
         <el-icon><FolderAdd /></el-icon>
-        创建备份
+        {{ $t('systemBackup.createBackup') }}
       </el-button>
     </div>
 
     <el-card>
       <el-table :data="backups" v-loading="loading" stripe>
-        <el-table-column prop="id" label="备份ID" width="80" />
-        <el-table-column prop="name" label="备份名称" width="200" />
-        <el-table-column prop="size" label="文件大小" width="120" />
-        <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column prop="description" label="备份描述" min-width="200" />
-        <el-table-column label="操作" width="180">
+        <el-table-column prop="id" :label="$t('systemBackup.backupId')" width="80" />
+        <el-table-column prop="name" :label="$t('systemBackup.backupName')" width="200" />
+        <el-table-column prop="size" :label="$t('systemBackup.fileSize')" width="120" />
+        <el-table-column prop="createTime" :label="$t('systemBackup.createTime')" width="180" />
+        <el-table-column prop="description" :label="$t('systemBackup.backupDescription')" min-width="200" />
+        <el-table-column :label="$t('common.actions')" width="180">
           <template #default="{ row }">
-            <el-button link type="primary" @click="downloadBackup(row)">下载</el-button>
-            <el-button link type="success" @click="restoreBackup(row)">还原</el-button>
-            <el-button link type="danger" @click="deleteBackup(row)">删除</el-button>
+            <el-button link type="primary" @click="downloadBackup(row)">{{ $t('systemBackup.download') }}</el-button>
+            <el-button link type="success" @click="restoreBackup(row)">{{ $t('systemBackup.restore') }}</el-button>
+            <el-button link type="danger" @click="deleteBackup(row)">{{ $t('common.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -29,8 +29,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { FolderAdd } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+
+const { t: $t } = useI18n()
 
 const loading = ref(false)
 const backups = ref([])

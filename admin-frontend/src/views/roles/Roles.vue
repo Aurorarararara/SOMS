@@ -2,34 +2,34 @@
   <div class="roles-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2 class="page-title">角色管理</h2>
+      <h2 class="page-title">{{ $t('nav.roles') }}</h2>
       <el-button type="primary" @click="showAddDialog = true">
         <el-icon><Plus /></el-icon>
-        新增角色
+        {{ $t('roles.addRole') }}
       </el-button>
     </div>
 
     <!-- 角色列表 -->
     <el-card class="table-card">
       <el-table :data="roles" v-loading="loading" stripe>
-        <el-table-column prop="id" label="角色ID" width="80" />
-        <el-table-column prop="name" label="角色名称" width="150" />
-        <el-table-column prop="code" label="角色编码" width="150" />
-        <el-table-column prop="description" label="角色描述" min-width="300" />
-        <el-table-column label="状态" width="80">
+        <el-table-column prop="id" :label="$t('roles.roleId')" width="80" />
+        <el-table-column prop="name" :label="$t('roles.roleName')" width="150" />
+        <el-table-column prop="code" :label="$t('roles.roleCode')" width="150" />
+        <el-table-column prop="description" :label="$t('roles.description')" min-width="300" />
+        <el-table-column :label="$t('roles.status')" width="80">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">
-              {{ row.status === 1 ? '启用' : '禁用' }}
+              {{ row.status === 1 ? $t('roles.enabled') : $t('roles.disabled') }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column label="操作" width="250" fixed="right">
+        <el-table-column prop="createTime" :label="$t('roles.createTime')" width="180" />
+        <el-table-column :label="$t('common.actions')" width="250" fixed="right">
           <template #default="{ row }">
-            <el-button link type="primary" @click="viewRole(row)">查看</el-button>
-            <el-button link type="primary" @click="editRole(row)">编辑</el-button>
-            <el-button link type="warning" @click="setPermissions(row)">权限</el-button>
-            <el-button link type="danger" @click="deleteRole(row)">删除</el-button>
+            <el-button link type="primary" @click="viewRole(row)">{{ $t('common.view') }}</el-button>
+            <el-button link type="primary" @click="editRole(row)">{{ $t('common.edit') }}</el-button>
+            <el-button link type="warning" @click="setPermissions(row)">{{ $t('roles.permissions') }}</el-button>
+            <el-button link type="danger" @click="deleteRole(row)">{{ $t('common.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -38,16 +38,16 @@
     <!-- 新增/编辑角色对话框 -->
     <el-dialog 
       v-model="showAddDialog" 
-      :title="isEdit ? '编辑角色' : '新增角色'" 
+      :title="isEdit ? $t('roles.editRole') : $t('roles.addRole')"
       width="500px"
       @close="resetForm"
     >
       <el-form :model="roleForm" :rules="formRules" ref="formRef" label-width="100px">
-        <el-form-item label="角色名称" prop="name">
-          <el-input v-model="roleForm.name" placeholder="请输入角色名称" />
+        <el-form-item :label="$t('roles.roleName')" prop="name">
+          <el-input v-model="roleForm.name" :placeholder="$t('roles.enterRoleName')" />
         </el-form-item>
-        <el-form-item label="角色编码" prop="code">
-          <el-input v-model="roleForm.code" placeholder="请输入角色编码" />
+        <el-form-item :label="$t('roles.roleCode')" prop="code">
+          <el-input v-model="roleForm.code" :placeholder="$t('roles.enterRoleCode')" />
         </el-form-item>
         <el-form-item label="角色描述" prop="description">
           <el-input 
@@ -132,9 +132,12 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { roleApi } from '@/api/role'
+
+const { t: $t } = useI18n()
 
 // 响应式数据
 const loading = ref(false)

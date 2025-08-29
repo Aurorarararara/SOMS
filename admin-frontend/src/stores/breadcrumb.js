@@ -9,43 +9,43 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
   
   // 路径映射配置 - 管理端
   const routeMap = ref({
-    '/admin': { title: '管理后台', icon: 'House', category: '首页' },
-    '/admin/dashboard': { title: '综合仪表盘', icon: 'DataBoard', category: '仪表盘' },
-    '/admin/employees': { title: '员工管理', icon: 'User', category: '用户管理' },
-    '/admin/departments': { title: '部门管理', icon: 'OfficeBuilding', category: '用户管理' },
-    '/admin/roles': { title: '角色管理', icon: 'UserFilled', category: '用户管理' },
-    '/admin/organization/chart': { title: '组织架构图', icon: 'OfficeBuilding', category: '用户管理' },
+    '/admin': { title: '管理后台', i18nKey: 'nav.adminBackend', icon: 'House', category: '首页' },
+    '/admin/dashboard': { title: '综合仪表盘', i18nKey: 'nav.dashboard', icon: 'DataBoard', category: '仪表盘' },
+    '/admin/employees': { title: '员工管理', i18nKey: 'nav.employees', icon: 'User', category: '用户管理' },
+    '/admin/departments': { title: '部门管理', i18nKey: 'nav.departments', icon: 'OfficeBuilding', category: '用户管理' },
+    '/admin/roles': { title: '角色管理', i18nKey: 'nav.roles', icon: 'UserFilled', category: '用户管理' },
+    '/admin/organization/chart': { title: '组织架构图', i18nKey: 'nav.organizationChart', icon: 'OfficeBuilding', category: '用户管理' },
     
     // 考勤管理
-    '/admin/attendance/records': { title: '考勤记录', icon: 'Clock', category: '考勤管理' },
-    '/admin/attendance/rules': { title: '考勤规则', icon: 'Setting', category: '考勤管理' },
-    '/admin/attendance/statistics': { title: '考勤统计', icon: 'DataAnalysis', category: '考勤管理' },
+    '/admin/attendance/records': { title: '考勤记录', i18nKey: 'nav.attendanceRecords', icon: 'Clock', category: '考勤管理' },
+    '/admin/attendance/rules': { title: '考勤规则', i18nKey: 'nav.attendanceRules', icon: 'Setting', category: '考勤管理' },
+    '/admin/attendance/statistics': { title: '考勤统计', i18nKey: 'nav.attendanceStatistics', icon: 'DataAnalysis', category: '考勤管理' },
     
     // 请假管理
-    '/admin/leave/applications': { title: '请假申请', icon: 'Calendar', category: '请假管理' },
-    '/admin/leave/approval': { title: '审批管理', icon: 'Select', category: '请假管理' },
-    '/admin/leave/statistics': { title: '请假统计', icon: 'DataAnalysis', category: '请假管理' },
+    '/admin/leave/applications': { title: '请假申请', i18nKey: 'nav.leaveApplications', icon: 'Calendar', category: '请假管理' },
+    '/admin/leave/approval': { title: '审批管理', i18nKey: 'nav.leaveApproval', icon: 'Select', category: '请假管理' },
+    '/admin/leave/statistics': { title: '请假统计', i18nKey: 'nav.leaveStatistics', icon: 'DataAnalysis', category: '请假管理' },
     
     // 公告管理
-    '/admin/announcements': { title: '公告管理', icon: 'Bell', category: '内容管理' },
-    
+    '/admin/announcements': { title: '公告管理', i18nKey: 'nav.announcements', icon: 'Bell', category: '内容管理' },
+
     // 审批流程
-    '/admin/workflow': { title: '审批流程管理', icon: 'Connection', category: '流程管理' },
+    '/admin/workflow': { title: '审批流程管理', i18nKey: 'nav.workflow', icon: 'Connection', category: '流程管理' },
     '/admin/workflow/my-tasks': { title: '我的待办任务', icon: 'List', category: '流程管理', parent: '/admin/workflow' },
     '/admin/workflow/my-initiated': { title: '我发起的流程', icon: 'Upload', category: '流程管理', parent: '/admin/workflow' },
     
     // 数据报表
-    '/admin/reports/attendance': { title: '考勤报表', icon: 'DataAnalysis', category: '数据报表' },
-    '/admin/reports/leave': { title: '请假报表', icon: 'DataAnalysis', category: '数据报表' },
-    '/admin/reports/performance': { title: '绩效报表', icon: 'TrendCharts', category: '数据报表' },
+    '/admin/reports/attendance': { title: '考勤报表', i18nKey: 'nav.attendanceReports', icon: 'DataAnalysis', category: '数据报表' },
+    '/admin/reports/leave': { title: '请假报表', i18nKey: 'nav.leaveReports', icon: 'DataAnalysis', category: '数据报表' },
+    '/admin/reports/performance': { title: '绩效报表', i18nKey: 'nav.performanceReports', icon: 'TrendCharts', category: '数据报表' },
     
     // 系统设置
-    '/admin/system/config': { title: '系统配置', icon: 'Setting', category: '系统设置' },
-    '/admin/system/logs': { title: '操作日志', icon: 'Document', category: '系统设置' },
-    '/admin/system/backup': { title: '数据备份', icon: 'FolderOpened', category: '系统设置' },
-    
+    '/admin/system/config': { title: '系统配置', i18nKey: 'nav.systemConfig', icon: 'Setting', category: '系统设置' },
+    '/admin/system/logs': { title: '操作日志', i18nKey: 'nav.operationLogs', icon: 'Document', category: '系统设置' },
+    '/admin/system/backup': { title: '数据备份', i18nKey: 'nav.dataBackup', icon: 'FolderOpened', category: '系统设置' },
+
     // 个人信息
-    '/admin/profile': { title: '个人信息', icon: 'User', category: '个人' }
+    '/admin/profile': { title: '个人信息', i18nKey: 'nav.profile', icon: 'User', category: '个人' }
   })
 
   // 计算属性
@@ -185,12 +185,12 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
     const routeInfo = getRouteInfo(currentPath)
 
     if (!routeInfo) {
-      return [{ title: '管理后台', path: '/admin/dashboard' }]
+      return [{ title: 'nav.adminBackend', path: '/admin/dashboard', isI18nKey: true }]
     }
 
     // 添加首页
     if (currentPath !== '/admin/dashboard') {
-      breadcrumbs.push({ title: '管理后台', path: '/admin/dashboard', icon: 'House' })
+      breadcrumbs.push({ title: 'nav.adminBackend', path: '/admin/dashboard', icon: 'House', isI18nKey: true })
     }
 
     // 构建面包屑路径
@@ -205,10 +205,11 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
 
       // 添加当前路径
       breadcrumbs.push({
-        title: info.title,
+        title: info.i18nKey || info.title,
         path: path,
         icon: info.icon,
-        category: info.category
+        category: info.category,
+        isI18nKey: !!info.i18nKey
       })
     }
 

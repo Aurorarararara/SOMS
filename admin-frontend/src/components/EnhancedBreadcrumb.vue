@@ -22,7 +22,7 @@
               <House v-else-if="item.icon === 'House'" />
               <Document v-else />
             </el-icon>
-            <span class="breadcrumb-text">{{ item.title }}</span>
+            <span class="breadcrumb-text">{{ item.isI18nKey ? $t(item.title) : item.title }}</span>
           </div>
         </el-breadcrumb-item>
       </el-breadcrumb>
@@ -30,9 +30,9 @@
       <!-- 操作按钮组 -->
       <div class="breadcrumb-actions">
         <!-- 收藏按钮 -->
-        <el-tooltip :content="isCurrentFavorite ? '取消收藏' : '收藏此页面'" placement="bottom">
-          <el-button 
-            text 
+        <el-tooltip :content="isCurrentFavorite ? $t('breadcrumb.removeFromFavorites') : $t('breadcrumb.addToFavorites')" placement="bottom">
+          <el-button
+            text
             :type="isCurrentFavorite ? 'warning' : 'default'"
             @click="toggleFavorite"
             class="action-btn"
