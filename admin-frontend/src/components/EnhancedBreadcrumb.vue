@@ -62,8 +62,8 @@
           
           <div class="history-panel">
             <div class="panel-header">
-              <span class="panel-title">最近访问</span>
-              <el-button text size="small" @click="clearHistory">清空</el-button>
+              <span class="panel-title">{{ $t('breadcrumb.recentVisits') }}</span>
+              <el-button text size="small" @click="clearHistory">{{ $t('common.clear') }}</el-button>
             </div>
             
             <div class="history-list" v-if="recentRoutes.length > 0">
@@ -186,6 +186,7 @@
 <script setup>
 import { computed, watch, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useBreadcrumbStore } from '@/stores/breadcrumb'
 import { ElMessage } from 'element-plus'
 import FavoriteManager from './FavoriteManager.vue'
@@ -222,6 +223,7 @@ import {
 
 const route = useRoute()
 const router = useRouter()
+const { t: $t } = useI18n()
 const breadcrumbStore = useBreadcrumbStore()
 
 // 响应式数据

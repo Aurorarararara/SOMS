@@ -1,0 +1,275 @@
+export default {
+  // 通用
+  common: {
+    confirm: '确认',
+    cancel: '取消',
+    save: '保存',
+    delete: '删除',
+    edit: '编辑',
+    add: '添加',
+    search: '搜索',
+    reset: '重置',
+    submit: '提交',
+    back: '返回',
+    next: '下一步',
+    previous: '上一步',
+    loading: '加载中...',
+    noData: '暂无数据',
+    success: '成功',
+    error: '错误',
+    warning: '警告',
+    info: '信息',
+    yes: '是',
+    no: '否',
+    close: '关闭',
+    refresh: '刷新',
+    export: '导出',
+    import: '导入',
+    clear: '清空',
+    manage: '管理',
+    view: '查看',
+    download: '下载',
+    upload: '上传'
+  },
+
+  // 导航菜单
+  nav: {
+    dashboard: '个人工作台',
+    attendance: '我的考勤',
+    attendanceRecords: '考勤记录',
+    leave: '请假申请',
+    leaveRecords: '请假记录',
+    schedule: '日程管理',
+    notifications: '公告通知',
+    profile: '个人信息',
+    collaborative: '协同编辑',
+    collaborativeDemo: '协同编辑功能演示',
+    richtext: '富文本编辑器',
+    markdown: 'Markdown编辑器',
+    code: '代码编辑器',
+    table: '表格编辑器',
+    tasks: '任务管理',
+    createTask: '创建任务',
+    taskDetail: '任务详情'
+  },
+
+  // 面包屑导航
+  breadcrumb: {
+    home: '首页',
+    recentVisits: '最近访问',
+    favorites: '我的收藏',
+    addToFavorites: '收藏此页面',
+    removeFromFavorites: '取消收藏',
+    visitHistory: '访问历史',
+    clearHistory: '清空历史',
+    clearFavorites: '清空收藏',
+    noHistory: '暂无访问记录',
+    noFavorites: '暂无收藏页面',
+    favoriteAdded: '已添加到收藏',
+    favoriteRemoved: '已移除收藏',
+    favoriteExists: '该页面已在收藏夹中',
+    historyCleared: '已清空访问历史',
+    favoritesCleared: '已清空收藏夹',
+    justNow: '刚刚',
+    minutesAgo: '分钟前',
+    hoursAgo: '小时前',
+    daysAgo: '天前'
+  },
+
+  // 用户相关
+  user: {
+    login: '登录',
+    logout: '退出登录',
+    username: '用户名',
+    password: '密码',
+    rememberMe: '记住我',
+    forgotPassword: '忘记密码',
+    profile: '个人资料',
+    settings: '设置',
+    changePassword: '修改密码',
+    personalInfo: '个人信息',
+    avatar: '头像',
+    nickname: '昵称',
+    email: '邮箱',
+    phone: '手机号',
+    department: '部门',
+    position: '职位',
+    joinDate: '入职日期'
+  },
+
+  // 考勤管理
+  attendance: {
+    clockIn: '上班打卡',
+    clockOut: '下班打卡',
+    status: '状态',
+    time: '时间',
+    location: '地点',
+    records: '考勤记录',
+    statistics: '考勤统计',
+    workDays: '工作天数',
+    lateDays: '迟到天数',
+    earlyLeaveDays: '早退天数',
+    absentDays: '缺勤天数',
+    overtimeHours: '加班时长',
+    clockInTime: '上班时间',
+    clockOutTime: '下班时间',
+    workHours: '工作时长',
+    normal: '正常',
+    late: '迟到',
+    earlyLeave: '早退',
+    absent: '缺勤',
+    overtime: '加班'
+  },
+
+  // 请假管理
+  leave: {
+    apply: '申请请假',
+    type: '请假类型',
+    startDate: '开始日期',
+    endDate: '结束日期',
+    days: '请假天数',
+    reason: '请假原因',
+    status: '状态',
+    pending: '待审批',
+    approved: '已通过',
+    rejected: '已拒绝',
+    cancelled: '已取消',
+    records: '请假记录',
+    annualLeave: '年假',
+    sickLeave: '病假',
+    personalLeave: '事假',
+    maternityLeave: '产假',
+    paternityLeave: '陪产假',
+    marriageLeave: '婚假',
+    bereavementLeave: '丧假',
+    approver: '审批人',
+    approvalTime: '审批时间',
+    approvalComments: '审批意见'
+  },
+
+  // 公告通知
+  notification: {
+    title: '标题',
+    content: '内容',
+    publishTime: '发布时间',
+    publisher: '发布人',
+    read: '已读',
+    unread: '未读',
+    markAsRead: '标记为已读',
+    markAsUnread: '标记为未读',
+    detail: '详情',
+    noNotifications: '暂无通知'
+  },
+
+  // 协同编辑
+  collaborative: {
+    create: '创建文档',
+    open: '打开文档',
+    share: '分享',
+    collaborators: '协作者',
+    onlineUsers: '在线用户',
+    documentTitle: '文档标题',
+    lastModified: '最后修改',
+    version: '版本',
+    history: '历史记录',
+    comments: '评论',
+    suggestions: '建议',
+    richTextEditor: '富文本编辑器',
+    markdownEditor: 'Markdown编辑器',
+    codeEditor: '代码编辑器',
+    tableEditor: '表格编辑器',
+    language: '编程语言',
+    theme: '主题',
+    fontSize: '字体大小',
+    wordWrap: '自动换行'
+  },
+
+  // 任务管理
+  task: {
+    title: '任务标题',
+    description: '任务描述',
+    priority: '优先级',
+    status: '状态',
+    assignee: '负责人',
+    creator: '创建人',
+    createTime: '创建时间',
+    dueDate: '截止日期',
+    completedTime: '完成时间',
+    tags: '标签',
+    attachments: '附件',
+    comments: '评论',
+    high: '高',
+    medium: '中',
+    low: '低',
+    todo: '待办',
+    inProgress: '进行中',
+    completed: '已完成',
+    cancelled: '已取消',
+    overdue: '已逾期'
+  },
+
+  // 语言切换
+  language: {
+    switch: '切换语言',
+    chinese: '中文',
+    english: 'English',
+    current: '当前语言'
+  },
+
+  // 表单验证
+  validation: {
+    required: '此字段为必填项',
+    email: '请输入有效的邮箱地址',
+    phone: '请输入有效的手机号码',
+    password: '密码长度至少6位',
+    confirmPassword: '两次输入的密码不一致',
+    minLength: '长度不能少于{min}位',
+    maxLength: '长度不能超过{max}位',
+    numeric: '请输入数字',
+    positive: '请输入正数',
+    integer: '请输入整数'
+  },
+
+  // 操作提示
+  message: {
+    saveSuccess: '保存成功',
+    saveFailed: '保存失败',
+    deleteSuccess: '删除成功',
+    deleteFailed: '删除失败',
+    updateSuccess: '更新成功',
+    updateFailed: '更新失败',
+    createSuccess: '创建成功',
+    createFailed: '创建失败',
+    loginSuccess: '登录成功',
+    loginFailed: '登录失败',
+    logoutSuccess: '退出成功',
+    networkError: '网络错误，请稍后重试',
+    serverError: '服务器错误',
+    permissionDenied: '权限不足',
+    operationSuccess: '操作成功',
+    operationFailed: '操作失败',
+    confirmDelete: '确定要删除吗？',
+    confirmLogout: '确定要退出登录吗？',
+    unsavedChanges: '有未保存的更改，确定要离开吗？'
+  },
+
+  // 时间相关
+  time: {
+    today: '今天',
+    yesterday: '昨天',
+    tomorrow: '明天',
+    thisWeek: '本周',
+    lastWeek: '上周',
+    nextWeek: '下周',
+    thisMonth: '本月',
+    lastMonth: '上月',
+    nextMonth: '下月',
+    thisYear: '今年',
+    lastYear: '去年',
+    nextYear: '明年',
+    morning: '上午',
+    afternoon: '下午',
+    evening: '晚上',
+    night: '夜间'
+  }
+}

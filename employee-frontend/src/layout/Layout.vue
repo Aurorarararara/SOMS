@@ -154,8 +154,11 @@
                 </el-scrollbar>
               </div>
             </el-popover>
+
+            <!-- 语言切换 -->
+            <LanguageSwitcher />
           </div>
-          
+
           <!-- 用户信息 -->
           <el-dropdown class="user-dropdown" @command="handleUserCommand">
             <div class="user-info">
@@ -214,6 +217,7 @@ import {
 import { useUserStore } from '@/stores/user'
 import { useDebounce, useThrottle } from '@/utils/debounce'
 import EnhancedBreadcrumb from '@/components/EnhancedBreadcrumb.vue'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
 const route = useRoute()
 const router = useRouter()

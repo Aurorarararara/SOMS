@@ -1,0 +1,275 @@
+export default {
+  // Common
+  common: {
+    confirm: 'Confirm',
+    cancel: 'Cancel',
+    save: 'Save',
+    delete: 'Delete',
+    edit: 'Edit',
+    add: 'Add',
+    search: 'Search',
+    reset: 'Reset',
+    submit: 'Submit',
+    back: 'Back',
+    next: 'Next',
+    previous: 'Previous',
+    loading: 'Loading...',
+    noData: 'No Data',
+    success: 'Success',
+    error: 'Error',
+    warning: 'Warning',
+    info: 'Info',
+    yes: 'Yes',
+    no: 'No',
+    close: 'Close',
+    refresh: 'Refresh',
+    export: 'Export',
+    import: 'Import',
+    clear: 'Clear',
+    manage: 'Manage',
+    view: 'View',
+    download: 'Download',
+    upload: 'Upload'
+  },
+
+  // Navigation Menu
+  nav: {
+    dashboard: 'Dashboard',
+    attendance: 'My Attendance',
+    attendanceRecords: 'Attendance Records',
+    leave: 'Leave Application',
+    leaveRecords: 'Leave Records',
+    schedule: 'Schedule Management',
+    notifications: 'Notifications',
+    profile: 'Profile',
+    collaborative: 'Collaborative Editing',
+    collaborativeDemo: 'Collaborative Editing Demo',
+    richtext: 'Rich Text Editor',
+    markdown: 'Markdown Editor',
+    code: 'Code Editor',
+    table: 'Table Editor',
+    tasks: 'Task Management',
+    createTask: 'Create Task',
+    taskDetail: 'Task Detail'
+  },
+
+  // Breadcrumb Navigation
+  breadcrumb: {
+    home: 'Home',
+    recentVisits: 'Recent Visits',
+    favorites: 'My Favorites',
+    addToFavorites: 'Add to Favorites',
+    removeFromFavorites: 'Remove from Favorites',
+    visitHistory: 'Visit History',
+    clearHistory: 'Clear History',
+    clearFavorites: 'Clear Favorites',
+    noHistory: 'No visit history',
+    noFavorites: 'No favorite pages',
+    favoriteAdded: 'Added to favorites',
+    favoriteRemoved: 'Removed from favorites',
+    favoriteExists: 'Page already in favorites',
+    historyCleared: 'Visit history cleared',
+    favoritesCleared: 'Favorites cleared',
+    justNow: 'Just now',
+    minutesAgo: 'minutes ago',
+    hoursAgo: 'hours ago',
+    daysAgo: 'days ago'
+  },
+
+  // User Related
+  user: {
+    login: 'Login',
+    logout: 'Logout',
+    username: 'Username',
+    password: 'Password',
+    rememberMe: 'Remember Me',
+    forgotPassword: 'Forgot Password',
+    profile: 'Profile',
+    settings: 'Settings',
+    changePassword: 'Change Password',
+    personalInfo: 'Personal Information',
+    avatar: 'Avatar',
+    nickname: 'Nickname',
+    email: 'Email',
+    phone: 'Phone',
+    department: 'Department',
+    position: 'Position',
+    joinDate: 'Join Date'
+  },
+
+  // Attendance Management
+  attendance: {
+    clockIn: 'Clock In',
+    clockOut: 'Clock Out',
+    status: 'Status',
+    time: 'Time',
+    location: 'Location',
+    records: 'Attendance Records',
+    statistics: 'Attendance Statistics',
+    workDays: 'Work Days',
+    lateDays: 'Late Days',
+    earlyLeaveDays: 'Early Leave Days',
+    absentDays: 'Absent Days',
+    overtimeHours: 'Overtime Hours',
+    clockInTime: 'Clock In Time',
+    clockOutTime: 'Clock Out Time',
+    workHours: 'Work Hours',
+    normal: 'Normal',
+    late: 'Late',
+    earlyLeave: 'Early Leave',
+    absent: 'Absent',
+    overtime: 'Overtime'
+  },
+
+  // Leave Management
+  leave: {
+    apply: 'Apply for Leave',
+    type: 'Leave Type',
+    startDate: 'Start Date',
+    endDate: 'End Date',
+    days: 'Leave Days',
+    reason: 'Leave Reason',
+    status: 'Status',
+    pending: 'Pending',
+    approved: 'Approved',
+    rejected: 'Rejected',
+    cancelled: 'Cancelled',
+    records: 'Leave Records',
+    annualLeave: 'Annual Leave',
+    sickLeave: 'Sick Leave',
+    personalLeave: 'Personal Leave',
+    maternityLeave: 'Maternity Leave',
+    paternityLeave: 'Paternity Leave',
+    marriageLeave: 'Marriage Leave',
+    bereavementLeave: 'Bereavement Leave',
+    approver: 'Approver',
+    approvalTime: 'Approval Time',
+    approvalComments: 'Approval Comments'
+  },
+
+  // Notifications
+  notification: {
+    title: 'Title',
+    content: 'Content',
+    publishTime: 'Publish Time',
+    publisher: 'Publisher',
+    read: 'Read',
+    unread: 'Unread',
+    markAsRead: 'Mark as Read',
+    markAsUnread: 'Mark as Unread',
+    detail: 'Detail',
+    noNotifications: 'No notifications'
+  },
+
+  // Collaborative Editing
+  collaborative: {
+    create: 'Create Document',
+    open: 'Open Document',
+    share: 'Share',
+    collaborators: 'Collaborators',
+    onlineUsers: 'Online Users',
+    documentTitle: 'Document Title',
+    lastModified: 'Last Modified',
+    version: 'Version',
+    history: 'History',
+    comments: 'Comments',
+    suggestions: 'Suggestions',
+    richTextEditor: 'Rich Text Editor',
+    markdownEditor: 'Markdown Editor',
+    codeEditor: 'Code Editor',
+    tableEditor: 'Table Editor',
+    language: 'Programming Language',
+    theme: 'Theme',
+    fontSize: 'Font Size',
+    wordWrap: 'Word Wrap'
+  },
+
+  // Task Management
+  task: {
+    title: 'Task Title',
+    description: 'Task Description',
+    priority: 'Priority',
+    status: 'Status',
+    assignee: 'Assignee',
+    creator: 'Creator',
+    createTime: 'Create Time',
+    dueDate: 'Due Date',
+    completedTime: 'Completed Time',
+    tags: 'Tags',
+    attachments: 'Attachments',
+    comments: 'Comments',
+    high: 'High',
+    medium: 'Medium',
+    low: 'Low',
+    todo: 'To Do',
+    inProgress: 'In Progress',
+    completed: 'Completed',
+    cancelled: 'Cancelled',
+    overdue: 'Overdue'
+  },
+
+  // Language Switch
+  language: {
+    switch: 'Switch Language',
+    chinese: '中文',
+    english: 'English',
+    current: 'Current Language'
+  },
+
+  // Form Validation
+  validation: {
+    required: 'This field is required',
+    email: 'Please enter a valid email address',
+    phone: 'Please enter a valid phone number',
+    password: 'Password must be at least 6 characters',
+    confirmPassword: 'Passwords do not match',
+    minLength: 'Length cannot be less than {min} characters',
+    maxLength: 'Length cannot exceed {max} characters',
+    numeric: 'Please enter a number',
+    positive: 'Please enter a positive number',
+    integer: 'Please enter an integer'
+  },
+
+  // Operation Messages
+  message: {
+    saveSuccess: 'Save successful',
+    saveFailed: 'Save failed',
+    deleteSuccess: 'Delete successful',
+    deleteFailed: 'Delete failed',
+    updateSuccess: 'Update successful',
+    updateFailed: 'Update failed',
+    createSuccess: 'Create successful',
+    createFailed: 'Create failed',
+    loginSuccess: 'Login successful',
+    loginFailed: 'Login failed',
+    logoutSuccess: 'Logout successful',
+    networkError: 'Network error, please try again later',
+    serverError: 'Server error',
+    permissionDenied: 'Permission denied',
+    operationSuccess: 'Operation successful',
+    operationFailed: 'Operation failed',
+    confirmDelete: 'Are you sure you want to delete?',
+    confirmLogout: 'Are you sure you want to logout?',
+    unsavedChanges: 'You have unsaved changes, are you sure you want to leave?'
+  },
+
+  // Time Related
+  time: {
+    today: 'Today',
+    yesterday: 'Yesterday',
+    tomorrow: 'Tomorrow',
+    thisWeek: 'This Week',
+    lastWeek: 'Last Week',
+    nextWeek: 'Next Week',
+    thisMonth: 'This Month',
+    lastMonth: 'Last Month',
+    nextMonth: 'Next Month',
+    thisYear: 'This Year',
+    lastYear: 'Last Year',
+    nextYear: 'Next Year',
+    morning: 'Morning',
+    afternoon: 'Afternoon',
+    evening: 'Evening',
+    night: 'Night'
+  }
+}

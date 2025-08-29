@@ -61,8 +61,8 @@
           
           <div class="history-panel">
             <div class="panel-header">
-              <span class="panel-title">最近访问</span>
-              <el-button text size="small" @click="clearHistory">清空</el-button>
+              <span class="panel-title">{{ $t('breadcrumb.recentVisits') }}</span>
+              <el-button text size="small" @click="clearHistory">{{ $t('common.clear') }}</el-button>
             </div>
             
             <div class="history-list" v-if="recentRoutes.length > 0">
@@ -91,7 +91,7 @@
             
             <div v-else class="empty-state">
               <el-icon><DocumentRemove /></el-icon>
-              <span>暂无访问记录</span>
+              <span>{{ $t('breadcrumb.noHistory') }}</span>
             </div>
           </div>
         </el-popover>
@@ -120,10 +120,10 @@
           
           <div class="favorites-panel">
             <div class="panel-header">
-              <span class="panel-title">我的收藏</span>
+              <span class="panel-title">{{ $t('breadcrumb.favorites') }}</span>
               <div class="panel-actions">
-                <el-button text size="small" @click="openFavoriteManager">管理</el-button>
-                <el-button text size="small" @click="clearFavorites">清空</el-button>
+                <el-button text size="small" @click="openFavoriteManager">{{ $t('common.manage') }}</el-button>
+                <el-button text size="small" @click="clearFavorites">{{ $t('common.clear') }}</el-button>
               </div>
             </div>
             
@@ -168,7 +168,7 @@
             
             <div v-else class="empty-state">
               <el-icon><Star /></el-icon>
-              <span>暂无收藏页面</span>
+              <span>{{ $t('breadcrumb.noFavorites') }}</span>
             </div>
           </div>
         </el-popover>
@@ -183,6 +183,7 @@
 <script setup>
 import { computed, watch, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useBreadcrumbStore } from '@/stores/breadcrumb'
 import { ElMessage } from 'element-plus'
 import FavoriteManager from './FavoriteManager.vue'
@@ -211,6 +212,7 @@ import {
 
 const route = useRoute()
 const router = useRouter()
+const { t: $t } = useI18n()
 const breadcrumbStore = useBreadcrumbStore()
 
 // 响应式数据
@@ -242,14 +244,14 @@ const toggleFavorite = () => {
   if (isCurrentFavorite.value) {
     const success = breadcrumbStore.removeFromFavorites(route.path)
     if (success) {
-      ElMessage.success('已取消收藏')
+      ElMessage.success($t('breadcrumb.favoriteRemoved'))
     }
   } else {
     const success = breadcrumbStore.addToFavorites(route)
     if (success) {
-      ElMessage.success('已添加到收藏')
+      ElMessage.success($t('breadcrumb.favoriteAdded'))
     } else {
-      ElMessage.warning('该页面已在收藏夹中')
+      ElMessage.warning($t('breadcrumb.favoriteExists'))
     }
   }
 }
@@ -262,12 +264,12 @@ const navigateTo = (path) => {
 
 const clearHistory = () => {
   breadcrumbStore.clearHistory()
-  ElMessage.success('已清空访问历史')
+  ElMessage.success($t('breadcrumb.historyCleared'))
 }
 
 const clearFavorites = () => {
   breadcrumbStore.clearFavorites()
-  ElMessage.success('已清空收藏夹')
+  ElMessage.success($t('breadcrumb.favoritesCleared'))
 }
 
 const openFavoriteManager = () => {
