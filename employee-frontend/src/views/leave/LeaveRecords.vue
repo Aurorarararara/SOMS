@@ -328,7 +328,7 @@ const loadRecords = async () => {
     await loadStatistics()
     
   } catch (error) {
-    console.error('加载请假记录失败:', error)
+    console.error('Failed to load leave records:', error)
     ElMessage.error($t('leaveRecords.loadRecordsFailed'))
   } finally {
     loading.value = false
@@ -349,7 +349,7 @@ const loadStatistics = async () => {
       }
     }
   } catch (error) {
-    console.error('加载统计数据失败:', error)
+    console.error('Failed to load statistics:', error)
   }
 }
 
@@ -357,14 +357,14 @@ const loadStatistics = async () => {
 
 const getReasonByType = (type) => {
   const reasons = {
-    sick: '身体不适，需要休息',
-    personal: '家里有事需要处理',
-    annual: '年假休息',
-    compensatory: '加班调休',
-    marriage: '结婚事宜',
-    maternity: '产假休息'
+    sick: $t('leaveRecords.sickReason'),
+    personal: $t('leaveRecords.personalReason'),
+    annual: $t('leaveRecords.annualReason'),
+    compensatory: $t('leaveRecords.compensatoryReason'),
+    marriage: $t('leaveRecords.marriageReason'),
+    maternity: $t('leaveRecords.maternityReason')
   }
-  return reasons[type] || '其他原因'
+  return reasons[type] || $t('leaveRecords.otherReason')
 }
 
 const resetFilter = () => {

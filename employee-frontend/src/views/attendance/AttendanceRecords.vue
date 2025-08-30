@@ -231,9 +231,9 @@ const statistics = ref({
 // 计算属性
 const dateRangeText = computed(() => {
   if (filterForm.dateRange && filterForm.dateRange.length === 2) {
-    return `${filterForm.dateRange[0]} 至 ${filterForm.dateRange[1]}`
+    return `${filterForm.dateRange[0]} ${$t('common.to')} ${filterForm.dateRange[1]}`
   }
-  return '最近30天'
+  return $t('attendanceRecords.last30Days')
 })
 
 // 方法
@@ -264,8 +264,8 @@ const loadRecords = async () => {
     await loadStatistics()
     
   } catch (error) {
-    console.error('加载考勤记录失败:', error)
-    ElMessage.error('加载考勤记录失败')
+    console.error('Failed to load attendance records:', error)
+    ElMessage.error($t('attendanceRecords.loadFailed'))
   } finally {
     loading.value = false
   }
@@ -285,7 +285,7 @@ const loadStatistics = async () => {
       }
     }
   } catch (error) {
-    console.error('加载统计数据失败:', error)
+    console.error('Failed to load statistics:', error)
   }
 }
 
@@ -313,7 +313,7 @@ const handleCurrentChange = (newPage) => {
 }
 
 const exportRecords = () => {
-  ElMessage.success('导出功能开发中...')
+  ElMessage.success($t('attendanceRecords.exportInDevelopment'))
 }
 
 const formatDate = (dateStr) => {
@@ -324,7 +324,15 @@ const formatDate = (dateStr) => {
 }
 
 const getWeekDay = (dateStr) => {
-  const weekDays = ['日', '一', '二', '三', '四', '五', '六']
+  const weekDays = [
+    $t('attendanceRecords.sunday'),
+    $t('attendanceRecords.monday'),
+    $t('attendanceRecords.tuesday'),
+    $t('attendanceRecords.wednesday'),
+    $t('attendanceRecords.thursday'),
+    $t('attendanceRecords.friday'),
+    $t('attendanceRecords.saturday')
+  ]
   const date = new Date(dateStr)
   return weekDays[date.getDay()]
 }
@@ -348,13 +356,13 @@ const getStatusType = (status) => {
 
 const getStatusText = (status) => {
   const textMap = {
-    normal: '正常',
-    late: '迟到',
-    early: '早退',
-    absent: '缺勤',
-    leave: '请假'
+    normal: $t('attendanceRecords.normal'),
+    late: $t('attendanceRecords.late'),
+    early: $t('attendanceRecords.early'),
+    absent: $t('attendanceRecords.absent'),
+    leave: $t('attendanceRecords.onLeave')
   }
-  return textMap[status] || '未知'
+  return textMap[status] || $t('attendanceRecords.unknown')
 }
 
 // 生命周期

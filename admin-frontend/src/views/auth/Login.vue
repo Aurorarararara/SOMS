@@ -176,7 +176,7 @@ const handleLogin = async () => {
     
     await userStore.loginAction(loginData)
     ElMessage.success('登录成功！')
-    router.push('/dashboard')
+    router.push('/admin/dashboard')
   } catch (error) {
     ElMessage.error(error.message || '登录失败，请检查账号密码')
     refreshCaptcha()

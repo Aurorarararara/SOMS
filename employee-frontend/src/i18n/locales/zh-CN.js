@@ -188,6 +188,7 @@ export default {
 
   // 考勤记录
   attendanceRecords: {
+    title: '考勤记录',
     subtitle: '查看个人考勤记录和统计',
     exportRecords: '导出记录',
     dateRange: '日期范围',
@@ -201,9 +202,10 @@ export default {
     absent: '缺勤',
     onLeave: '请假',
     normalDays: '正常天数',
-    lateDays: '迟到次数',
-    earlyDays: '早退次数',
+    lateDays: '迟到天数',
+    earlyDays: '早退天数',
     absentDays: '缺勤天数',
+    leaveDays: '请假天数',
     attendanceRecords: '考勤记录',
     totalRecords: '共 {count} 条记录',
     date: '日期',
@@ -216,7 +218,23 @@ export default {
     checkLocation: '打卡地点',
     checkIn: '上班',
     checkOut: '下班',
-    remark: '备注'
+    remark: '备注',
+    monthlyStats: '本月统计',
+    totalDays: '总天数',
+    workDays: '工作日',
+    actualDays: '实际出勤',
+    attendanceRate: '出勤率',
+    last30Days: '最近30天',
+    loadFailed: '加载考勤记录失败',
+    exportInDevelopment: '导出功能开发中...',
+    sunday: '日',
+    monday: '一',
+    tuesday: '二',
+    wednesday: '三',
+    thursday: '四',
+    friday: '五',
+    saturday: '六',
+    unknown: '未知'
   },
 
   // 日程管理
@@ -276,6 +294,28 @@ export default {
     withdrawSuccess: '撤回成功',
     withdrawFailed: '撤回失败',
     loadRecordsFailed: '加载请假记录失败'
+  },
+
+  // 请假记录
+  leaveRecords: {
+    leaveRecords: '请假记录',
+    totalRecords: '总记录数',
+    totalLeaveDays: '总请假天数',
+    approvedApplications: '已批准申请',
+    pendingApplications: '待审批申请',
+    remainingAnnualLeave: '剩余年假',
+    leaveApplicationDetails: '请假申请详情',
+    leaveDays: '请假天数',
+    leaveReason: '请假原因',
+    approvalStatus: '审批状态',
+    approver: '审批人',
+    approveTime: '审批时间',
+    selectStatus: '选择状态',
+    pending: '待审批',
+    approved: '已批准',
+    rejected: '已拒绝',
+    cancelled: '已取消',
+    days: '天'
   },
 
   // 登录页面
@@ -433,24 +473,12 @@ export default {
     remarkPlaceholder: '请输入备注（可选）'
   },
 
-  // 考勤记录
-  attendanceRecords: {
-    subtitle: '查看个人考勤历史记录',
-    exportRecords: '导出记录',
-    dateRange: '日期范围',
-    startDate: '开始日期',
-    endDate: '结束日期',
-    attendanceStatus: '考勤状态',
-    selectStatus: '选择状态',
-    normal: '正常',
-    late: '迟到',
-    early: '早退',
-    absent: '缺勤',
-    onLeave: '请假'
-  },
+
 
   // 请假记录
   leaveRecords: {
+    leaveRecords: '请假记录',
+    title: '请假记录',
     subtitle: '查看个人请假申请历史记录',
     newLeave: '新建请假',
     applicationTime: '申请时间',
@@ -463,7 +491,32 @@ export default {
     annualLeave: '年假',
     compensatoryLeave: '调休',
     marriageLeave: '婚假',
-    maternityLeave: '产假'
+    maternityLeave: '产假',
+    totalRecords: '总记录数',
+    totalLeaveDays: '总请假天数',
+    approvedApplications: '已批准申请',
+    pendingApplications: '待审批申请',
+    remainingAnnualLeave: '剩余年假',
+    leaveApplicationDetails: '请假申请详情',
+    leaveDays: '请假天数',
+    leaveReason: '请假原因',
+    approvalStatus: '审批状态',
+    approver: '审批人',
+    approveTime: '审批时间',
+    selectStatus: '选择状态',
+    pending: '待审批',
+    approved: '已批准',
+    rejected: '已拒绝',
+    cancelled: '已取消',
+    days: '天',
+    sickReason: '身体不适，需要休息',
+    personalReason: '家里有事需要处理',
+    annualReason: '年假休息',
+    compensatoryReason: '加班调休',
+    marriageReason: '结婚事宜',
+    maternityReason: '产假休息',
+    otherReason: '其他原因',
+    loadRecordsFailed: '加载请假记录失败'
   },
 
   // 请假管理

@@ -1,90 +1,93 @@
 <template>
   <div class="announcements-container">
     <div class="page-header">
-      <h2 class="page-title">公告管理</h2>
+      <h2 class="page-title">{{ $t('announcement.management') }}</h2>
       <el-button type="primary" @click="showAddDialog = true">
         <el-icon><Plus /></el-icon>
-        发布公告
+        {{ $t('announcement.add') }}
       </el-button>
     </div>
 
     <el-card class="table-card">
       <el-table :data="announcements" v-loading="loading" stripe>
-        <el-table-column prop="id" label="公告ID" width="80" />
-        <el-table-column prop="title" label="公告标题" min-width="200" />
-        <el-table-column prop="type" label="公告类型" width="120">
+        <el-table-column prop="id" :label="$t('announcement.announcementId')" width="80" />
+        <el-table-column prop="title" :label="$t('announcement.title')" min-width="200" />
+        <el-table-column prop="type" :label="$t('announcement.announcementType')" width="120">
           <template #default="{ row }">
             <el-tag :type="getTypeColor(row.type)">
               {{ getTypeText(row.type) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="publisher" label="发布人" width="100" />
-        <el-table-column prop="publishTime" label="发布时间" width="180" />
-        <el-table-column prop="readCount" label="阅读量" width="100" align="center" />
-        <el-table-column label="状态" width="100">
+        <el-table-column prop="publisher" :label="$t('announcement.publisher')" width="100" />
+        <el-table-column prop="publishTime" :label="$t('announcement.publishTime')" width="180" />
+        <el-table-column prop="readCount" :label="$t('announcement.readCount')" width="100" align="center" />
+        <el-table-column :label="$t('announcement.status')" width="100">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">
-              {{ row.status === 1 ? '已发布' : '草稿' }}
+              {{ row.status === 1 ? $t('announcement.published') : $t('announcement.draft') }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200" fixed="right">
+        <el-table-column :label="$t('announcement.actions')" width="200" fixed="right">
           <template #default="{ row }">
-            <el-button link type="primary" @click="viewAnnouncement(row)">查看</el-button>
-            <el-button link type="primary" @click="editAnnouncement(row)">编辑</el-button>
-            <el-button link type="danger" @click="deleteAnnouncement(row)">删除</el-button>
+            <el-button link type="primary" @click="viewAnnouncement(row)">{{ $t('announcement.view') }}</el-button>
+            <el-button link type="primary" @click="editAnnouncement(row)">{{ $t('announcement.edit') }}</el-button>
+            <el-button link type="danger" @click="deleteAnnouncement(row)">{{ $t('announcement.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
 
     <!-- 新增/编辑对话框 -->
-    <el-dialog 
-      v-model="showAddDialog" 
-      :title="isEdit ? '编辑公告' : '发布公告'" 
+    <el-dialog
+      v-model="showAddDialog"
+      :title="isEdit ? $t('announcement.edit') : $t('announcement.add')"
       width="800px"
       @close="resetForm"
     >
       <el-form :model="announcementForm" :rules="formRules" ref="formRef" label-width="100px">
-        <el-form-item label="公告标题" prop="title">
-          <el-input v-model="announcementForm.title" placeholder="请输入公告标题" />
+        <el-form-item :label="$t('announcement.title')" prop="title">
+          <el-input v-model="announcementForm.title" :placeholder="$t('announcement.enterTitle')" />
         </el-form-item>
-        <el-form-item label="公告类型" prop="type">
-          <el-select v-model="announcementForm.type" placeholder="请选择公告类型">
-            <el-option label="通知公告" value="notice" />
-            <el-option label="系统维护" value="maintenance" />
-            <el-option label="紧急通知" value="urgent" />
-            <el-option label="活动公告" value="activity" />
+        <el-form-item :label="$t('announcement.announcementType')" prop="type">
+          <el-select v-model="announcementForm.type" :placeholder="$t('announcement.selectType')">
+            <el-option :label="$t('announcement.notice')" value="notice" />
+            <el-option :label="$t('announcement.maintenance')" value="maintenance" />
+            <el-option :label="$t('announcement.urgent')" value="urgent" />
+            <el-option :label="$t('announcement.activity')" value="activity" />
           </el-select>
         </el-form-item>
-        <el-form-item label="公告内容" prop="content">
-          <el-input 
-            v-model="announcementForm.content" 
-            type="textarea" 
+        <el-form-item :label="$t('announcement.content')" prop="content">
+          <el-input
+            v-model="announcementForm.content"
+            type="textarea"
             :rows="8"
-            placeholder="请输入公告内容" 
+            :placeholder="$t('announcement.enterContent')"
           />
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item :label="$t('announcement.status')">
           <el-radio-group v-model="announcementForm.status">
-            <el-radio :label="0">草稿</el-radio>
-            <el-radio :label="1">立即发布</el-radio>
+            <el-radio :label="0">{{ $t('announcement.draft') }}</el-radio>
+            <el-radio :label="1">{{ $t('announcement.publishImmediately') }}</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="showAddDialog = false">取消</el-button>
-        <el-button type="primary" @click="saveAnnouncement" :loading="saving">确定</el-button>
+        <el-button @click="showAddDialog = false">{{ $t('announcement.cancel') }}</el-button>
+        <el-button type="primary" @click="saveAnnouncement" :loading="saving">{{ $t('announcement.save') }}</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useI18n } from 'vue-i18n'
+
+const { t: $t } = useI18n()
 
 const loading = ref(false)
 const saving = ref(false)
@@ -100,11 +103,11 @@ const announcementForm = reactive({
   status: 1
 })
 
-const formRules = {
-  title: [{ required: true, message: '请输入公告标题', trigger: 'blur' }],
-  type: [{ required: true, message: '请选择公告类型', trigger: 'change' }],
-  content: [{ required: true, message: '请输入公告内容', trigger: 'blur' }]
-}
+const formRules = computed(() => ({
+  title: [{ required: true, message: $t('announcement.titleRequired'), trigger: 'blur' }],
+  type: [{ required: true, message: $t('announcement.typeRequired'), trigger: 'change' }],
+  content: [{ required: true, message: $t('announcement.contentRequired'), trigger: 'blur' }]
+}))
 
 const formRef = ref(null)
 
@@ -120,12 +123,12 @@ const getTypeColor = (type) => {
 
 const getTypeText = (type) => {
   const textMap = {
-    notice: '通知公告',
-    maintenance: '系统维护',
-    urgent: '紧急通知',
-    activity: '活动公告'
+    notice: $t('announcement.notice'),
+    maintenance: $t('announcement.maintenance'),
+    urgent: $t('announcement.urgent'),
+    activity: $t('announcement.activity')
   }
-  return textMap[type] || '未知'
+  return textMap[type] || $t('announcement.unknown')
 }
 
 const loadAnnouncements = async () => {
@@ -135,10 +138,10 @@ const loadAnnouncements = async () => {
     announcements.value = [
       {
         id: 1,
-        title: '系统维护通知',
+        title: 'System Maintenance Notice',
         type: 'maintenance',
-        content: '系统将于本周六进行维护...',
-        publisher: '系统管理员',
+        content: 'System maintenance will be performed this Saturday...',
+        publisher: 'System Administrator',
         publishTime: '2024-01-15 10:00:00',
         readCount: 125,
         status: 1
@@ -150,7 +153,7 @@ const loadAnnouncements = async () => {
 }
 
 const viewAnnouncement = (announcement) => {
-  ElMessage.info(`查看公告: ${announcement.title}`)
+  ElMessage.info(`${$t('announcement.viewAnnouncement')}: ${announcement.title}`)
 }
 
 const editAnnouncement = (announcement) => {
@@ -161,11 +164,14 @@ const editAnnouncement = (announcement) => {
 
 const deleteAnnouncement = async (announcement) => {
   try {
-    await ElMessageBox.confirm(`确定要删除公告 ${announcement.title} 吗？`, '删除确认')
-    ElMessage.success('删除成功')
+    await ElMessageBox.confirm(
+      $t('announcement.deleteConfirmMessage', { title: announcement.title }),
+      $t('announcement.deleteConfirm')
+    )
+    ElMessage.success($t('announcement.deleteSuccess'))
     loadAnnouncements()
   } catch (error) {
-    // 用户取消删除
+    // User cancelled deletion
   }
 }
 
@@ -175,11 +181,11 @@ const saveAnnouncement = async () => {
     await formRef.value.validate()
     saving.value = true
     await new Promise(resolve => setTimeout(resolve, 1000))
-    ElMessage.success(isEdit.value ? '更新成功' : '发布成功')
+    ElMessage.success(isEdit.value ? $t('announcement.updateSuccess') : $t('announcement.publishSuccess'))
     showAddDialog.value = false
     loadAnnouncements()
   } catch (error) {
-    console.error('表单验证失败:', error)
+    console.error('Form validation failed:', error)
   } finally {
     saving.value = false
   }
