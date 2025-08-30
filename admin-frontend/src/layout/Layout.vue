@@ -110,6 +110,11 @@
           <EnhancedBreadcrumb />
         </div>
         
+        <div class="header-center">
+          <!-- 全局搜索 -->
+          <GlobalSearch />
+        </div>
+
         <div class="header-right">
           <!-- 快捷操作 -->
           <div class="header-actions">
@@ -226,6 +231,7 @@ import { useUserStore } from '@/stores/user'
 import { useDebounce, useThrottle } from '@/utils/debounce'
 import EnhancedBreadcrumb from '@/components/EnhancedBreadcrumb.vue'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
+import GlobalSearch from '@/components/GlobalSearch/GlobalSearch.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -427,6 +433,14 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0 20px;
 }
 
 .sidebar-toggle {

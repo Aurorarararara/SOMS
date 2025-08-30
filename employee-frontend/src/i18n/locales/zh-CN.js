@@ -677,5 +677,48 @@ export default {
     afternoon: '下午',
     evening: '晚上',
     night: '夜间'
+  },
+
+  // 全局搜索
+  search: {
+    title: '全局搜索',
+    placeholder: '搜索页面、功能...',
+    inputPlaceholder: '输入关键词搜索页面和功能',
+    noResults: '未找到相关结果',
+    resultsCount: '找到 {count} 个结果',
+    recentSearches: '最近搜索',
+    clearHistory: '清空历史',
+    quickTips: '快捷提示',
+    navigateTip: '上下选择',
+    selectTip: '确认选择',
+    closeTip: '关闭搜索',
+    category: {
+      dashboard: '工作台',
+      attendance: '考勤管理',
+      leave: '请假管理',
+      collaborative: '协同编辑',
+      tasks: '任务管理',
+      schedule: '日程管理',
+      notifications: '公告通知',
+      profile: '个人信息'
+    },
+    desc: {
+      dashboard: '查看个人工作概览和待办事项',
+      attendance: '进行考勤打卡和查看考勤状态',
+      attendanceRecords: '查看个人考勤记录和统计',
+      leave: '提交请假申请和查看申请状态',
+      leaveRecords: '查看个人请假记录和统计',
+      collaborative: '协同编辑功能概览',
+      richtext: '多人协同富文本编辑',
+      markdown: '多人协同Markdown编辑',
+      code: '多人协同代码编辑',
+      table: '多人协同表格编辑',
+      collaborativeDemo: '协同编辑功能演示',
+      tasks: '查看和管理个人任务',
+      createTask: '创建新的任务',
+      schedule: '管理个人日程安排',
+      notifications: '查看系统公告和通知',
+      profile: '查看和编辑个人信息'
+    }
   }
 }

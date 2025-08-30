@@ -682,5 +682,55 @@ export default {
     afternoon: '下午',
     evening: '晚上',
     night: '夜间'
+  },
+
+  // 全局搜索
+  search: {
+    title: '全局搜索',
+    placeholder: '搜索页面、功能...',
+    inputPlaceholder: '输入关键词搜索页面和功能',
+    noResults: '未找到相关结果',
+    resultsCount: '找到 {count} 个结果',
+    recentSearches: '最近搜索',
+    clearHistory: '清空历史',
+    quickTips: '快捷提示',
+    navigateTip: '上下选择',
+    selectTip: '确认选择',
+    closeTip: '关闭搜索',
+    category: {
+      dashboard: '仪表盘',
+      user: '用户管理',
+      attendance: '考勤管理',
+      leave: '请假管理',
+      content: '内容管理',
+      workflow: '审批流程',
+      reports: '数据报表',
+      system: '系统设置',
+      profile: '个人信息'
+    },
+    desc: {
+      dashboard: '查看系统整体数据统计和概览信息',
+      employees: '管理员工信息、添加删除员工、编辑员工资料',
+      departments: '管理公司部门结构、添加删除部门',
+      roles: '管理用户角色和权限配置',
+      organizationChart: '查看公司组织架构图',
+      attendanceRecords: '查看和管理员工考勤记录',
+      attendanceRules: '配置考勤规则和时间设置',
+      attendanceStatistics: '查看考勤统计数据和分析',
+      leaveApplications: '查看和处理员工请假申请',
+      leaveApproval: '处理请假审批流程',
+      leaveStatistics: '查看请假统计数据',
+      announcements: '发布和管理系统公告通知',
+      workflow: '配置和管理审批流程',
+      myTasks: '查看我的待办审批任务',
+      myInitiated: '查看我发起的审批流程',
+      reportsAttendance: '生成考勤数据报表',
+      reportsLeave: '生成请假数据报表',
+      reportsPerformance: '生成绩效数据报表',
+      systemConfig: '配置系统参数和设置',
+      systemLogs: '查看系统操作日志',
+      systemBackup: '数据备份和恢复管理',
+      profile: '查看和编辑个人信息'
+    }
   }
 }
