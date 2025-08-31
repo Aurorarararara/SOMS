@@ -190,6 +190,7 @@
     <TaskFormDialog
       v-model="showCreateTaskDialog"
       :task="currentTask"
+      :users="users"
       @save="handleTaskSave"
     />
 
@@ -203,6 +204,7 @@
     <TaskAssignDialog
       v-model="showAssignDialog"
       :task="currentTask"
+      :users="users"
       @assign="handleTaskAssign"
     />
   </div>
@@ -219,6 +221,7 @@ import TaskFormDialog from './components/TaskFormDialog.vue'
 import TaskDetailDialog from './components/TaskDetailDialog.vue'
 import TaskAssignDialog from './components/TaskAssignDialog.vue'
 import * as taskApi from '@/api/taskApi'
+import { employeeApi } from '@/api/employee'
 
 // 响应式数据
 const loading = ref(false)
@@ -248,6 +251,9 @@ const pagination = ref({
   size: 20,
   total: 0
 })
+
+// 用户列表
+const users = ref([])
 
 // 计算属性
 const getPriorityType = (priority) => {
@@ -529,9 +535,21 @@ watch([searchQuery, filterStatus, filterPriority], () => {
   loadTasks()
 }, { debounce: 300 })
 
+// 获取用户列表
+const loadUsers = async () => {
+  try {
+    const response = await employeeApi.getEmployeeList()
+    users.value = response.data || []
+  } catch (error) {
+    console.error('获取用户列表失败:', error)
+    ElMessage.error('获取用户列表失败')
+  }
+}
+
 onMounted(async () => {
   await loadTaskStats()
   await loadTasks()
+  await loadUsers()
 })
 </script>
 

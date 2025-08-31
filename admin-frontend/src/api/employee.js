@@ -4,7 +4,7 @@ export const employeeApi = {
   // 分页查询员工列表
   getEmployeeList(params) {
     return request({
-      url: '/admin/employees',
+      url: '/api/admin/employees',
       method: 'get',
       params
     })
@@ -13,7 +13,7 @@ export const employeeApi = {
   // 搜索员工
   searchEmployees(keyword) {
     return request({
-      url: '/admin/employees/search',
+      url: '/api/admin/employees/search',
       method: 'get',
       params: { keyword }
     })
@@ -22,7 +22,7 @@ export const employeeApi = {
   // 根据部门查询员工
   getEmployeesByDepartment(departmentId) {
     return request({
-      url: `/admin/employees/department/${departmentId}`,
+      url: `/api/admin/employees/department/${departmentId}`,
       method: 'get'
     })
   },
@@ -30,7 +30,7 @@ export const employeeApi = {
   // 获取员工详情
   getEmployeeDetail(employeeId) {
     return request({
-      url: `/admin/employees/${employeeId}`,
+      url: `/api/admin/employees/${employeeId}`,
       method: 'get'
     })
   },
@@ -38,7 +38,7 @@ export const employeeApi = {
   // 创建员工
   createEmployee(data) {
     return request({
-      url: '/admin/employees',
+      url: '/api/admin/employees',
       method: 'post',
       data
     })
@@ -47,7 +47,7 @@ export const employeeApi = {
   // 更新员工信息
   updateEmployee(employeeId, data) {
     return request({
-      url: `/admin/employees/${employeeId}`,
+      url: `/api/admin/employees/${employeeId}`,
       method: 'put',
       data
     })
@@ -56,7 +56,7 @@ export const employeeApi = {
   // 启用/禁用员工
   toggleEmployeeStatus(employeeId) {
     return request({
-      url: `/admin/employees/${employeeId}/toggle-status`,
+      url: `/api/admin/employees/${employeeId}/toggle-status`,
       method: 'put'
     })
   },
@@ -64,7 +64,7 @@ export const employeeApi = {
   // 删除员工
   deleteEmployee(employeeId) {
     return request({
-      url: `/admin/employees/${employeeId}`,
+      url: `/api/admin/employees/${employeeId}`,
       method: 'delete'
     })
   },
@@ -72,7 +72,7 @@ export const employeeApi = {
   // 统计在职员工数量
   getActiveEmployeeCount() {
     return request({
-      url: '/admin/employees/count/active',
+      url: '/api/admin/employees/count/active',
       method: 'get'
     })
   }

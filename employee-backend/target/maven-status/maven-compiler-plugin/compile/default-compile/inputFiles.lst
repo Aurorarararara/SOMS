@@ -46,6 +46,7 @@ D:\项目\综合课程设计\SOMS-5\employee-backend\src\main\java\com\office\em
 D:\项目\综合课程设计\SOMS-5\employee-backend\src\main\java\com\office\employee\service\LeaveService.java
 D:\项目\综合课程设计\SOMS-5\employee-backend\src\main\java\com\office\employee\entity\CollaborativeSession.java
 D:\项目\综合课程设计\SOMS-5\employee-backend\src\main\java\com\office\employee\controller\AnnouncementController.java
+D:\项目\综合课程设计\SOMS-5\employee-backend\src\main\java\com\office\employee\controller\NotificationWebSocketController.java
 D:\项目\综合课程设计\SOMS-5\employee-backend\src\main\java\com\office\employee\dto\LoginRequest.java
 D:\项目\综合课程设计\SOMS-5\employee-backend\src\main\java\com\office\employee\service\impl\TaskServiceImpl.java
 D:\项目\综合课程设计\SOMS-5\employee-backend\src\main\java\com\office\employee\service\NotificationService.java

@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/admin/tasks")
+@RequestMapping("/api/admin/tasks")
 @RequiredArgsConstructor
 public class TaskController {
 
@@ -152,8 +152,10 @@ public class TaskController {
             return Result.error("用户未登录");
         }
 
-        Task task = taskService.updateTaskProgress(id, progress, userId);
-        return Result.success(task);
+        // TODO: 实现updateTaskProgress方法
+        // Task task = taskService.updateTaskProgress(id, progress, userId);
+        // return Result.success(task);
+        return Result.error("进度更新功能待实现");
     }
 
     /**

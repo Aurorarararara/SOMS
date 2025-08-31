@@ -25,6 +25,7 @@ D:\项目\综合课程设计\SOMS-5\admin-backend\src\main\java\com\office\admin
 D:\项目\综合课程设计\SOMS-5\admin-backend\src\main\java\com\office\admin\controller\NotificationController.java
 D:\项目\综合课程设计\SOMS-5\admin-backend\src\main\java\com\office\admin\entity\Document.java
 D:\项目\综合课程设计\SOMS-5\admin-backend\src\main\java\com\office\admin\service\WorkflowEngineService.java
+D:\项目\综合课程设计\SOMS-5\admin-backend\src\main\java\com\office\admin\controller\NotificationWebSocketController.java
 D:\项目\综合课程设计\SOMS-5\admin-backend\src\main\java\com\office\admin\websocket\CollaborationWebSocketHandler.java
 D:\项目\综合课程设计\SOMS-5\admin-backend\src\main\java\com\office\admin\controller\WorkflowInstanceController.java
 D:\项目\综合课程设计\SOMS-5\admin-backend\src\main\java\com\office\admin\controller\WorkflowTemplateController.java

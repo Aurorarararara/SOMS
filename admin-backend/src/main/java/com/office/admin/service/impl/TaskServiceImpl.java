@@ -66,7 +66,8 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         // 发送任务分配通知
         if (task.getAssigneeId() != null && !task.getAssigneeId().equals(creatorId)) {
             try {
-                notificationService.sendTaskAssignedNotification(task.getAssigneeId(), task.getId(), task.getTitle());
+                // TODO: 实现sendTaskAssignedNotification方法
+                // notificationService.sendTaskAssignedNotification(task.getAssigneeId(), task.getId(), task.getTitle());
             } catch (Exception e) {
                 log.warn("发送任务分配通知失败: taskId={}, assigneeId={}, error={}",
                         task.getId(), task.getAssigneeId(), e.getMessage());
@@ -121,7 +122,8 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         if (task.getNotifyOnUpdate() && task.getAssigneeId() != null && !task.getAssigneeId().equals(userId)) {
             try {
                 String notificationType = "completed".equals(request.getStatus()) ? "task_completed" : "task_updated";
-                notificationService.sendTaskUpdateNotification(task.getAssigneeId(), task.getId(), task.getTitle(), notificationType);
+                // TODO: 实现sendTaskUpdateNotification方法
+                // notificationService.sendTaskUpdateNotification(task.getAssigneeId(), task.getId(), task.getTitle(), notificationType);
             } catch (Exception e) {
                 log.warn("发送任务更新通知失败: taskId={}, assigneeId={}, error={}",
                         task.getId(), task.getAssigneeId(), e.getMessage());
@@ -148,7 +150,8 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         // 发送任务分配通知
         if (assigneeId != null && !assigneeId.equals(oldAssigneeId)) {
             try {
-                notificationService.sendTaskAssignedNotification(assigneeId, task.getId(), task.getTitle());
+                // TODO: 实现sendTaskAssignedNotification方法
+                // notificationService.sendTaskAssignedNotification(assigneeId, task.getId(), task.getTitle());
             } catch (Exception e) {
                 log.warn("发送任务分配通知失败: taskId={}, assigneeId={}, error={}",
                         task.getId(), assigneeId, e.getMessage());
@@ -188,7 +191,8 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         if (task.getNotifyOnUpdate() && task.getAssigneeId() != null && !task.getAssigneeId().equals(userId)) {
             try {
                 String notificationType = progress == 100 ? "task_completed" : "task_updated";
-                notificationService.sendTaskUpdateNotification(task.getAssigneeId(), task.getId(), task.getTitle(), notificationType);
+                // TODO: 实现sendTaskUpdateNotification方法
+                // notificationService.sendTaskUpdateNotification(task.getAssigneeId(), task.getId(), task.getTitle(), notificationType);
             } catch (Exception e) {
                 log.warn("发送任务进度更新通知失败: taskId={}, assigneeId={}, error={}",
                         task.getId(), task.getAssigneeId(), e.getMessage());
@@ -594,7 +598,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     public List<Map<String, Object>> getUserWorkloadRanking(Integer limit) {
         return taskMapper.selectUserWorkloadRanking(limit);
     }
-    
+
     // 私有辅助方法
     private boolean canModifyTask(Task task, Long userId) {
         // 管理员可以修改所有任务

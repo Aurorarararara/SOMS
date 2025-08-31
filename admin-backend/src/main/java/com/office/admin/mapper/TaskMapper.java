@@ -488,4 +488,5 @@ public interface TaskMapper extends BaseMapper<Task> {
             "ORDER BY total_hours DESC " +
             "LIMIT #{limit}")
     List<Map<String, Object>> selectUserWorkloadRanking(@Param("limit") Integer limit);
+
 }

@@ -58,6 +58,7 @@ com\office\admin\entity\WorkflowHistory.class
 com\office\admin\entity\CollaborativeSession.class
 com\office\admin\entity\Role.class
 com\office\admin\entity\Document.class
+com\office\admin\controller\NotificationWebSocketController.class
 com\office\admin\entity\LeaveApplication.class
 com\office\admin\service\WorkflowTemplateService.class
 com\office\admin\entity\Notification.class
