@@ -140,6 +140,82 @@ export const adminSearchConfig = [
     descriptionKey: 'search.desc.leaveStatistics'
   },
 
+  // 任务管理
+  {
+    id: 'tasks',
+    title: '任务列表',
+    titleKey: 'nav.taskList',
+    path: '/admin/tasks',
+    icon: 'List',
+    category: 'tasks',
+    categoryKey: 'search.category.tasks',
+    keywords: ['任务', 'task', '列表', 'list', '管理', 'management'],
+    description: '查看和管理所有任务',
+    descriptionKey: 'search.desc.taskList'
+  },
+  {
+    id: 'createTask',
+    title: '创建任务',
+    titleKey: 'nav.createTask',
+    path: '/admin/tasks/create',
+    icon: 'Plus',
+    category: 'tasks',
+    categoryKey: 'search.category.tasks',
+    keywords: ['创建', 'create', '任务', 'task', '新建', 'new'],
+    description: '创建新的任务',
+    descriptionKey: 'search.desc.createTask'
+  },
+  {
+    id: 'taskStatistics',
+    title: '任务统计',
+    titleKey: 'nav.taskStatistics',
+    path: '/admin/tasks/statistics',
+    icon: 'DataAnalysis',
+    category: 'tasks',
+    categoryKey: 'search.category.tasks',
+    keywords: ['任务', 'task', '统计', 'statistics', '数据', 'data', '分析'],
+    description: '查看任务统计数据',
+    descriptionKey: 'search.desc.taskStatistics'
+  },
+
+  // 通知管理
+  {
+    id: 'notifications',
+    title: '通知列表',
+    titleKey: 'nav.notificationList',
+    path: '/admin/notifications',
+    icon: 'Message',
+    category: 'notifications',
+    categoryKey: 'search.category.notifications',
+    keywords: ['通知', 'notification', '列表', 'list', '管理'],
+    description: '查看所有通知记录',
+    descriptionKey: 'search.desc.notificationList'
+  },
+  {
+    id: 'sendNotification',
+    title: '发送通知',
+    titleKey: 'nav.sendNotification',
+    path: '/admin/notifications/send',
+    icon: 'Promotion',
+    category: 'notifications',
+    categoryKey: 'search.category.notifications',
+    keywords: ['发送', 'send', '通知', 'notification', '新建'],
+    description: '发送新通知',
+    descriptionKey: 'search.desc.sendNotification'
+  },
+  {
+    id: 'notificationTemplates',
+    title: '通知模板',
+    titleKey: 'nav.notificationTemplates',
+    path: '/admin/notifications/templates',
+    icon: 'Document',
+    category: 'notifications',
+    categoryKey: 'search.category.notifications',
+    keywords: ['通知', 'notification', '模板', 'template', '管理'],
+    description: '管理通知模板',
+    descriptionKey: 'search.desc.notificationTemplates'
+  },
+
   // 公告管理
   {
     id: 'announcements',

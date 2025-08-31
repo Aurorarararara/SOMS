@@ -86,6 +86,56 @@ const routes = [
         component: () => import('@/views/leave/LeaveStatistics.vue'),
         meta: { title: '请假统计' }
       },
+      // 任务管理子路由
+      {
+        path: '/admin/tasks',
+        name: 'TaskManagement',
+        component: () => import('@/views/tasks/TaskManagement.vue'),
+        meta: { title: '任务管理' }
+      },
+      {
+        path: '/admin/tasks/create',
+        name: 'TaskCreate',
+        component: () => import('@/views/tasks/TaskCreate.vue'),
+        meta: { title: '创建任务' }
+      },
+      {
+        path: '/admin/tasks/:id',
+        name: 'TaskDetail',
+        component: () => import('@/views/tasks/TaskDetail.vue'),
+        meta: { title: '任务详情' }
+      },
+      {
+        path: '/admin/tasks/statistics',
+        name: 'TaskStatistics',
+        component: () => import('@/views/tasks/TaskStatistics.vue'),
+        meta: { title: '任务统计' }
+      },
+      // 通知管理子路由
+      {
+        path: '/admin/notifications',
+        name: 'NotificationManagement',
+        component: () => import('@/views/notifications/NotificationManagement.vue'),
+        meta: { title: '通知管理' }
+      },
+      {
+        path: '/admin/notifications/send',
+        name: 'NotificationSend',
+        component: () => import('@/views/notifications/NotificationSend.vue'),
+        meta: { title: '发送通知' }
+      },
+      {
+        path: '/admin/notifications/templates',
+        name: 'NotificationTemplates',
+        component: () => import('@/views/notifications/NotificationTemplates.vue'),
+        meta: { title: '通知模板' }
+      },
+      {
+        path: '/admin/notifications/:id',
+        name: 'NotificationDetail',
+        component: () => import('@/views/notifications/NotificationDetail.vue'),
+        meta: { title: '通知详情' }
+      },
       // 公告管理
       {
         path: '/admin/announcements',

@@ -30,5 +30,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // 添加原生WebSocket端点
         registry.addEndpoint("/ws/collaboration")
                 .setAllowedOriginPatterns("*");
+
+        // 通知WebSocket端点
+        registry.addEndpoint("/ws-notifications")
+                .setAllowedOriginPatterns("*")
+                .withSockJS();
     }
 }

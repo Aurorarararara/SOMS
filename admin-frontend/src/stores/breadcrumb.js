@@ -25,7 +25,17 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
     '/admin/leave/applications': { title: '请假申请', i18nKey: 'nav.leaveApplications', icon: 'Calendar', category: '请假管理' },
     '/admin/leave/approval': { title: '审批管理', i18nKey: 'nav.leaveApproval', icon: 'Select', category: '请假管理' },
     '/admin/leave/statistics': { title: '请假统计', i18nKey: 'nav.leaveStatistics', icon: 'DataAnalysis', category: '请假管理' },
-    
+
+    // 任务管理
+    '/admin/tasks': { title: '任务列表', i18nKey: 'nav.taskList', icon: 'List', category: '任务管理' },
+    '/admin/tasks/create': { title: '创建任务', i18nKey: 'nav.createTask', icon: 'Plus', category: '任务管理', parent: '/admin/tasks' },
+    '/admin/tasks/statistics': { title: '任务统计', i18nKey: 'nav.taskStatistics', icon: 'DataAnalysis', category: '任务管理', parent: '/admin/tasks' },
+
+    // 通知管理
+    '/admin/notifications': { title: '通知列表', i18nKey: 'nav.notificationList', icon: 'Message', category: '通知管理' },
+    '/admin/notifications/send': { title: '发送通知', i18nKey: 'nav.sendNotification', icon: 'Promotion', category: '通知管理', parent: '/admin/notifications' },
+    '/admin/notifications/templates': { title: '通知模板', i18nKey: 'nav.notificationTemplates', icon: 'Document', category: '通知管理', parent: '/admin/notifications' },
+
     // 公告管理
     '/admin/announcements': { title: '公告管理', i18nKey: 'nav.announcements', icon: 'Bell', category: '内容管理' },
 

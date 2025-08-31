@@ -59,8 +59,14 @@ const routes = [
       {
         path: '/notifications/:id',
         name: 'NotificationDetail',
-        component: () => import('@/views/notifications/Notifications.vue'),
+        component: () => import('@/views/notifications/NotificationDetail.vue'),
         meta: { title: '通知详情' }
+      },
+      {
+        path: '/notifications/settings',
+        name: 'NotificationSettings',
+        component: () => import('@/views/notifications/NotificationSettings.vue'),
+        meta: { title: '通知设置' }
       },
       {
         path: '/profile',
@@ -121,6 +127,12 @@ const routes = [
         name: 'TaskDetail',
         component: () => import('@/views/tasks/TaskDetail.vue'),
         meta: { title: '任务详情' }
+      },
+      {
+        path: '/tasks/statistics',
+        name: 'TaskStatistics',
+        component: () => import('@/views/tasks/TaskStatistics.vue'),
+        meta: { title: '任务统计' }
       }
     ]
   }

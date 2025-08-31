@@ -61,7 +61,8 @@ export default {
     table: '表格编辑器',
     tasks: '任务管理',
     createTask: '创建任务',
-    taskDetail: '任务详情'
+    taskDetail: '任务详情',
+    taskStatistics: '任务统计'
   },
 
   // 面包屑导航

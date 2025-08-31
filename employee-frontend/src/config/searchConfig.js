@@ -165,6 +165,18 @@ export const employeeSearchConfig = [
     description: '创建新的任务',
     descriptionKey: 'search.desc.createTask'
   },
+  {
+    id: 'task-statistics',
+    title: '任务统计',
+    titleKey: 'nav.taskStatistics',
+    path: '/tasks/statistics',
+    icon: 'DataAnalysis',
+    category: 'tasks',
+    categoryKey: 'search.category.tasks',
+    keywords: ['任务', 'task', '统计', 'statistics', '数据', 'data', '分析'],
+    description: '查看个人任务统计数据',
+    descriptionKey: 'search.desc.taskStatistics'
+  },
 
   // 日程管理
   {

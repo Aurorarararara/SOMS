@@ -94,7 +94,7 @@
 
       <!-- 任务列表 -->
       <div class="task-list">
-        <el-table :data="filteredTasks" v-loading="loading" style="width: 100%">
+        <el-table :data="tasks" v-loading="loading" style="width: 100%">
           <el-table-column type="selection" width="55" />
           <el-table-column prop="title" label="任务标题" min-width="200">
             <template #default="scope">
@@ -111,13 +111,13 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="assignee" label="负责人" width="120">
+          <el-table-column prop="assigneeName" label="负责人" width="120">
             <template #default="scope">
               <div class="assignee-cell">
                 <el-avatar :size="24" :src="scope.row.assigneeAvatar">
-                  {{ scope.row.assignee?.charAt(0) }}
+                  {{ scope.row.assigneeName?.charAt(0) }}
                 </el-avatar>
-                <span>{{ scope.row.assignee }}</span>
+                <span>{{ scope.row.assigneeName }}</span>
               </div>
             </template>
           </el-table-column>
@@ -128,11 +128,15 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="dueDate" label="截止时间" width="120" />
+          <el-table-column prop="dueDate" label="截止时间" width="120">
+            <template #default="scope">
+              {{ formatDate(scope.row.dueDate) }}
+            </template>
+          </el-table-column>
           <el-table-column prop="progress" label="进度" width="150">
             <template #default="scope">
               <div class="progress-cell">
-                <el-progress :percentage="scope.row.progress" :stroke-width="8" />
+                <el-progress :percentage="scope.row.progress || 0" :stroke-width="8" />
               </div>
             </template>
           </el-table-column>
@@ -155,6 +159,19 @@
             </template>
           </el-table-column>
         </el-table>
+
+        <!-- 分页 -->
+        <div class="pagination-container">
+          <el-pagination
+            v-model:current-page="pagination.current"
+            v-model:page-size="pagination.size"
+            :page-sizes="[10, 20, 50, 100]"
+            :total="pagination.total"
+            layout="total, sizes, prev, pager, next, jumper"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
       </div>
     </div>
 
@@ -175,15 +192,16 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { 
-  Operation, Plus, Download, Clock, Loading, Check, Warning, 
-  Search, ArrowDown 
+import {
+  Operation, Plus, Download, Clock, Loading, Check, Warning,
+  Search, ArrowDown
 } from '@element-plus/icons-vue'
 import TaskFormDialog from './components/TaskFormDialog.vue'
 import CommentDialog from './components/CommentDialog.vue'
+import * as taskApi from '@/api/taskApi'
 
 const { t: $t } = useI18n()
 
@@ -198,39 +216,20 @@ const currentTask = ref(null)
 
 // 任务统计数据
 const taskStats = ref({
-  pending: 12,
-  processing: 8,
-  completed: 45,
-  overdue: 3
+  pending: 0,
+  processing: 0,
+  completed: 0,
+  overdue: 0,
+  total: 0
 })
 
-// 模拟任务数据
-const tasks = ref([
-  {
-    id: 1,
-    title: '系统性能优化',
-    priority: 'high',
-    assignee: '张三',
-    assigneeAvatar: '',
-    status: 'processing',
-    dueDate: '2025-09-15',
-    progress: 75,
-    isUrgent: true,
-    comments: []
-  },
-  {
-    id: 2,
-    title: '用户界面重构',
-    priority: 'medium',
-    assignee: '李四',
-    assigneeAvatar: '',
-    status: 'pending',
-    dueDate: '2025-09-20',
-    progress: 0,
-    isUrgent: false,
-    comments: []
-  }
-])
+// 任务数据
+const tasks = ref([])
+const pagination = ref({
+  current: 1,
+  size: 20,
+  total: 0
+})
 
 // 计算属性
 const filteredTasks = computed(() => {
@@ -275,10 +274,48 @@ const getStatusText = (status) => {
   return texts[status] || '待处理'
 }
 
+// API调用方法
+const loadTaskStats = async () => {
+  try {
+    const response = await taskApi.getTaskStats()
+    if (response.code === 200) {
+      taskStats.value = response.data
+    }
+  } catch (error) {
+    console.error('加载任务统计失败:', error)
+  }
+}
+
+const loadTasks = async () => {
+  loading.value = true
+  try {
+    const params = {
+      page: pagination.value.current,
+      size: pagination.value.size,
+      title: searchQuery.value,
+      status: filterStatus.value,
+      priority: filterPriority.value
+    }
+
+    const response = await taskApi.getTaskList(params)
+    if (response.code === 200) {
+      tasks.value = response.data.records || []
+      pagination.value.total = response.data.total || 0
+    }
+  } catch (error) {
+    console.error('加载任务列表失败:', error)
+    ElMessage.error('加载任务列表失败')
+  } finally {
+    loading.value = false
+  }
+}
+
 const resetFilters = () => {
   searchQuery.value = ''
   filterStatus.value = ''
   filterPriority.value = ''
+  pagination.value.current = 1
+  loadTasks()
 }
 
 const editTask = (task) => {
@@ -291,43 +328,140 @@ const openCommentDialog = (task) => {
   showCommentDialog.value = true
 }
 
-const handleTaskSave = (taskData) => {
-  // 处理任务保存逻辑
-  ElMessage.success('任务保存成功！')
+const handleTaskSave = async (taskData) => {
+  try {
+    let response
+    if (taskData.id) {
+      // 更新任务
+      response = await taskApi.updateTask(taskData.id, taskData)
+    } else {
+      // 创建任务
+      response = await taskApi.createTask(taskData)
+    }
+
+    if (response.code === 200) {
+      ElMessage.success(taskData.id ? '任务更新成功！' : '任务创建成功！')
+      showCreateTaskDialog.value = false
+      currentTask.value = null
+      await loadTasks()
+      await loadTaskStats()
+    }
+  } catch (error) {
+    console.error('保存任务失败:', error)
+    ElMessage.error('保存任务失败')
+  }
 }
 
-const handleCommentSave = (commentData) => {
-  // 处理评论保存逻辑
-  ElMessage.success('评论添加成功！')
+const handleCommentSave = async (commentData) => {
+  try {
+    const response = await taskApi.addTaskComment(currentTask.value.id, commentData.content)
+    if (response.code === 200) {
+      ElMessage.success('评论添加成功！')
+      showCommentDialog.value = false
+    }
+  } catch (error) {
+    console.error('添加评论失败:', error)
+    ElMessage.error('添加评论失败')
+  }
 }
 
-const duplicateTask = (task) => {
-  // 复制任务逻辑
-  ElMessage.success('任务复制成功！')
+const duplicateTask = async (task) => {
+  try {
+    const response = await taskApi.duplicateTask(task.id)
+    if (response.code === 200) {
+      ElMessage.success('任务复制成功！')
+      await loadTasks()
+      await loadTaskStats()
+    }
+  } catch (error) {
+    console.error('复制任务失败:', error)
+    ElMessage.error('复制任务失败')
+  }
 }
 
-const assignTask = (task) => {
-  // 重新分配任务逻辑
-  ElMessage.success('任务分配成功！')
+const assignTask = async (task) => {
+  // TODO: 实现重新分配任务的对话框
+  ElMessage.info('重新分配功能开发中')
 }
 
-const deleteTask = (task) => {
-  ElMessageBox.confirm('确定要删除这个任务吗？', '确认删除', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning',
-  }).then(() => {
-    ElMessage.success('任务删除成功！')
-  })
+const deleteTask = async (task) => {
+  try {
+    await ElMessageBox.confirm('确定要删除这个任务吗？', '确认删除', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    })
+
+    const response = await taskApi.deleteTask(task.id)
+    if (response.code === 200) {
+      ElMessage.success('任务删除成功！')
+      await loadTasks()
+      await loadTaskStats()
+    }
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('删除任务失败:', error)
+      ElMessage.error('删除任务失败')
+    }
+  }
 }
 
-const exportTasks = () => {
-  // 导出任务逻辑
-  ElMessage.success('任务导出成功！')
+const exportTasks = async () => {
+  try {
+    const params = {
+      title: searchQuery.value,
+      status: filterStatus.value,
+      priority: filterPriority.value
+    }
+
+    const response = await taskApi.exportTasks(params, 'excel')
+
+    // 创建下载链接
+    const blob = new Blob([response], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    })
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `tasks_${new Date().getTime()}.xlsx`
+    link.click()
+    window.URL.revokeObjectURL(url)
+
+    ElMessage.success('任务导出成功！')
+  } catch (error) {
+    console.error('导出任务失败:', error)
+    ElMessage.error('导出任务失败')
+  }
 }
 
-onMounted(() => {
-  // 初始化数据
+// 分页处理方法
+const handleSizeChange = (size) => {
+  pagination.value.size = size
+  pagination.value.current = 1
+  loadTasks()
+}
+
+const handleCurrentChange = (current) => {
+  pagination.value.current = current
+  loadTasks()
+}
+
+// 工具方法
+const formatDate = (dateString) => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  return date.toLocaleDateString('zh-CN')
+}
+
+// 监听筛选条件变化
+watch([searchQuery, filterStatus, filterPriority], () => {
+  pagination.value.current = 1
+  loadTasks()
+}, { debounce: 300 })
+
+onMounted(async () => {
+  await loadTaskStats()
+  await loadTasks()
 })
 </script>
 
@@ -456,5 +590,12 @@ onMounted(() => {
 
 .progress-cell {
   padding: 0 8px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px 0;
 }
 </style>

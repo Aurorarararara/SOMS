@@ -11,10 +11,15 @@ import com.office.employee.mapper.TaskMapper;
 import com.office.employee.mapper.TaskCommentMapper;
 import com.office.employee.service.TaskService;
 import com.office.employee.service.TaskCommentService;
+import com.office.employee.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.ByteArrayOutputStream;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
@@ -28,6 +33,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     
     private final TaskMapper taskMapper;
     private final TaskCommentMapper taskCommentMapper;
+    private final NotificationService notificationService;
 
     @Override
     @Transactional
@@ -54,10 +60,15 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         }
         
         save(task);
-        
-        // TODO: 发送通知给被分配的用户
-        if (task.getNotifyOnUpdate() && task.getAssigneeId() != null) {
-            sendTaskNotification(task, "新任务分配");
+
+        // 发送任务分配通知
+        if (task.getAssigneeId() != null && !task.getAssigneeId().equals(creatorId)) {
+            try {
+                notificationService.sendTaskAssignedNotification(task.getAssigneeId(), task.getId(), task.getTitle());
+            } catch (Exception e) {
+                log.warn("发送任务分配通知失败: taskId={}, assigneeId={}, error={}",
+                        task.getId(), task.getAssigneeId(), e.getMessage());
+            }
         }
         
         return task;
@@ -100,12 +111,18 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         }
         
         updateById(task);
-        
-        // 发送更新通知
-        if (task.getNotifyOnUpdate()) {
-            sendTaskNotification(task, "任务更新");
+
+        // 发送任务更新通知
+        if (task.getNotifyOnUpdate() && task.getAssigneeId() != null && !task.getAssigneeId().equals(userId)) {
+            try {
+                String notificationType = "completed".equals(request.getStatus()) ? "task_completed" : "task_updated";
+                notificationService.sendTaskUpdateNotification(task.getAssigneeId(), task.getId(), task.getTitle(), notificationType);
+            } catch (Exception e) {
+                log.warn("发送任务更新通知失败: taskId={}, assigneeId={}, error={}",
+                        task.getId(), task.getAssigneeId(), e.getMessage());
+            }
         }
-        
+
         return task;
     }
 
@@ -125,10 +142,17 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         task.setAssigneeId(assigneeId);
         task.setUpdateBy(operatorId);
         updateById(task);
-        
-        // 发送通知
-        sendTaskNotification(task, "任务重新分配");
-        
+
+        // 发送任务重新分配通知
+        if (assigneeId != null && !assigneeId.equals(oldAssigneeId)) {
+            try {
+                notificationService.sendTaskAssignedNotification(assigneeId, task.getId(), task.getTitle());
+            } catch (Exception e) {
+                log.warn("发送任务重新分配通知失败: taskId={}, assigneeId={}, error={}",
+                        task.getId(), assigneeId, e.getMessage());
+            }
+        }
+
         return task;
     }
 
@@ -157,9 +181,16 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         }
         
         updateById(task);
-        
-        if (task.getNotifyOnUpdate()) {
-            sendTaskNotification(task, "任务进度更新");
+
+        // 发送任务进度更新通知
+        if (task.getNotifyOnUpdate() && task.getAssigneeId() != null && !task.getAssigneeId().equals(userId)) {
+            try {
+                String notificationType = progress == 100 ? "task_completed" : "task_updated";
+                notificationService.sendTaskUpdateNotification(task.getAssigneeId(), task.getId(), task.getTitle(), notificationType);
+            } catch (Exception e) {
+                log.warn("发送任务进度更新通知失败: taskId={}, assigneeId={}, error={}",
+                        task.getId(), task.getAssigneeId(), e.getMessage());
+            }
         }
         
         return task;
@@ -286,8 +317,266 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
 
     @Override
     public byte[] exportTasks(TaskQueryRequest request, String format) {
-        // TODO: 实现任务导出功能
-        throw new RuntimeException("功能开发中");
+        try {
+            // 查询要导出的任务数据
+            IPage<Task> page = pageTasks(request);
+            List<Task> tasks = page.getRecords();
+
+            if ("excel".equalsIgnoreCase(format)) {
+                return exportTasksToExcel(tasks);
+            } else if ("csv".equalsIgnoreCase(format)) {
+                return exportTasksToCSV(tasks);
+            } else {
+                throw new IllegalArgumentException("不支持的导出格式: " + format);
+            }
+        } catch (Exception e) {
+            log.error("导出任务数据失败", e);
+            throw new RuntimeException("导出任务数据失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 导出任务到Excel
+     */
+    private byte[] exportTasksToExcel(List<Task> tasks) {
+        try {
+            // 创建工作簿
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("任务列表");
+
+            // 创建标题行
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"任务ID", "任务标题", "任务描述", "优先级", "状态", "创建人", "负责人",
+                              "开始时间", "截止时间", "预计工时", "实际工时", "进度", "创建时间"};
+
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+            }
+
+            // 填充数据
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                Row row = sheet.createRow(i + 1);
+
+                row.createCell(0).setCellValue(task.getId());
+                row.createCell(1).setCellValue(task.getTitle());
+                row.createCell(2).setCellValue(task.getDescription());
+                row.createCell(3).setCellValue(getPriorityText(task.getPriority()));
+                row.createCell(4).setCellValue(getStatusText(task.getStatus()));
+                row.createCell(5).setCellValue(task.getCreatorName());
+                row.createCell(6).setCellValue(task.getAssigneeName());
+                row.createCell(7).setCellValue(task.getStartDate() != null ? task.getStartDate().toString() : "");
+                row.createCell(8).setCellValue(task.getDueDate() != null ? task.getDueDate().toString() : "");
+                row.createCell(9).setCellValue(task.getEstimatedHours() != null ? task.getEstimatedHours() : 0);
+                row.createCell(10).setCellValue(task.getActualHours() != null ? task.getActualHours() : 0);
+                row.createCell(11).setCellValue(task.getProgress() != null ? task.getProgress() + "%" : "0%");
+                row.createCell(12).setCellValue(task.getCreateTime() != null ? task.getCreateTime().toString() : "");
+            }
+
+            // 自动调整列宽
+            for (int i = 0; i < headers.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            // 转换为字节数组
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            workbook.close();
+
+            return outputStream.toByteArray();
+        } catch (Exception e) {
+            log.error("导出Excel失败", e);
+            throw new RuntimeException("导出Excel失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 导出任务到CSV
+     */
+    private byte[] exportTasksToCSV(List<Task> tasks) {
+        try {
+            StringBuilder csv = new StringBuilder();
+
+            // 添加CSV标题行
+            csv.append("任务ID,任务标题,任务描述,优先级,状态,创建人,负责人,开始时间,截止时间,预计工时,实际工时,进度,创建时间\n");
+
+            // 添加数据行
+            for (Task task : tasks) {
+                csv.append(task.getId()).append(",")
+                   .append(escapeCSV(task.getTitle())).append(",")
+                   .append(escapeCSV(task.getDescription())).append(",")
+                   .append(getPriorityText(task.getPriority())).append(",")
+                   .append(getStatusText(task.getStatus())).append(",")
+                   .append(escapeCSV(task.getCreatorName())).append(",")
+                   .append(escapeCSV(task.getAssigneeName())).append(",")
+                   .append(task.getStartDate() != null ? task.getStartDate().toString() : "").append(",")
+                   .append(task.getDueDate() != null ? task.getDueDate().toString() : "").append(",")
+                   .append(task.getEstimatedHours() != null ? task.getEstimatedHours() : 0).append(",")
+                   .append(task.getActualHours() != null ? task.getActualHours() : 0).append(",")
+                   .append(task.getProgress() != null ? task.getProgress() + "%" : "0%").append(",")
+                   .append(task.getCreateTime() != null ? task.getCreateTime().toString() : "").append("\n");
+            }
+
+            return csv.toString().getBytes("UTF-8");
+        } catch (Exception e) {
+            log.error("导出CSV失败", e);
+            throw new RuntimeException("导出CSV失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 转义CSV字段
+     */
+    private String escapeCSV(String value) {
+        if (value == null) return "";
+        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
+            return "\"" + value.replace("\"", "\"\"") + "\"";
+        }
+        return value;
+    }
+
+    /**
+     * 获取优先级文本
+     */
+    private String getPriorityText(String priority) {
+        switch (priority) {
+            case "low": return "低";
+            case "medium": return "中";
+            case "high": return "高";
+            case "urgent": return "紧急";
+            default: return priority;
+        }
+    }
+
+    /**
+     * 获取状态文本
+     */
+    private String getStatusText(String status) {
+        switch (status) {
+            case "pending": return "待处理";
+            case "processing": return "进行中";
+            case "completed": return "已完成";
+            case "overdue": return "已逾期";
+            default: return status;
+        }
+    }
+
+    // ==================== 新增统计方法实现 ====================
+
+    @Override
+    public Map<String, Object> getTaskStatsByDepartment(Long departmentId) {
+        return taskMapper.selectTaskStatsByDepartment(departmentId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllDepartmentTaskDistribution(Integer days) {
+        return taskMapper.selectAllDepartmentTaskDistribution(days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getDepartmentTaskDistributionByPriority(Integer days) {
+        return taskMapper.selectDepartmentTaskDistributionByPriority(days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getDepartmentTaskDistributionByStatus(Integer days) {
+        return taskMapper.selectDepartmentTaskDistributionByStatus(days);
+    }
+
+    @Override
+    public Map<String, Integer> getTaskStatsByStatus() {
+        return taskMapper.selectTaskStatsByStatus();
+    }
+
+    @Override
+    public Map<String, Object> getWorkloadStats(Long userId) {
+        return taskMapper.selectWorkloadStatsByUserId(userId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getWorkloadStatsByDepartment(Integer days) {
+        return taskMapper.selectWorkloadStatsByDepartment(days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getWorkloadStatsByUser(Integer days) {
+        return taskMapper.selectWorkloadStatsByUser(days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getWorkloadTrendStats(Integer days) {
+        return taskMapper.selectWorkloadTrendStats(days);
+    }
+
+    @Override
+    public Map<String, Object> getEfficiencyAnalysis(Long userId, Integer days) {
+        return taskMapper.selectEfficiencyAnalysis(userId, days);
+    }
+
+    @Override
+    public Map<String, Object> getCompletionRateStats(Long userId, Integer days) {
+        return taskMapper.selectCompletionRateStats(userId, days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getCompletionRateByDepartment(Integer days) {
+        return taskMapper.selectCompletionRateByDepartment(days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getCompletionRateByDateRange(Integer days) {
+        return taskMapper.selectCompletionRateByDateRange(days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getCompletionRateByUser(Integer days) {
+        return taskMapper.selectCompletionRateByUser(days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getTaskTrendStats(Integer days) {
+        return taskMapper.selectTaskTrendStats(days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getDetailedTaskTrendStats(Integer days) {
+        return taskMapper.selectDetailedTaskTrendStats(days);
+    }
+
+    @Override
+    public List<Map<String, Object>> getWeeklyTaskTrendStats(Integer weeks) {
+        return taskMapper.selectWeeklyTaskTrendStats(weeks);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMonthlyTaskTrendStats(Integer months) {
+        return taskMapper.selectMonthlyTaskTrendStats(months);
+    }
+
+    @Override
+    public List<Map<String, Object>> getDepartmentTaskTrendStats(Integer days) {
+        return taskMapper.selectDepartmentTaskTrendStats(days);
+    }
+
+    @Override
+    public Map<String, Integer> getPriorityDistributionStats(Long userId) {
+        return taskMapper.selectPriorityDistributionStats(userId);
+    }
+
+    @Override
+    public Map<String, Object> getTaskEfficiencyStats(Long userId) {
+        return taskMapper.selectTaskEfficiencyStats(userId);
+    }
+
+    @Override
+    public Map<String, Object> getOverdueTaskStats(Long userId) {
+        return taskMapper.selectOverdueTaskStats(userId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getTaskAssignmentStats() {
+        return taskMapper.selectTaskAssignmentStats();
     }
 
     // 私有辅助方法
@@ -302,8 +591,5 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         return false;
     }
 
-    private void sendTaskNotification(Task task, String message) {
-        // TODO: 实现任务通知发送
-        log.info("发送任务通知: taskId={}, message={}", task.getId(), message);
-    }
+
 }

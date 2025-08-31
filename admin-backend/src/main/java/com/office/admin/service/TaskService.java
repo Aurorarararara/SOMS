@@ -94,4 +94,136 @@ public interface TaskService extends IService<Task> {
      * 导出任务数据
      */
     byte[] exportTasks(TaskQueryRequest request, String format);
+
+    // ==================== 新增统计方法 ====================
+
+    /**
+     * 按部门统计任务
+     */
+    Map<String, Object> getTaskStatsByDepartment(Long departmentId);
+
+    /**
+     * 获取所有部门任务分布统计
+     */
+    List<Map<String, Object>> getAllDepartmentTaskDistribution(Integer days);
+
+    /**
+     * 按部门和优先级统计任务分布
+     */
+    List<Map<String, Object>> getDepartmentTaskDistributionByPriority(Integer days);
+
+    /**
+     * 按部门和状态统计任务分布
+     */
+    List<Map<String, Object>> getDepartmentTaskDistributionByStatus(Integer days);
+
+    /**
+     * 按状态统计任务
+     */
+    Map<String, Integer> getTaskStatsByStatus();
+
+    /**
+     * 获取工作量统计
+     */
+    Map<String, Object> getWorkloadStats(Long userId);
+
+    /**
+     * 按部门统计工作量
+     */
+    List<Map<String, Object>> getWorkloadStatsByDepartment(Integer days);
+
+    /**
+     * 按用户统计工作量
+     */
+    List<Map<String, Object>> getWorkloadStatsByUser(Integer days);
+
+    /**
+     * 获取工作量趋势统计
+     */
+    List<Map<String, Object>> getWorkloadTrendStats(Integer days);
+
+    /**
+     * 获取效率分析统计
+     */
+    Map<String, Object> getEfficiencyAnalysis(Long userId, Integer days);
+
+    /**
+     * 获取任务完成率统计
+     */
+    Map<String, Object> getCompletionRateStats(Long userId, Integer days);
+
+    /**
+     * 按部门统计任务完成率
+     */
+    List<Map<String, Object>> getCompletionRateByDepartment(Integer days);
+
+    /**
+     * 按时间范围统计任务完成率
+     */
+    List<Map<String, Object>> getCompletionRateByDateRange(Integer days);
+
+    /**
+     * 按用户统计任务完成率
+     */
+    List<Map<String, Object>> getCompletionRateByUser(Integer days);
+
+    /**
+     * 获取任务趋势统计
+     */
+    List<Map<String, Object>> getTaskTrendStats(Integer days);
+
+    /**
+     * 获取详细任务趋势分析
+     */
+    List<Map<String, Object>> getDetailedTaskTrendStats(Integer days);
+
+    /**
+     * 按周统计任务趋势
+     */
+    List<Map<String, Object>> getWeeklyTaskTrendStats(Integer weeks);
+
+    /**
+     * 按月统计任务趋势
+     */
+    List<Map<String, Object>> getMonthlyTaskTrendStats(Integer months);
+
+    /**
+     * 按部门统计任务趋势
+     */
+    List<Map<String, Object>> getDepartmentTaskTrendStats(Integer days);
+
+    /**
+     * 获取优先级分布统计
+     */
+    Map<String, Integer> getPriorityDistributionStats(Long userId);
+
+    /**
+     * 获取任务效率统计
+     */
+    Map<String, Object> getTaskEfficiencyStats(Long userId);
+
+    /**
+     * 获取逾期任务统计
+     */
+    Map<String, Object> getOverdueTaskStats(Long userId);
+
+    /**
+     * 获取任务分配统计
+     */
+    List<Map<String, Object>> getTaskAssignmentStats();
+
+    /**
+     * 获取全局任务统计（管理员用）
+     */
+    Map<String, Object> getGlobalTaskStats();
+
+    /**
+     * 获取部门任务分布统计
+     */
+    List<Map<String, Object>> getDepartmentTaskDistribution();
+
+    /**
+     * 获取用户工作量排行
+     */
+    List<Map<String, Object>> getUserWorkloadRanking(Integer limit);
 }

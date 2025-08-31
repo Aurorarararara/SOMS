@@ -63,6 +63,7 @@
             </template>
             <el-menu-item index="/tasks">{{ $t('nav.tasks') }}</el-menu-item>
             <el-menu-item index="/tasks/create">{{ $t('nav.createTask') }}</el-menu-item>
+            <el-menu-item index="/tasks/statistics">{{ $t('nav.taskStatistics') }}</el-menu-item>
           </el-sub-menu>
 
           <el-menu-item index="/schedule">

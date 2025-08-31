@@ -55,6 +55,14 @@ export default {
     workflow: 'Workflow Management',
     myTasks: 'My Tasks',
     myInitiated: 'My Initiated',
+    taskManagement: 'Task Management',
+    taskList: 'Task List',
+    createTask: 'Create Task',
+    taskStatistics: 'Task Statistics',
+    notificationManagement: 'Notification Management',
+    notificationList: 'Notification List',
+    sendNotification: 'Send Notification',
+    notificationTemplates: 'Notification Templates',
     attendanceReports: 'Attendance Reports',
     leaveReports: 'Leave Reports',
     performanceReports: 'Performance Reports',
@@ -85,7 +93,18 @@ export default {
     justNow: 'Just now',
     minutesAgo: 'minutes ago',
     hoursAgo: 'hours ago',
-    daysAgo: 'days ago'
+    daysAgo: 'days ago',
+    // Task management breadcrumbs
+    taskManagement: 'Task Management',
+    taskList: 'Task List',
+    createTask: 'Create Task',
+    taskDetail: 'Task Detail',
+    taskStatistics: 'Task Statistics',
+    // Notification management breadcrumbs
+    notificationManagement: 'Notification Management',
+    notificationList: 'Notification List',
+    sendNotification: 'Send Notification',
+    notificationTemplates: 'Notification Templates'
   },
 
   // User Related

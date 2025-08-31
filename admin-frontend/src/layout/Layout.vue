@@ -54,6 +54,26 @@
             <el-menu-item index="/admin/leave/approval">{{ $t('nav.leaveApproval') }}</el-menu-item>
             <el-menu-item index="/admin/leave/statistics">{{ $t('nav.leaveStatistics') }}</el-menu-item>
           </el-sub-menu>
+
+          <el-sub-menu index="/admin/tasks">
+            <template #title>
+              <el-icon><List /></el-icon>
+              <span>{{ $t('nav.taskManagement') }}</span>
+            </template>
+            <el-menu-item index="/admin/tasks">{{ $t('nav.taskList') }}</el-menu-item>
+            <el-menu-item index="/admin/tasks/create">{{ $t('nav.createTask') }}</el-menu-item>
+            <el-menu-item index="/admin/tasks/statistics">{{ $t('nav.taskStatistics') }}</el-menu-item>
+          </el-sub-menu>
+
+          <el-sub-menu index="/admin/notifications">
+            <template #title>
+              <el-icon><Message /></el-icon>
+              <span>{{ $t('nav.notificationManagement') }}</span>
+            </template>
+            <el-menu-item index="/admin/notifications">{{ $t('nav.notificationList') }}</el-menu-item>
+            <el-menu-item index="/admin/notifications/send">{{ $t('nav.sendNotification') }}</el-menu-item>
+            <el-menu-item index="/admin/notifications/templates">{{ $t('nav.notificationTemplates') }}</el-menu-item>
+          </el-sub-menu>
           
           <el-menu-item index="/admin/announcements">
             <el-icon><Bell /></el-icon>
@@ -224,7 +244,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   Setting, DataBoard, User, Clock, DocumentRemove, Bell, DataAnalysis,
   Menu, Refresh, FullScreen, ArrowDown, SwitchButton, Operation,
-  OfficeBuilding
+  OfficeBuilding, List, Message
 } from '@element-plus/icons-vue'
 
 import { useUserStore } from '@/stores/user'

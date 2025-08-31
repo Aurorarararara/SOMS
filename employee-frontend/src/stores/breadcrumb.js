@@ -30,6 +30,7 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
     '/collaborative/table/:id': { title: '表格编辑器', i18nKey: 'nav.table', icon: 'Edit', category: '协同', parent: '/collaborative' },
     '/tasks': { title: '任务管理', i18nKey: 'nav.tasks', icon: 'List', category: '任务' },
     '/tasks/create': { title: '创建任务', i18nKey: 'nav.createTask', icon: 'Plus', category: '任务', parent: '/tasks' },
+    '/tasks/statistics': { title: '任务统计', i18nKey: 'nav.taskStatistics', icon: 'DataAnalysis', category: '任务', parent: '/tasks' },
     '/tasks/:id': { title: '任务详情', i18nKey: 'nav.taskDetail', icon: 'Document', category: '任务', parent: '/tasks' }
   })
 

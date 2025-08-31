@@ -20,5 +20,6 @@ public class TaskUpdateRequest {
     private Boolean isUrgent;
     private Boolean allowReassign;
     private Boolean notifyOnUpdate;
+    private Integer estimatedHours;
     private Integer actualHours;
 }

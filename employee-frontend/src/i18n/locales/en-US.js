@@ -61,7 +61,8 @@ export default {
     table: 'Table Editor',
     tasks: 'Task Management',
     createTask: 'Create Task',
-    taskDetail: 'Task Detail'
+    taskDetail: 'Task Detail',
+    taskStatistics: 'Task Statistics'
   },
 
   // Breadcrumb Navigation
@@ -84,7 +85,9 @@ export default {
     justNow: 'Just now',
     minutesAgo: '{minutes} minutes ago',
     hoursAgo: '{hours} hours ago',
-    daysAgo: '{days} days ago'
+    daysAgo: '{days} days ago',
+    // Task management breadcrumbs
+    taskStatistics: 'Task Statistics'
   },
 
   // User Related
