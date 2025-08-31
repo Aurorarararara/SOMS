@@ -314,12 +314,11 @@ public interface TaskMapper extends BaseMapper<Task> {
      * 获取优先级分布统计
      */
     @Select("SELECT " +
-            "COUNT(CASE WHEN priority = 'low' THEN 1 END) as low_priority, " +
-            "COUNT(CASE WHEN priority = 'normal' THEN 1 END) as normal_priority, " +
-            "COUNT(CASE WHEN priority = 'high' THEN 1 END) as high_priority, " +
-            "COUNT(CASE WHEN priority = 'urgent' THEN 1 END) as urgent_priority " +
-            "FROM tasks WHERE assignee_id = #{userId}")
-    Map<String, Integer> selectPriorityDistributionStats(@Param("userId") Long userId);
+            "priority, " +
+            "COUNT(*) as count " +
+            "FROM tasks WHERE assignee_id = #{userId} " +
+            "GROUP BY priority")
+    List<Map<String, Object>> selectPriorityDistributionStats(@Param("userId") Long userId);
 
     /**
      * 获取任务效率统计

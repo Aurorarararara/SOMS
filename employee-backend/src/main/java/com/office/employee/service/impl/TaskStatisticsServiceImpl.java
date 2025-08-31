@@ -139,15 +139,26 @@ public class TaskStatisticsServiceImpl implements TaskStatisticsService {
         distribution.putAll(workloadStats);
         
         // 获取优先级分布
-        Map<String, Integer> priorityStats = taskMapper.selectPriorityDistributionStats(userId);
-        distribution.putAll(priorityStats);
+        List<Map<String, Object>> priorityStatsList = taskMapper.selectPriorityDistributionStats(userId);
+        for (Map<String, Object> stat : priorityStatsList) {
+            String priority = (String) stat.get("priority");
+            Integer count = ((Number) stat.get("count")).intValue();
+            distribution.put(priority + "_priority", count);
+        }
         
         return distribution;
     }
     
     @Override
     public Map<String, Object> getPriorityAnalysis(Long userId, Integer days) {
-        return new HashMap<>(taskMapper.selectPriorityDistributionStats(userId));
+        List<Map<String, Object>> priorityStatsList = taskMapper.selectPriorityDistributionStats(userId);
+        Map<String, Object> result = new HashMap<>();
+        for (Map<String, Object> stat : priorityStatsList) {
+            String priority = (String) stat.get("priority");
+            Object count = stat.get("count");
+            result.put(priority, count);
+        }
+        return result;
     }
     
     @Override
@@ -187,11 +198,15 @@ public class TaskStatisticsServiceImpl implements TaskStatisticsService {
     @Override
     public Map<String, Object> getTaskCategoryStats(Long userId, Integer days) {
         Map<String, Object> stats = new HashMap<>();
-        
+
         // 获取优先级分布作为分类统计
-        Map<String, Integer> priorityStats = taskMapper.selectPriorityDistributionStats(userId);
-        stats.putAll(priorityStats);
-        
+        List<Map<String, Object>> priorityStatsList = taskMapper.selectPriorityDistributionStats(userId);
+        for (Map<String, Object> stat : priorityStatsList) {
+            String priority = (String) stat.get("priority");
+            Object count = stat.get("count");
+            stats.put(priority, count);
+        }
+
         return stats;
     }
     
