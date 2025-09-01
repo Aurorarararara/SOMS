@@ -240,36 +240,6 @@ public class TaskController {
     }
 
     /**
-     * 获取工作量统计
-     */
-    @GetMapping("/stats/workload")
-    public Result<Map<String, Object>> getWorkloadStats(HttpServletRequest request) {
-        Long userId = getUserIdFromRequest(request);
-        Map<String, Object> stats = taskService.getWorkloadStats(userId);
-        return Result.success(stats);
-    }
-
-    /**
-     * 获取优先级分布统计
-     */
-    @GetMapping("/stats/priority")
-    public Result<List<Map<String, Object>>> getPriorityDistributionStats(HttpServletRequest request) {
-        Long userId = getUserIdFromRequest(request);
-        List<Map<String, Object>> stats = taskService.getPriorityDistributionStats(userId);
-        return Result.success(stats);
-    }
-
-    /**
-     * 获取任务效率统计
-     */
-    @GetMapping("/stats/efficiency")
-    public Result<Map<String, Object>> getTaskEfficiencyStats(HttpServletRequest request) {
-        Long userId = getUserIdFromRequest(request);
-        Map<String, Object> stats = taskService.getTaskEfficiencyStats(userId);
-        return Result.success(stats);
-    }
-
-    /**
      * 获取分配给我的任务
      */
     @GetMapping("/assigned")

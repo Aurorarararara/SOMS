@@ -616,12 +616,13 @@ onMounted(async () => {
       loadWorkloadTrendData()
     ])
     await initCharts()
-    window.addEventListener('resize', handleResize)
   } catch (error) {
     ElMessage.error('加载统计数据失败')
   } finally {
     loading.value = false
   }
+
+  window.addEventListener('resize', handleResize)
 })
 
 // 清理

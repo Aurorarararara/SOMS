@@ -564,7 +564,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     }
 
     @Override
-    public List<Map<String, Object>> getPriorityDistributionStats(Long userId) {
+    public Map<String, Integer> getPriorityDistributionStats(Long userId) {
         return taskMapper.selectPriorityDistributionStats(userId);
     }
 

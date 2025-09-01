@@ -195,7 +195,7 @@ public interface TaskService extends IService<Task> {
     /**
      * 获取优先级分布统计
      */
-    List<Map<String, Object>> getPriorityDistributionStats(Long userId);
+    Map<String, Integer> getPriorityDistributionStats(Long userId);
 
     /**
      * 获取任务效率统计
