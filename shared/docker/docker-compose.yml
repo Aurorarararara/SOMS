@@ -1,0 +1,82 @@
+services:
+  # MySQL数据库
+  mysql:
+    image: mysql:8.0
+    container_name: office_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: office_system
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../../database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Redis缓存 (可选)
+  redis:
+    image: redis:7.0-alpine
+    container_name: office_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # Nginx反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: office_nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ../nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - employee-backend
+      - admin-backend
+
+  # 员工端后端服务
+  employee-backend:
+    build:
+      context: ../../employee-backend
+      dockerfile: Dockerfile
+    container_name: office_employee_backend
+    restart: always
+    ports:
+      - "8086:8085"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - employee_logs:/app/logs
+
+  # 管理端后端服务
+  admin-backend:
+    build:
+      context: ../../admin-backend
+      dockerfile: Dockerfile
+    container_name: office_admin_backend
+    restart: always
+    ports:
+      - "8083:8082"  # 修改端口映射以避免冲突
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - admin_logs:/app/logs
+
+volumes:
+  mysql_data:
+  redis_data:
+  employee_logs:
+  admin_logs:

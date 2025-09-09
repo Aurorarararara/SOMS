@@ -1,0 +1,736 @@
+export default {
+  // 通用
+  common: {
+    confirm: '确认',
+    cancel: '取消',
+    save: '保存',
+    delete: '删除',
+    edit: '编辑',
+    add: '添加',
+    search: '搜索',
+    reset: '重置',
+    submit: '提交',
+    back: '返回',
+    next: '下一步',
+    previous: '上一步',
+    loading: '加载中...',
+    noData: '暂无数据',
+    success: '成功',
+    error: '错误',
+    warning: '警告',
+    info: '信息',
+    yes: '是',
+    no: '否',
+    close: '关闭',
+    refresh: '刷新',
+    export: '导出',
+    import: '导入',
+    clear: '清空',
+    manage: '管理',
+    view: '查看',
+    download: '下载',
+    upload: '上传'
+  },
+
+  // 布局
+  layout: {
+    refreshPage: '刷新页面',
+    toggleFullscreen: '全屏显示'
+  },
+
+  // 导航菜单
+  nav: {
+    dashboard: '综合仪表盘',
+    employees: '员工管理',
+    departments: '部门管理',
+    roles: '角色管理',
+    organizationChart: '组织架构图',
+    attendanceRecords: '考勤记录',
+    attendanceRules: '考勤规则',
+    attendanceStatistics: '考勤统计',
+    leaveApplications: '请假申请',
+    leaveApproval: '审批管理',
+    leaveStatistics: '请假统计',
+    announcements: '公告管理',
+    workflow: '审批流程管理',
+    myTasks: '我的待办任务',
+    myInitiated: '我发起的流程',
+    attendanceReports: '考勤报表',
+    leaveReports: '请假报表',
+    performanceReports: '绩效报表',
+    systemConfig: '系统配置',
+    operationLogs: '操作日志',
+    dataBackup: '数据备份',
+    profile: '个人信息',
+    adminBackend: '管理后台'
+  },
+
+  // 面包屑导航
+  breadcrumb: {
+    home: '管理后台',
+    recentVisits: '最近访问',
+    favorites: '我的收藏',
+    addToFavorites: '收藏此页面',
+    removeFromFavorites: '取消收藏',
+    visitHistory: '访问历史',
+    clearHistory: '清空历史',
+    clearFavorites: '清空收藏',
+    noHistory: '暂无访问记录',
+    noFavorites: '暂无收藏页面',
+    favoriteAdded: '已添加到收藏',
+    favoriteRemoved: '已移除收藏',
+    favoriteExists: '该页面已在收藏夹中',
+    historyCleared: '已清空访问历史',
+    favoritesCleared: '已清空收藏夹',
+    justNow: '刚刚',
+    minutesAgo: '分钟前',
+    hoursAgo: '小时前',
+    daysAgo: '天前'
+  },
+
+  // 用户相关
+  user: {
+    login: '登录',
+    logout: '退出登录',
+    username: '用户名',
+    password: '密码',
+    rememberMe: '记住我',
+    forgotPassword: '忘记密码',
+    profile: '个人资料',
+    settings: '设置',
+    changePassword: '修改密码',
+    personalInfo: '个人信息',
+    avatar: '头像',
+    nickname: '昵称',
+    email: '邮箱',
+    phone: '手机号',
+    department: '部门',
+    position: '职位',
+    joinDate: '入职日期',
+    status: '状态',
+    active: '激活',
+    inactive: '禁用',
+    permissions: '权限'
+  },
+
+  // 仪表盘
+  dashboard: {
+    totalEmployees: '总员工数',
+    todayAttendance: '今日考勤',
+    pendingLeave: '待审批请假',
+    totalDepartments: '部门数量',
+    attendanceStats: '考勤统计',
+    departmentDistribution: '部门人员分布',
+    selectMonth: '选择月份',
+    quickActions: '快捷操作',
+    latestAnnouncements: '最新公告',
+    viewMore: '查看更多',
+    pendingTasks: '待处理事项',
+    systemMessages: '系统消息',
+    noPendingTasks: '暂无待处理事项',
+    noSystemMessages: '暂无系统消息'
+  },
+
+  // 员工管理
+  employees: {
+    addEmployee: '新增员工',
+    employeeName: '员工姓名',
+    enterEmployeeName: '请输入员工姓名',
+    department: '所属部门',
+    selectDepartment: '请选择部门',
+    employeeStatus: '员工状态',
+    selectStatus: '请选择状态',
+    active: '在职',
+    inactive: '离职',
+    employeeId: '员工ID',
+    employeeCode: '员工工号',
+    name: '姓名',
+    email: '邮箱',
+    phone: '电话',
+    position: '职位',
+    status: '状态'
+  },
+
+  // 部门管理
+  departments: {
+    addDepartment: '新增部门',
+    editDepartment: '编辑部门',
+    departmentId: '部门ID',
+    departmentName: '部门名称',
+    description: '部门描述',
+    manager: '部门经理',
+    employeeCount: '员工数量',
+    status: '状态',
+    createTime: '创建时间',
+    normal: '正常',
+    disabled: '停用',
+    enterDepartmentName: '请输入部门名称'
+  },
+
+  // 角色管理
+  roles: {
+    addRole: '新增角色',
+    editRole: '编辑角色',
+    roleId: '角色ID',
+    roleName: '角色名称',
+    roleCode: '角色编码',
+    description: '角色描述',
+    status: '状态',
+    createTime: '创建时间',
+    enabled: '启用',
+    disabled: '禁用',
+    permissions: '权限',
+    enterRoleName: '请输入角色名称',
+    enterRoleCode: '请输入角色编码'
+  },
+
+  // 考勤规则
+  attendanceRules: {
+    addRule: '新增规则',
+    editRule: '编辑规则',
+    ruleId: '规则ID',
+    ruleName: '规则名称',
+    workStartTime: '上班时间',
+    workEndTime: '下班时间',
+    lateThreshold: '迟到阈值',
+    earlyThreshold: '早退阈值',
+    applicableDepartments: '适用部门',
+    status: '状态',
+    enabled: '启用',
+    disabled: '禁用',
+    enterRuleName: '请输入规则名称'
+  },
+
+  // 考勤统计
+  attendanceStatistics: {
+    exportStatistics: '导出统计',
+    normalAttendance: '正常出勤',
+    lateCount: '迟到次数',
+    absentCount: '旷工次数',
+    leaveCount: '请假次数',
+    statisticsRange: '统计范围'
+  },
+
+  // 请假申请
+  leaveApplications: {
+    exportApplications: '导出申请',
+    applicant: '申请人',
+    enterApplicantName: '请输入申请人姓名',
+    leaveType: '请假类型',
+    selectLeaveType: '请选择请假类型',
+    sickLeave: '病假',
+    personalLeave: '事假',
+    annualLeave: '年假',
+    marriageLeave: '婚假',
+    maternityLeave: '产假',
+    bereavementLeave: '丧假',
+    applicationStatus: '申请状态',
+    selectStatus: '请选择状态',
+    pending: '待审批',
+    approved: '已通过',
+    rejected: '已拒绝',
+    cancelled: '已撤销',
+    applicationDate: '申请日期',
+    startDate: '开始日期',
+    endDate: '结束日期',
+    applicationId: '申请ID',
+    employeeCode: '工号',
+    department: '部门',
+    leaveDays: '请假天数',
+    status: '状态',
+    applicationTime: '申请时间',
+    reason: '请假原因',
+    viewDetails: '查看详情',
+    workflowProgress: '流程进度'
+  },
+
+  // 审批管理
+  leaveApproval: {
+    showAll: '显示全部',
+    pending: '待审批',
+    approved: '已通过',
+    rejected: '已拒绝',
+    totalApplications: '总申请',
+    applicationId: '申请ID',
+    applicant: '申请人',
+    department: '部门',
+    leaveType: '请假类型',
+    leaveDuration: '请假时间',
+    days: '天数',
+    priority: '优先级',
+    applicationTime: '申请时间',
+    status: '状态',
+    details: '详情',
+    approve: '通过',
+    reject: '拒绝'
+  },
+
+  // 请假统计
+  leaveStatistics: {
+    exportStatistics: '导出统计',
+    statisticsDetails: '请假统计明细',
+    statisticsPeriod: '统计周期',
+    startMonth: '开始月份',
+    endMonth: '结束月份',
+    employeeName: '员工姓名',
+    department: '部门',
+    sickLeaveDays: '病假(天)',
+    personalLeaveDays: '事假(天)',
+    annualLeaveDays: '年假(天)',
+    totalLeaveDays: '总请假(天)',
+    leaveRate: '请假率',
+    viewDetails: '查看详情',
+    totalEmployees: '总员工数',
+    monthlyLeaveCount: '本月请假人数',
+    averageLeaveRate: '平均请假率'
+  },
+
+  // 公告管理
+  announcementsManage: {
+    publishAnnouncement: '发布公告',
+    announcementTitle: '公告标题',
+    enterTitle: '请输入公告标题',
+    announcementType: '公告类型',
+    selectType: '请选择类型',
+    notice: '通知公告',
+    news: '新闻动态',
+    policy: '制度规定',
+    other: '其他',
+    publishStatus: '发布状态',
+    selectStatus: '请选择状态',
+    published: '已发布',
+    unpublished: '未发布',
+    contentSummary: '内容摘要',
+    publisher: '发布人',
+    publishTime: '发布时间',
+    readCount: '阅读量',
+    status: '状态'
+  },
+
+  // 系统配置
+  systemConfig: {
+    saveConfig: '保存配置',
+    basicSettings: '基本设置',
+    systemName: '系统名称',
+    systemVersion: '系统版本',
+    adminEmail: '管理员邮箱',
+    attendanceSettings: '考勤设置',
+    standardWorkHours: '标准工作时间',
+    hoursPerDay: '小时/天',
+    lateThreshold: '迟到阈值',
+    minutes: '分钟'
+  },
+
+  // 操作日志
+  systemLogs: {
+    exportLogs: '导出日志',
+    logId: '日志ID',
+    operationUser: '操作用户',
+    operationType: '操作类型',
+    operationDescription: '操作描述',
+    ipAddress: 'IP地址',
+    operationTime: '操作时间'
+  },
+
+  // 数据备份
+  systemBackup: {
+    createBackup: '创建备份',
+    backupId: '备份ID',
+    backupName: '备份名称',
+    fileSize: '文件大小',
+    createTime: '创建时间',
+    backupDescription: '备份描述',
+    download: '下载',
+    restore: '还原'
+  },
+
+  // 考勤报表
+  reportsAttendance: {
+    attendanceReport: '考勤报表',
+    generateReport: '生成报表',
+    reportType: '报表类型',
+    monthlyReport: '月度报表',
+    quarterlyReport: '季度报表',
+    yearlyReport: '年度报表',
+    statisticsRange: '统计范围',
+    startMonth: '开始月份',
+    endMonth: '结束月份',
+    queryReport: '查询报表',
+    chartPlaceholder: '考勤趋势图表展示区域',
+    reportLoadingInProgress: '报表加载功能开发中...',
+    reportGenerationInProgress: '报表生成功能开发中...'
+  },
+
+  // 请假报表
+  reportsLeave: {
+    leaveReport: '请假报表',
+    exportReport: '导出报表',
+    chartPlaceholder: '请假统计图表展示区域'
+  },
+
+  // 绩效报表
+  reportsPerformance: {
+    performanceReport: '绩效报表',
+    generatePerformanceReport: '生成绩效报表',
+    chartPlaceholder: '绩效分析图表展示区域'
+  },
+
+  // 登录页面
+  login: {
+    systemTitle: '智能办公管理系统',
+    adminPlatform: '管理平台',
+    adminLogin: '管理员登录',
+    adminLoginPrompt: '使用管理员账户登录系统',
+    adminAccount: '管理员账号',
+    enterCaptcha: '请输入验证码',
+    clickRefresh: '点击刷新',
+    loggingIn: '登录中...',
+    loginSuccess: '登录成功！',
+    loginFailed: '登录失败，请检查账号密码',
+    captchaError: '验证码错误'
+  },
+
+  // 员工管理
+  employee: {
+    list: '员工列表',
+    add: '添加员工',
+    edit: '编辑员工',
+    detail: '员工详情',
+    employeeId: '员工编号',
+    name: '姓名',
+    gender: '性别',
+    male: '男',
+    female: '女',
+    age: '年龄',
+    idCard: '身份证号',
+    address: '地址',
+    emergencyContact: '紧急联系人',
+    emergencyPhone: '紧急联系电话',
+    hireDate: '入职日期',
+    probationEndDate: '试用期结束日期',
+    contractType: '合同类型',
+    salary: '薪资',
+    bankAccount: '银行账户',
+    socialSecurity: '社保号',
+    workLocation: '工作地点'
+  },
+
+  // 部门管理
+  department: {
+    list: '部门列表',
+    add: '添加部门',
+    edit: '编辑部门',
+    detail: '部门详情',
+    name: '部门名称',
+    code: '部门编码',
+    manager: '部门经理',
+    parentDepartment: '上级部门',
+    description: '部门描述',
+    employeeCount: '员工数量',
+    subDepartments: '子部门',
+    organizationChart: '组织架构'
+  },
+
+  // 角色管理
+  role: {
+    list: '角色列表',
+    add: '添加角色',
+    edit: '编辑角色',
+    detail: '角色详情',
+    name: '角色名称',
+    code: '角色编码',
+    description: '角色描述',
+    permissions: '权限设置',
+    users: '关联用户',
+    systemRole: '系统角色',
+    customRole: '自定义角色'
+  },
+
+  // 考勤管理
+  attendance: {
+    records: '考勤记录',
+    rules: '考勤规则',
+    statistics: '考勤统计',
+    clockIn: '上班打卡',
+    clockOut: '下班打卡',
+    status: '状态',
+    time: '时间',
+    location: '地点',
+    workDays: '工作天数',
+    lateDays: '迟到天数',
+    earlyLeaveDays: '早退天数',
+    absentDays: '缺勤天数',
+    overtimeHours: '加班时长',
+    clockInTime: '上班时间',
+    clockOutTime: '下班时间',
+    workHours: '工作时长',
+    normal: '正常',
+    late: '迟到',
+    earlyLeave: '早退',
+    absent: '缺勤',
+    overtime: '加班',
+    workingDays: '工作日',
+    restDays: '休息日',
+    holidays: '节假日'
+  },
+
+  // 请假管理
+  leave: {
+    applications: '请假申请',
+    approval: '审批管理',
+    statistics: '请假统计',
+    type: '请假类型',
+    startDate: '开始日期',
+    endDate: '结束日期',
+    days: '请假天数',
+    reason: '请假原因',
+    status: '状态',
+    pending: '待审批',
+    approved: '已通过',
+    rejected: '已拒绝',
+    cancelled: '已取消',
+    applicant: '申请人',
+    approver: '审批人',
+    approvalTime: '审批时间',
+    approvalComments: '审批意见',
+    annualLeave: '年假',
+    sickLeave: '病假',
+    personalLeave: '事假',
+    maternityLeave: '产假',
+    paternityLeave: '陪产假',
+    marriageLeave: '婚假',
+    bereavementLeave: '丧假'
+  },
+
+  // 公告管理
+  announcement: {
+    management: '公告管理',
+    list: '公告列表',
+    add: '发布公告',
+    edit: '编辑公告',
+    detail: '公告详情',
+    title: '公告标题',
+    content: '公告内容',
+    publishTime: '发布时间',
+    publisher: '发布人',
+    status: '状态',
+    draft: '草稿',
+    published: '已发布',
+    archived: '已归档',
+    priority: '优先级',
+    high: '高',
+    medium: '中',
+    low: '低',
+    targetAudience: '目标受众',
+    allEmployees: '全体员工',
+    specificDepartments: '指定部门',
+    specificEmployees: '指定员工',
+    announcementId: '公告ID',
+    announcementType: '公告类型',
+    readCount: '阅读量',
+    actions: '操作',
+    view: '查看',
+    delete: '删除',
+    cancel: '取消',
+    save: '保存',
+    enterTitle: '请输入公告标题',
+    selectType: '请选择公告类型',
+    enterContent: '请输入公告内容',
+    publishImmediately: '立即发布',
+    notice: '通知公告',
+    maintenance: '系统维护',
+    urgent: '紧急通知',
+    activity: '活动公告',
+    unknown: '未知',
+    viewAnnouncement: '查看公告',
+    deleteConfirm: '删除确认',
+    deleteConfirmMessage: '确定要删除公告 {title} 吗？',
+    deleteSuccess: '删除成功',
+    updateSuccess: '更新成功',
+    publishSuccess: '发布成功',
+    titleRequired: '请输入公告标题',
+    typeRequired: '请选择公告类型',
+    contentRequired: '请输入公告内容'
+  },
+
+  // 审批流程
+  workflow: {
+    management: '流程管理',
+    myTasks: '我的待办',
+    myInitiated: '我发起的',
+    processName: '流程名称',
+    processType: '流程类型',
+    initiator: '发起人',
+    currentStep: '当前步骤',
+    status: '状态',
+    createTime: '创建时间',
+    completeTime: '完成时间',
+    approve: '通过',
+    reject: '拒绝',
+    transfer: '转办',
+    comments: '审批意见',
+    history: '流程历史',
+    pending: '待处理',
+    processing: '处理中',
+    completed: '已完成',
+    terminated: '已终止'
+  },
+
+  // 数据报表
+  report: {
+    attendance: '考勤报表',
+    leave: '请假报表',
+    performance: '绩效报表',
+    dateRange: '日期范围',
+    department: '部门',
+    employee: '员工',
+    generateReport: '生成报表',
+    exportReport: '导出报表',
+    chartView: '图表视图',
+    tableView: '表格视图',
+    summary: '汇总',
+    detail: '明细'
+  },
+
+  // 系统设置
+  system: {
+    config: '系统配置',
+    logs: '操作日志',
+    backup: '数据备份',
+    basicSettings: '基础设置',
+    securitySettings: '安全设置',
+    emailSettings: '邮件设置',
+    smsSettings: '短信设置',
+    backupNow: '立即备份',
+    restoreData: '恢复数据',
+    logLevel: '日志级别',
+    logRetention: '日志保留期',
+    operation: '操作',
+    operator: '操作人',
+    operationTime: '操作时间',
+    ipAddress: 'IP地址',
+    result: '结果'
+  },
+
+  // 语言切换
+  language: {
+    switch: '切换语言',
+    chinese: '中文',
+    english: 'English',
+    current: '当前语言'
+  },
+
+  // 表单验证
+  validation: {
+    required: '此字段为必填项',
+    email: '请输入有效的邮箱地址',
+    phone: '请输入有效的手机号码',
+    password: '密码长度至少6位',
+    confirmPassword: '两次输入的密码不一致',
+    minLength: '长度不能少于{min}位',
+    maxLength: '长度不能超过{max}位',
+    numeric: '请输入数字',
+    positive: '请输入正数',
+    integer: '请输入整数',
+    idCard: '请输入有效的身份证号',
+    bankAccount: '请输入有效的银行账户'
+  },
+
+  // 操作提示
+  message: {
+    saveSuccess: '保存成功',
+    saveFailed: '保存失败',
+    deleteSuccess: '删除成功',
+    deleteFailed: '删除失败',
+    updateSuccess: '更新成功',
+    updateFailed: '更新失败',
+    createSuccess: '创建成功',
+    createFailed: '创建失败',
+    loginSuccess: '登录成功',
+    loginFailed: '登录失败',
+    logoutSuccess: '退出成功',
+    networkError: '网络错误，请稍后重试',
+    serverError: '服务器错误',
+    permissionDenied: '权限不足',
+    operationSuccess: '操作成功',
+    operationFailed: '操作失败',
+    confirmDelete: '确定要删除吗？',
+    confirmLogout: '确定要退出登录吗？',
+    unsavedChanges: '有未保存的更改，确定要离开吗？',
+    approveSuccess: '审批通过',
+    rejectSuccess: '审批拒绝',
+    transferSuccess: '转办成功',
+    backupSuccess: '备份成功',
+    restoreSuccess: '恢复成功'
+  },
+
+  // 时间相关
+  time: {
+    today: '今天',
+    yesterday: '昨天',
+    tomorrow: '明天',
+    thisWeek: '本周',
+    lastWeek: '上周',
+    nextWeek: '下周',
+    thisMonth: '本月',
+    lastMonth: '上月',
+    nextMonth: '下月',
+    thisYear: '今年',
+    lastYear: '去年',
+    nextYear: '明年',
+    morning: '上午',
+    afternoon: '下午',
+    evening: '晚上',
+    night: '夜间'
+  },
+
+  // 全局搜索
+  search: {
+    title: '全局搜索',
+    placeholder: '搜索页面、功能...',
+    inputPlaceholder: '输入关键词搜索页面和功能',
+    noResults: '未找到相关结果',
+    resultsCount: '找到 {count} 个结果',
+    recentSearches: '最近搜索',
+    clearHistory: '清空历史',
+    quickTips: '快捷提示',
+    navigateTip: '上下选择',
+    selectTip: '确认选择',
+    closeTip: '关闭搜索',
+    category: {
+      dashboard: '仪表盘',
+      user: '用户管理',
+      attendance: '考勤管理',
+      leave: '请假管理',
+      content: '内容管理',
+      workflow: '审批流程',
+      reports: '数据报表',
+      system: '系统设置',
+      profile: '个人信息'
+    },
+    desc: {
+      dashboard: '查看系统整体数据统计和概览信息',
+      employees: '管理员工信息、添加删除员工、编辑员工资料',
+      departments: '管理公司部门结构、添加删除部门',
+      roles: '管理用户角色和权限配置',
+      organizationChart: '查看公司组织架构图',
+      attendanceRecords: '查看和管理员工考勤记录',
+      attendanceRules: '配置考勤规则和时间设置',
+      attendanceStatistics: '查看考勤统计数据和分析',
+      leaveApplications: '查看和处理员工请假申请',
+      leaveApproval: '处理请假审批流程',
+      leaveStatistics: '查看请假统计数据',
+      announcements: '发布和管理系统公告通知',
+      workflow: '配置和管理审批流程',
+      myTasks: '查看我的待办审批任务',
+      myInitiated: '查看我发起的审批流程',
+      reportsAttendance: '生成考勤数据报表',
+      reportsLeave: '生成请假数据报表',
+      reportsPerformance: '生成绩效数据报表',
+      systemConfig: '配置系统参数和设置',
+      systemLogs: '查看系统操作日志',
+      systemBackup: '数据备份和恢复管理',
+      profile: '查看和编辑个人信息'
+    }
+  }
+}

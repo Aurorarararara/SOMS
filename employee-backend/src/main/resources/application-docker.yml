@@ -1,0 +1,68 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: employee-backend
+  
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/office_system?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+
+# MyBatis Plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.office.employee.entity
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# JWT配置
+jwt:
+  secret: office_employee_secret_key_2024_very_secure_and_long_enough_for_hmac_sha256_algorithm
+  expiration: 86400000 # 24小时
+
+# 日志配置
+logging:
+  level:
+    com.office.employee: debug
+    org.springframework.security: debug
+
+# 文件上传配置
+file:
+  upload:
+    path: ./uploads/documents/
+  template:
+    path: ./templates/
+  max-size: 104857600 # 100MB
+
+# OpenIM配置
+openim:
+  api:
+    url: http://openim-server:10002
+  ws:
+    url: ws://openim-server:10001

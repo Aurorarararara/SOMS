@@ -1,0 +1,43 @@
+# Diff Summary
+
+Date : 2025-08-29 15:45:11
+
+Directory d:\\项目\\综合课程设计\\SOMS-5
+
+Total : 16 files,  1837 codes, 185 comments, 205 blanks, all 2227 lines
+
+[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
+
+## Languages
+| language | files | code | comment | blank | total |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| JavaScript | 7 | 1,252 | 183 | 127 | 1,562 |
+| vue | 6 | 454 | 2 | 78 | 534 |
+| JSON | 2 | 130 | 0 | 0 | 130 |
+| Markdown | 1 | 1 | 0 | 0 | 1 |
+
+## Directories
+| path | files | code | comment | blank | total |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| . | 16 | 1,837 | 185 | 205 | 2,227 |
+| .cunzhi-memory | 1 | 1 | 0 | 0 | 1 |
+| admin-frontend | 8 | 1,135 | 103 | 113 | 1,351 |
+| admin-frontend (Files) | 1 | 65 | 0 | 0 | 65 |
+| admin-frontend\\src | 7 | 1,070 | 103 | 113 | 1,286 |
+| admin-frontend\\src (Files) | 1 | 5 | 2 | 1 | 8 |
+| admin-frontend\\src\\components | 2 | 225 | 0 | 38 | 263 |
+| admin-frontend\\src\\i18n | 2 | 684 | 34 | 34 | 752 |
+| admin-frontend\\src\\i18n\\locales | 2 | 684 | 34 | 34 | 752 |
+| admin-frontend\\src\\layout | 1 | 2 | 1 | 1 | 4 |
+| admin-frontend\\src\\stores | 1 | 154 | 66 | 39 | 259 |
+| employee-frontend | 7 | 701 | 82 | 92 | 875 |
+| employee-frontend (Files) | 1 | 65 | 0 | 0 | 65 |
+| employee-frontend\\src | 6 | 636 | 82 | 92 | 810 |
+| employee-frontend\\src (Files) | 1 | 5 | 2 | 1 | 8 |
+| employee-frontend\\src\\components | 2 | 225 | 0 | 38 | 263 |
+| employee-frontend\\src\\i18n | 1 | 250 | 13 | 13 | 276 |
+| employee-frontend\\src\\i18n\\locales | 1 | 250 | 13 | 13 | 276 |
+| employee-frontend\\src\\layout | 1 | 2 | 1 | 1 | 4 |
+| employee-frontend\\src\\stores | 1 | 154 | 66 | 39 | 259 |
+
+[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)

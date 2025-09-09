@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.office.admin.mapper.DocumentMapper">
+
+    <!-- 分页查询文档 -->
+    <select id="selectPageWithKeyword" resultType="com.office.admin.entity.Document">
+        SELECT * FROM documents
+        WHERE status != 'deleted'
+        <if test="keyword != null and keyword != ''">
+            AND (title LIKE CONCAT('%', #{keyword}, '%') 
+                 OR file_name LIKE CONCAT('%', #{keyword}, '%')
+                 OR category LIKE CONCAT('%', #{keyword}, '%')
+                 OR description LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>
