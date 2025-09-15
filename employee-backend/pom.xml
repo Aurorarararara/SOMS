@@ -66,11 +66,18 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- MyBatis Plus -->
+        <!-- MyBatis Plus for Spring Boot 3 -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <version>3.5.9</version>
+        </dependency>
+        
+        <!-- MyBatis Plus JSQLParser for pagination -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <version>3.5.9</version>
         </dependency>
 
         <!-- JWT -->
