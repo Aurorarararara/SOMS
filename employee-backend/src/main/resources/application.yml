@@ -35,7 +35,7 @@ spring:
 
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY:}
+      api-key: ${OPENAI_API_KEY:sk-placeholder-key-for-development}
       chat:
         options:
           model: gpt-4o-mini
