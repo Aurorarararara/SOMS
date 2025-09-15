@@ -167,11 +167,10 @@ const handleLogin = async () => {
     
     loading.value = true
     
+    // 只发送后端需要的字段，移除captcha
     const loginData = {
       username: loginForm.username,
-      password: loginForm.password,
-      captcha: loginForm.captcha,
-      rememberMe: loginForm.rememberMe
+      password: loginForm.password
     }
     
     await userStore.loginAction(loginData)

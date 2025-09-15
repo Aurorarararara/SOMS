@@ -44,6 +44,15 @@ export const leaveManageApi = {
     })
   },
 
+  // 获取请假统计报表数据
+  getLeaveStatisticsReport(params) {
+    return request({
+      url: '/api/admin/leave/applications/statistics/report',
+      method: 'get',
+      params
+    })
+  },
+
   // 批量审批
   batchApprove(applicationIds, data) {
     return request({

@@ -96,6 +96,16 @@ public interface LeaveApplicationMapper extends BaseMapper<LeaveApplication> {
                                                            @Param("endDate") LocalDate endDate);
 
     /**
+     * 查询指定日期范围内的请假申请（只查询已通过的请假申请）
+     */
+    @Select("SELECT * FROM leave_applications " +
+            "WHERE status = 1 AND ((start_date BETWEEN #{startDate} AND #{endDate}) " +
+            "OR (end_date BETWEEN #{startDate} AND #{endDate})) " +
+            "ORDER BY start_date")
+    List<LeaveApplication> selectLeaveApplicationsBetweenDates(@Param("startDate") LocalDate startDate,
+                                                               @Param("endDate") LocalDate endDate);
+
+    /**
      * 查询即将到期的请假申请（需要催办）
      */
     @Select("SELECT la.*, u.username, u.real_name, e.employee_no " +

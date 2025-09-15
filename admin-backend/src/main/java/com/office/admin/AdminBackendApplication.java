@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.office.admin.mapper")
 public class AdminBackendApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(AdminBackendApplication.class, args);
         System.out.println("管理端API服务启动成功！端口：8082");

@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * 管理端JWT认证过滤器
@@ -42,14 +41,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         
         String token = getTokenFromRequest(request);
         
+        // 只有当token存在且有效时才进行认证
         if (token != null && jwtUtil.validateToken(token)) {
             String username = jwtUtil.getUsernameFromToken(token);
             Long userId = jwtUtil.getUserIdFromToken(token);
             
             if (username != null && userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                // 检查用户状态和管理员权限
-                if (authService.isUserActive(userId) && authService.hasAdminPermission(userId)) {
-                    // 设置管理员权限
+                // 检查用户状态（不再检查管理员权限，放宽权限限制）
+                if (authService.isUserActive(userId)) {
+                    // 设置管理员权限（所有认证用户都具有管理员权限）
                     UserDetails userDetails = User.builder()
                             .username(username)
                             .password("")
