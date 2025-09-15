@@ -22,6 +22,7 @@ public class MessageController {
      */
     @GetMapping("/system")
     public Result<List<SystemMessage>> getSystemMessages(@RequestParam(defaultValue = "5") int limit) {
+        System.out.println("收到获取系统消息的请求，limit: " + limit);
         // 创建一些示例系统消息
         List<SystemMessage> messages = new ArrayList<>();
         
@@ -40,6 +41,7 @@ public class MessageController {
             messages = messages.subList(0, limit);
         }
         
+        System.out.println("返回系统消息数量: " + messages.size());
         return Result.success(messages);
     }
     

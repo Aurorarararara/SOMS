@@ -2,6 +2,7 @@ package com.office.admin.controller;
 
 import com.office.admin.service.LeaveApplicationService;
 import com.office.admin.service.impl.LeaveApplicationServiceImpl.LeaveApplicationRequest;
+import com.office.admin.common.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,17 +11,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.Map;
+import java.util.List;
+import java.util.Arrays;
+import java.time.LocalDate;
 
 /**
  * 请假申请控制器 - 集成审批流程
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/leave/applications")
+@RequestMapping("/api/admin/leave/applications")
 @RequiredArgsConstructor
 @Tag(name = "请假申请管理", description = "请假申请相关接口")
 public class LeaveApplicationController {
@@ -211,5 +216,139 @@ public class LeaveApplicationController {
         
         public String getComment() { return comment; }
         public void setComment(String comment) { this.comment = comment; }
+    }
+    
+    /**
+     * 获取请假统计报表数据
+     * 
+     * @param reportType 报表类型 (daily, weekly, monthly, quarterly, yearly)
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @param quarters 季度列表
+     * @param years 年份列表
+     * @return 统计报表数据
+     */
+    @GetMapping("/statistics/report")
+    @Operation(summary = "获取请假统计报表数据", description = "根据条件获取请假统计报表数据")
+    public Result<Map<String, Object>> getLeaveStatisticsReport(
+            @RequestParam(defaultValue = "monthly") String reportType,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) String quarters,
+            @RequestParam(required = false) String years) {
+        
+        try {
+            LocalDate start = startDate != null ? LocalDate.parse(startDate) : LocalDate.now().minusMonths(1);
+            LocalDate end = endDate != null ? LocalDate.parse(endDate) : LocalDate.now();
+            
+            Map<String, Object> result = new java.util.HashMap<>();
+            
+            switch (reportType) {
+                case "daily":
+                    result.put("data", leaveApplicationService.getDailyLeaveStatistics(start, end));
+                    result.put("title", "每日请假统计");
+                    break;
+                case "weekly":
+                    result.put("data", leaveApplicationService.getWeeklyLeaveStatistics(start, end));
+                    result.put("title", "每周请假统计");
+                    break;
+                case "monthly":
+                    result.put("data", leaveApplicationService.getMonthlyLeaveStatistics(start, end));
+                    result.put("title", "每月请假统计");
+                    break;
+                case "quarterly":
+                    if (quarters != null && !quarters.isEmpty()) {
+                        List<String> quarterList = Arrays.asList(quarters.split(","));
+                        result.put("data", leaveApplicationService.getQuarterlyLeaveStatistics(quarterList));
+                        result.put("title", "季度请假统计");
+                    } else {
+                        result.put("data", leaveApplicationService.getQuarterlyLeaveStatisticsByYear(LocalDate.now().getYear()));
+                        result.put("title", "年度季度请假统计");
+                    }
+                    break;
+                case "yearly":
+                    if (years != null && !years.isEmpty()) {
+                        List<String> yearList = Arrays.asList(years.split(","));
+                        result.put("data", leaveApplicationService.getYearlyLeaveStatistics(yearList));
+                        result.put("title", "年度请假统计");
+                    } else {
+                        result.put("data", leaveApplicationService.getYearlyLeaveStatisticsByRange(
+                                LocalDate.now().getYear() - 4, LocalDate.now().getYear()));
+                        result.put("title", "近五年请假统计");
+                    }
+                    break;
+                default:
+                    result.put("data", leaveApplicationService.getMonthlyLeaveStatistics(start, end));
+                    result.put("title", "请假统计");
+            }
+            
+            result.put("type", reportType);
+            return Result.success(result);
+        } catch (Exception e) {
+            log.error("获取请假统计报表数据失败", e);
+            return Result.error("获取请假统计报表数据失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 导出请假统计数据为Excel
+     *
+     * @param response HTTP响应对象
+     * @param reportType 报表类型
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     */
+    @GetMapping("/statistics/export/excel")
+    @Operation(summary = "导出请假统计数据为Excel", description = "导出请假统计数据为Excel文件")
+    public void exportLeaveStatisticsAsExcel(HttpServletResponse response,
+                                           @RequestParam(defaultValue = "monthly") String reportType,
+                                           @RequestParam(required = false) String startDate,
+                                           @RequestParam(required = false) String endDate) {
+        try {
+            LocalDate start = startDate != null ? LocalDate.parse(startDate) : LocalDate.now().minusMonths(1);
+            LocalDate end = endDate != null ? LocalDate.parse(endDate) : LocalDate.now();
+
+            // 设置响应头
+            response.setContentType("application/vnd.ms-excel");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Disposition", "attachment; filename=leave_statistics.xlsx");
+
+            // 导出数据
+            leaveApplicationService.exportLeaveStatsToExcel(response.getOutputStream(), reportType, start, end);
+        } catch (Exception e) {
+            log.error("导出请假统计数据为Excel失败", e);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 导出请假统计数据为图片
+     *
+     * @param response HTTP响应对象
+     * @param reportType 报表类型
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     */
+    @GetMapping("/statistics/export/image")
+    @Operation(summary = "导出请假统计数据为图片", description = "导出请假统计数据为图片文件")
+    public void exportLeaveStatisticsAsImage(HttpServletResponse response,
+                                           @RequestParam(defaultValue = "monthly") String reportType,
+                                           @RequestParam(required = false) String startDate,
+                                           @RequestParam(required = false) String endDate) {
+        try {
+            LocalDate start = startDate != null ? LocalDate.parse(startDate) : LocalDate.now().minusMonths(1);
+            LocalDate end = endDate != null ? LocalDate.parse(endDate) : LocalDate.now();
+
+            // 设置响应头
+            response.setContentType("image/png");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Disposition", "attachment; filename=leave_statistics.png");
+
+            // 导出数据
+            leaveApplicationService.exportLeaveStatsToImage(response.getOutputStream(), reportType, start, end);
+        } catch (Exception e) {
+            log.error("导出请假统计数据为图片失败", e);
+            e.printStackTrace();
+        }
     }
 }

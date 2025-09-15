@@ -71,6 +71,12 @@ public interface AnalyticsService {
      */
     List<Map<String, Object>> getKpiData(Long metricId, String targetType, Long targetId, 
                                         String periodType, LocalDate startDate, LocalDate endDate);
+    
+    /**
+     * 生成KPI数据
+     */
+    void generateKpiData(Long metricId, String targetType, Long targetId, 
+                        String periodType, LocalDate startDate, LocalDate endDate);
 
     // ==================== 预测分析 ====================
 
@@ -112,96 +118,93 @@ public interface AnalyticsService {
      * 生成部门绩效报表
      */
     Map<String, Object> generateDepartmentPerformanceReport(Long departmentId, String periodType, 
-                                                           LocalDate startDate, LocalDate endDate);
+                                                          LocalDate startDate, LocalDate endDate);
 
     /**
      * 生成考勤分析报表
      */
-    Map<String, Object> generateAttendanceAnalysisReport(Long departmentId, LocalDate startDate, LocalDate endDate);
+    Map<String, Object> generateAttendanceAnalysisReport(Long departmentId, LocalDate startDate, 
+                                                        LocalDate endDate);
 
     /**
      * 生成会议效率报表
      */
-    Map<String, Object> generateMeetingEfficiencyReport(Long departmentId, LocalDate startDate, LocalDate endDate);
+    Map<String, Object> generateMeetingEfficiencyReport(Long departmentId, LocalDate startDate, 
+                                                       LocalDate endDate);
+    
+    /**
+     * 获取每日考勤统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每日考勤统计数据
+     */
+    List<Map<String, Object>> getDailyAttendanceStats(LocalDate startDate, LocalDate endDate);
 
     /**
-     * 生成协作活跃度报表
+     * 获取每周考勤统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每周考勤统计数据
      */
-    Map<String, Object> generateCollaborationActivityReport(Long departmentId, LocalDate startDate, LocalDate endDate);
+    List<Map<String, Object>> getWeeklyAttendanceStats(LocalDate startDate, LocalDate endDate);
 
     /**
-     * 生成综合分析报表
+     * 获取每月考勤统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每月考勤统计数据
      */
-    Map<String, Object> generateComprehensiveAnalysisReport(String reportType, Map<String, Object> parameters);
-
-    // ==================== 实时数据大屏 ====================
+    List<Map<String, Object>> getMonthlyAttendanceStats(LocalDate startDate, LocalDate endDate);
 
     /**
-     * 获取实时数据大屏数据
+     * 获取部门考勤统计数据
+     *
+     * @param departmentId 部门ID
+     * @param startDate    开始日期
+     * @param endDate      结束日期
+     * @param type         统计类型
+     * @return 部门考勤统计数据
      */
-    Map<String, Object> getRealTimeDashboardData(String dashboardType, Long targetId);
+    List<Map<String, Object>> getDepartmentAttendanceStats(Long departmentId, LocalDate startDate, LocalDate endDate, String type);
+    
+    /**
+     * 获取每日绩效统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每日绩效统计数据
+     */
+    List<Map<String, Object>> getDailyPerformanceStats(LocalDate startDate, LocalDate endDate);
 
     /**
-     * 获取关键指标概览
+     * 获取每周绩效统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每周绩效统计数据
      */
-    Map<String, Object> getKeyMetricsOverview();
+    List<Map<String, Object>> getWeeklyPerformanceStats(LocalDate startDate, LocalDate endDate);
 
     /**
-     * 获取部门对比数据
+     * 获取每月绩效统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每月绩效统计数据
      */
-    List<Map<String, Object>> getDepartmentComparisonData(String metricType, String periodType);
+    List<Map<String, Object>> getMonthlyPerformanceStats(LocalDate startDate, LocalDate endDate);
 
     /**
-     * 获取趋势分析数据
+     * 获取部门绩效统计数据
+     *
+     * @param departmentId 部门ID
+     * @param startDate    开始日期
+     * @param endDate      结束日期
+     * @param type         统计类型
+     * @return 部门绩效统计数据
      */
-    Map<String, Object> getTrendAnalysisData(String metricType, LocalDate startDate, LocalDate endDate);
-
-    /**
-     * 获取异常检测结果
-     */
-    List<Map<String, Object>> getAnomalyDetectionResults(String dataType, LocalDate date);
-
-    // ==================== 数据导出 ====================
-
-    /**
-     * 创建数据导出任务
-     */
-    Long createDataExportTask(String taskName, String exportType, Map<String, Object> exportConfig, String fileFormat);
-
-    /**
-     * 获取导出任务状态
-     */
-    Map<String, Object> getExportTaskStatus(Long taskId);
-
-    /**
-     * 获取导出任务列表
-     */
-    List<Map<String, Object>> getExportTasks(Long userId, String status);
-
-    /**
-     * 下载导出文件
-     */
-    String getExportFileDownloadUrl(Long taskId);
-
-    // ==================== 智能洞察 ====================
-
-    /**
-     * 获取智能洞察建议
-     */
-    List<Map<String, Object>> getIntelligentInsights(String insightType, Long targetId);
-
-    /**
-     * 获取效率优化建议
-     */
-    List<Map<String, Object>> getEfficiencyOptimizationSuggestions(Long employeeId);
-
-    /**
-     * 获取团队协作优化建议
-     */
-    List<Map<String, Object>> getTeamCollaborationSuggestions(Long departmentId);
-
-    /**
-     * 获取资源配置优化建议
-     */
-    List<Map<String, Object>> getResourceOptimizationSuggestions(Long departmentId);
+    List<Map<String, Object>> getDepartmentPerformanceStats(Long departmentId, LocalDate startDate, LocalDate endDate, String type);
 }
