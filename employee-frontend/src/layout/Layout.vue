@@ -104,6 +104,22 @@
             <el-menu-item index="/meeting/create">{{ $t('nav.createMeeting') }}</el-menu-item>
             <el-menu-item index="/meeting/join">{{ $t('nav.joinMeeting') }}</el-menu-item>
           </el-sub-menu>
+
+          <!-- 报销管理 -->
+          <el-sub-menu index="/expense">
+            <template #title>
+              <el-icon><Money /></el-icon>
+              <span>报销管理</span>
+            </template>
+            <el-menu-item index="/expense">我的报销</el-menu-item>
+            <el-menu-item index="/expense/create">创建报销</el-menu-item>
+          </el-sub-menu>
+
+          <!-- 管理后台 (仅管理员可见) -->
+          <el-menu-item index="/admin" v-permission="'admin'">
+            <el-icon><Setting /></el-icon>
+            <template #title>管理后台</template>
+          </el-menu-item>
         </el-menu>
       </div>
     </div>
@@ -243,7 +259,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   OfficeBuilding, Odometer, Clock, Timer, Document, Calendar, EditPen,
   Notebook, Bell, User, Expand, Fold, FullScreen, Refresh, ArrowDown,
-  Setting, SwitchButton, ChatDotRound, Message, VideoCamera
+  Setting, SwitchButton, ChatDotRound, Message, VideoCamera, Money
 } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 import { useDebounce, useThrottle } from '@/utils/debounce'

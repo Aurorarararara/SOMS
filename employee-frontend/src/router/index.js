@@ -163,6 +163,28 @@ const routes = [
         name: 'MeetingRoom',
         component: () => import('@/views/meeting/MeetingRoom.vue'),
         meta: { title: '会议室' }
+      },
+      {
+        path: '/expense',
+        name: 'Expense',
+        component: () => import('@/views/expense/Expense.vue'),
+        meta: { title: '报销申请', requiresAuth: true }
+      },
+      {
+        path: '/expense/create',
+        name: 'ExpenseCreate',
+        component: () => import('@/views/expense/ExpenseCreate.vue'),
+        meta: { title: '创建报销', requiresAuth: true }
+      },
+      {
+        path: '/admin',
+        name: 'Admin',
+        component: () => import('@/views/admin/Admin.vue'),
+        meta: { 
+          title: '管理后台', 
+          requiresAuth: true,
+          requiresRole: ['admin', 'manager']
+        }
       }
     ]
   }
@@ -206,6 +228,18 @@ router.beforeEach(async (to, from, next) => {
     if (to.path === '/login' && isLoggedIn) {
       next('/dashboard')
       return
+    }
+    
+    // 检查角色权限
+    if (to.meta.requiresRole && isLoggedIn) {
+      const userRole = userStore.userInfo?.role
+      const requiredRoles = Array.isArray(to.meta.requiresRole) ? to.meta.requiresRole : [to.meta.requiresRole]
+      
+      if (!userRole || !requiredRoles.includes(userRole)) {
+        // 权限不足，重定向到首页或显示错误页面
+        next('/dashboard')
+        return
+      }
     }
     
     // 正常路由继续

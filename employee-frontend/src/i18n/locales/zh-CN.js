@@ -66,7 +66,11 @@ export default {
     meetingList: '会议列表',
     createMeeting: '创建会议',
     joinMeeting: '加入会议',
-    aiAssistant: 'AI助手'
+    aiAssistant: 'AI助手',
+    expense: '报销管理',
+    expenseList: '我的报销',
+    createExpense: '创建报销',
+    admin: '管理后台'
   },
 
   // 面包屑导航

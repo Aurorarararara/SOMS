@@ -7,7 +7,7 @@ export default {
   // 获取文档列表
   getDocumentList(params) {
     return request({
-      url: '/api/documents',
+      url: '/documents',
       method: 'get',
       params
     })
@@ -16,7 +16,7 @@ export default {
   // 创建文档
   createDocument(data) {
     return request({
-      url: '/api/documents',
+      url: '/documents',
       method: 'post',
       data
     })
@@ -25,7 +25,7 @@ export default {
   // 获取文档详情
   getDocumentDetail(id) {
     return request({
-      url: `/api/documents/${id}`,
+      url: `/documents/${id}`,
       method: 'get'
     })
   },
@@ -33,7 +33,7 @@ export default {
   // 更新文档
   updateDocument(id, data) {
     return request({
-      url: `/api/documents/${id}`,
+      url: `/documents/${id}`,
       method: 'put',
       data
     })
@@ -42,7 +42,7 @@ export default {
   // 删除文档
   deleteDocument(id) {
     return request({
-      url: `/api/documents/${id}`,
+      url: `/documents/${id}`,
       method: 'delete'
     })
   },
@@ -50,7 +50,7 @@ export default {
   // 上传文档
   uploadDocument(formData) {
     return request({
-      url: '/api/documents/upload',
+      url: '/documents/upload',
       method: 'post',
       data: formData,
       headers: {
@@ -62,7 +62,7 @@ export default {
   // 下载文档
   downloadDocument(id) {
     return request({
-      url: `/api/documents/${id}/download`,
+      url: `/documents/${id}/download`,
       method: 'get',
       responseType: 'blob'
     })
@@ -71,7 +71,7 @@ export default {
   // 搜索文档
   searchDocuments(keyword) {
     return request({
-      url: '/api/documents/search',
+      url: '/documents/search',
       method: 'get',
       params: { keyword }
     })
@@ -80,7 +80,7 @@ export default {
   // 获取文档分类
   getDocumentCategories() {
     return request({
-      url: '/api/documents/categories',
+      url: '/documents/categories',
       method: 'get'
     })
   },
@@ -88,7 +88,7 @@ export default {
   // 分享文档
   shareDocument(id, data) {
     return request({
-      url: `/api/documents/${id}/share`,
+      url: `/documents/${id}/share`,
       method: 'post',
       data
     })
@@ -97,7 +97,7 @@ export default {
   // 收藏文档
   favoriteDocument(id) {
     return request({
-      url: `/api/documents/${id}/favorite`,
+      url: `/documents/${id}/favorite`,
       method: 'post'
     })
   },
@@ -105,7 +105,7 @@ export default {
   // 取消收藏
   unfavoriteDocument(id) {
     return request({
-      url: `/api/documents/${id}/unfavorite`,
+      url: `/documents/${id}/unfavorite`,
       method: 'delete'
     })
   },
@@ -113,7 +113,7 @@ export default {
   // 获取收藏的文档
   getFavoriteDocuments() {
     return request({
-      url: '/api/documents/favorites',
+      url: '/documents/favorites',
       method: 'get'
     })
   },
@@ -121,7 +121,7 @@ export default {
   // 获取最近访问的文档
   getRecentDocuments() {
     return request({
-      url: '/api/documents/recent',
+      url: '/documents/recent',
       method: 'get'
     })
   }

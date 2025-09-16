@@ -7,7 +7,7 @@ export default {
   // 创建任务
   createTask(data) {
     return request({
-      url: '/api/tasks',
+      url: '/tasks',
       method: 'post',
       data
     })
@@ -16,7 +16,7 @@ export default {
   // 更新任务
   updateTask(id, data) {
     return request({
-      url: `/api/tasks/${id}`,
+      url: `/tasks/${id}`,
       method: 'put',
       data
     })
@@ -41,7 +41,7 @@ export default {
   // 分页查询任务
   getTaskPage(data) {
     return request({
-      url: '/api/tasks/page',
+      url: '/tasks/page',
       method: 'post',
       data
     })
@@ -50,7 +50,7 @@ export default {
   // 分配任务
   assignTask(id, assigneeId) {
     return request({
-      url: `/api/tasks/${id}/assign`,
+      url: `/tasks/${id}/assign`,
       method: 'post',
       params: { assigneeId }
     })
@@ -59,7 +59,7 @@ export default {
   // 更新任务进度
   updateProgress(id, progress) {
     return request({
-      url: `/api/tasks/${id}/progress`,
+      url: `/tasks/${id}/progress`,
       method: 'post',
       params: { progress }
     })
@@ -68,7 +68,7 @@ export default {
   // 完成任务
   completeTask(id) {
     return request({
-      url: `/api/tasks/${id}/complete`,
+      url: `/tasks/${id}/complete`,
       method: 'post'
     })
   },
@@ -76,7 +76,7 @@ export default {
   // 复制任务
   duplicateTask(id) {
     return request({
-      url: `/api/tasks/${id}/duplicate`,
+      url: `/tasks/${id}/duplicate`,
       method: 'post'
     })
   },
@@ -84,7 +84,7 @@ export default {
   // 获取任务统计
   getTaskStats() {
     return request({
-      url: '/api/tasks/stats',
+      url: '/tasks/stats',
       method: 'get'
     })
   },
@@ -92,7 +92,7 @@ export default {
   // 获取分配给我的任务
   getAssignedTasks() {
     return request({
-      url: '/api/tasks/assigned',
+      url: '/tasks/assigned',
       method: 'get'
     })
   },
@@ -100,7 +100,7 @@ export default {
   // 获取我创建的任务
   getCreatedTasks() {
     return request({
-      url: '/api/tasks/created',
+      url: '/tasks/created',
       method: 'get'
     })
   },
@@ -108,7 +108,7 @@ export default {
   // 获取即将到期的任务
   getUpcomingTasks(days = 7) {
     return request({
-      url: '/api/tasks/upcoming',
+      url: '/tasks/upcoming',
       method: 'get',
       params: { days }
     })
@@ -117,7 +117,7 @@ export default {
   // 获取逾期任务
   getOverdueTasks() {
     return request({
-      url: '/api/tasks/overdue',
+      url: '/tasks/overdue',
       method: 'get'
     })
   },
@@ -125,7 +125,7 @@ export default {
   // 批量分配任务
   batchAssignTasks(taskIds, assigneeId) {
     return request({
-      url: '/api/tasks/batch/assign',
+      url: '/tasks/batch/assign',
       method: 'post',
       params: { taskIds, assigneeId }
     })
@@ -134,7 +134,7 @@ export default {
   // 批量更新任务状态
   batchUpdateStatus(taskIds, status) {
     return request({
-      url: '/api/tasks/batch/status',
+      url: '/tasks/batch/status',
       method: 'post',
       params: { taskIds, status }
     })
@@ -143,7 +143,7 @@ export default {
   // 添加任务评论
   addComment(id, data) {
     return request({
-      url: `/api/tasks/${id}/comments`,
+      url: `/tasks/${id}/comments`,
       method: 'post',
       data
     })
@@ -152,7 +152,7 @@ export default {
   // 获取任务评论
   getTaskComments(id, current = 1, size = 20) {
     return request({
-      url: `/api/tasks/${id}/comments`,
+      url: `/tasks/${id}/comments`,
       method: 'get',
       params: { current, size }
     })
@@ -161,7 +161,7 @@ export default {
   // 回复评论
   replyComment(commentId, content) {
     return request({
-      url: `/api/tasks/comments/${commentId}/reply`,
+      url: `/tasks/comments/${commentId}/reply`,
       method: 'post',
       params: { content }
     })
@@ -170,7 +170,7 @@ export default {
   // 更新评论
   updateComment(commentId, content) {
     return request({
-      url: `/api/tasks/comments/${commentId}`,
+      url: `/tasks/comments/${commentId}`,
       method: 'put',
       params: { content }
     })
@@ -179,7 +179,7 @@ export default {
   // 删除评论
   deleteComment(commentId) {
     return request({
-      url: `/api/tasks/comments/${commentId}`,
+      url: `/tasks/comments/${commentId}`,
       method: 'delete'
     })
   },
@@ -187,7 +187,7 @@ export default {
   // 获取评论的回复
   getCommentReplies(commentId) {
     return request({
-      url: `/api/tasks/comments/${commentId}/replies`,
+      url: `/tasks/comments/${commentId}/replies`,
       method: 'get'
     })
   },
@@ -195,7 +195,7 @@ export default {
   // 获取我被@的评论
   getMentionedComments() {
     return request({
-      url: '/api/tasks/comments/mentions',
+      url: '/tasks/comments/mentions',
       method: 'get'
     })
   }

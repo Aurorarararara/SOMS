@@ -38,4 +38,10 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
      */
     @Select("SELECT COUNT(*) FROM employees WHERE department_id = #{departmentId} AND status = 1")
     int countByDepartmentId(@Param("departmentId") Long departmentId);
+
+    /**
+     * 根据部门ID查询部门经理
+     */
+    @Select("SELECT * FROM employees WHERE department_id = #{departmentId} AND position LIKE '%经理%' AND status = 1 LIMIT 1")
+    Employee selectDepartmentManager(@Param("departmentId") Long departmentId);
 }

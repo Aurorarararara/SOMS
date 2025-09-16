@@ -55,6 +55,15 @@
             <el-menu-item index="/admin/leave/statistics">{{ $t('nav.leaveStatistics') }}</el-menu-item>
           </el-sub-menu>
           
+          <el-sub-menu index="/admin/expense">
+            <template #title>
+              <el-icon><Money /></el-icon>
+              <span>{{ $t('nav.expenseManagement') }}</span>
+            </template>
+            <el-menu-item index="/admin/expense/applications">{{ $t('nav.expenseApplications') }}</el-menu-item>
+            <el-menu-item index="/admin/expense/approval">{{ $t('nav.expenseApproval') }}</el-menu-item>
+          </el-sub-menu>
+          
           <el-menu-item index="/admin/announcements">
             <el-icon><Bell /></el-icon>
             <template #title>{{ $t('nav.announcements') }}</template>
@@ -229,7 +238,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   Setting, DataBoard, User, Clock, DocumentRemove, Bell, DataAnalysis,
   Menu, Refresh, FullScreen, ArrowDown, SwitchButton, Operation,
-  OfficeBuilding, ChatDotRound
+  OfficeBuilding, ChatDotRound, Money
 } from '@element-plus/icons-vue'
 
 import { useUserStore } from '@/stores/user'

@@ -16,7 +16,7 @@ const imApi = {
     
     // 使用GET方法获取Token
     return request({
-      url: '/api/im/token',  // 修复：与后端控制器路径保持一致
+      url: '/im/token',  // 修复：与后端控制器路径保持一致
       method: 'get',
       params: { userId: safeUserId },
       timeout: 20000 // 增加超时时间
@@ -29,7 +29,7 @@ const imApi = {
       // 如果GET方法失败，尝试使用POST方法
       console.log('尝试使用POST方法获取IM Token');
       return request({
-        url: '/api/im/token',  // 修复：与后端控制器路径保持一致
+        url: '/im/token',  // 修复：与后端控制器路径保持一致
         method: 'post',
         params: { userId: safeUserId },
         timeout: 20000 // 增加超时时间
@@ -50,7 +50,7 @@ const imApi = {
    */
   getOnlineUsers() {
     return request({
-      url: '/api/im/users/online',
+      url: '/im/users/online',
       method: 'get'
     });
   },
@@ -63,7 +63,7 @@ const imApi = {
    */
   updateUserStatus(userId, status) {
     return request({
-      url: `/api/im/users/${userId}/status`,
+      url: `/im/users/${userId}/status`,
       method: 'post',
       params: { status }
     })
@@ -76,7 +76,7 @@ const imApi = {
    */
   getUserStatus(userId) {
     return request({
-      url: `/api/im/users/${userId}/status`,
+      url: `/im/users/${userId}/status`,
       method: 'get'
     })
   },
@@ -88,7 +88,7 @@ const imApi = {
    */
   getUserInfo(userId) {
     return request({
-      url: `/api/im/users/${userId}`,
+      url: `/im/users/${userId}`,
       method: 'get'
     })
   },
@@ -100,7 +100,7 @@ const imApi = {
    */
   getUserChatRooms(userId) {
     return request({
-      url: '/api/im/chatrooms',
+      url: '/im/chatrooms',
       method: 'get',
       params: { userId }
     })
@@ -114,7 +114,7 @@ const imApi = {
    */
   getOrCreateSingleChatRoom(userId1, userId2) {
     return request({
-      url: '/api/im/chatrooms/single',
+      url: '/im/chatrooms/single',
       method: 'post',
       params: { userId1, userId2 }
     })
@@ -127,7 +127,7 @@ const imApi = {
    */
   createGroupChatRoom(data) {
     return request({
-      url: '/api/im/chatrooms/group',
+      url: '/im/chatrooms/group',
       method: 'post',
       data
     })
@@ -140,7 +140,7 @@ const imApi = {
    */
   getChatRoomMembers(roomId) {
     return request({
-      url: `/api/im/chatrooms/${roomId}/members`,
+      url: `/im/chatrooms/${roomId}/members`,
       method: 'get'
     })
   },
@@ -154,7 +154,7 @@ const imApi = {
    */
   joinChatRoom(roomId, userId, nickname) {
     return request({
-      url: `/api/im/chatrooms/${roomId}/join`,
+      url: `/im/chatrooms/${roomId}/join`,
       method: 'post',
       params: { userId, nickname }
     })
@@ -168,7 +168,7 @@ const imApi = {
    */
   leaveChatRoom(roomId, userId) {
     return request({
-      url: `/api/im/chatrooms/${roomId}/leave`,
+      url: `/im/chatrooms/${roomId}/leave`,
       method: 'post',
       params: { userId }
     })
@@ -182,7 +182,7 @@ const imApi = {
    */
   getChatMessages(roomId, limit = 50) {
     return request({
-      url: '/api/im/messages',
+      url: '/im/messages',
       method: 'get',
       params: { roomId, limit }
     }).catch(error => {
@@ -227,7 +227,7 @@ const imApi = {
    */
   sendMessage(data) {
     return request({
-      url: '/api/im/messages',
+      url: '/im/messages',
       method: 'post',
       data
     })

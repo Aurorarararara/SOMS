@@ -121,6 +121,25 @@ export const useUserStore = defineStore('user', () => {
     }
   }
   
+  // 权限检查方法
+  const hasRole = (role) => {
+    if (!userInfo.value || !userInfo.value.role) return false
+    return userInfo.value.role === role
+  }
+  
+  const hasAnyRole = (roles) => {
+    if (!userInfo.value || !userInfo.value.role) return false
+    return Array.isArray(roles) ? roles.includes(userInfo.value.role) : roles === userInfo.value.role
+  }
+  
+  const isAdmin = computed(() => {
+    return hasRole('admin')
+  })
+  
+  const isManager = computed(() => {
+    return hasAnyRole(['admin', 'manager'])
+  })
+
   return {
     token,
     userInfo,
@@ -129,6 +148,10 @@ export const useUserStore = defineStore('user', () => {
     loginAction,
     logoutAction,
     getUserInfoAction,
-    isCacheValid
+    isCacheValid,
+    hasRole,
+    hasAnyRole,
+    isAdmin,
+    isManager
   }
 })

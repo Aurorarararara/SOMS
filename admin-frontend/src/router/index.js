@@ -86,6 +86,19 @@ const routes = [
         component: () => import('@/views/leave/LeaveStatistics.vue'),
         meta: { title: '请假统计' }
       },
+      // 报销管理
+      {
+        path: '/admin/expense/applications',
+        name: 'ExpenseApplications',
+        component: () => import('@/views/expense/ExpenseApplications.vue'),
+        meta: { title: '报销申请' }
+      },
+      {
+        path: '/admin/expense/approval',
+        name: 'ExpenseApproval',
+        component: () => import('@/views/expense/ExpenseApproval.vue'),
+        meta: { title: '报销审批' }
+      },
       // 公告管理
       {
         path: '/admin/announcements',

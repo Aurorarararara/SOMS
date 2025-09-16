@@ -8,6 +8,8 @@ import './style/index.css'
 
 // 引入健康检查工具
 import { healthChecker } from '@/utils/healthChecker'
+// 引入权限指令
+import { setupDirectives } from '@/directives'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -15,6 +17,9 @@ const pinia = createPinia()
 app.use(pinia)
 app.use(router)
 app.use(i18n)
+
+// 注册权限指令
+setupDirectives(app)
 
 // 初始化语言设置
 app.mount('#app')
