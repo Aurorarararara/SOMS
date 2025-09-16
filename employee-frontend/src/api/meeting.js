@@ -7,7 +7,7 @@ export default {
   // 获取我的会议列表
   getMyMeetings(params) {
     return request({
-      url: '/meetings/my',
+      url: '/api/meetings/my',
       method: 'get',
       params
     })
@@ -16,7 +16,7 @@ export default {
   // 获取会议详情
   getMeetingDetail(id) {
     return request({
-      url: `/meetings/${id}`,
+      url: `/api/meetings/${id}`,
       method: 'get'
     })
   },
@@ -24,7 +24,7 @@ export default {
   // 创建会议
   createMeeting(data) {
     return request({
-      url: '/meetings',
+      url: '/api/meetings',
       method: 'post',
       data
     })
@@ -33,7 +33,7 @@ export default {
   // 加入会议
   joinMeeting(meetingId) {
     return request({
-      url: `/meetings/${meetingId}/join`,
+      url: `/api/meetings/${meetingId}/join`,
       method: 'post'
     })
   },
@@ -41,7 +41,7 @@ export default {
   // 离开会议
   leaveMeeting(meetingId) {
     return request({
-      url: `/meetings/${meetingId}/leave`,
+      url: `/api/meetings/${meetingId}/leave`,
       method: 'post'
     })
   },
@@ -49,7 +49,7 @@ export default {
   // 通过会议代码加入会议
   joinMeetingByCode(meetingCode, password = '') {
     return request({
-      url: '/meetings/join-by-code',
+      url: '/api/meetings/join-by-code',
       method: 'post',
       data: {
         meetingCode,
@@ -61,7 +61,7 @@ export default {
   // 获取会议参与者
   getMeetingParticipants(meetingId) {
     return request({
-      url: `/meetings/${meetingId}/participants`,
+      url: `/api/meetings/${meetingId}/participants`,
       method: 'get'
     })
   },
@@ -69,7 +69,7 @@ export default {
   // 发送会议聊天消息
   sendMeetingMessage(meetingId, message) {
     return request({
-      url: `/meetings/${meetingId}/messages`,
+      url: `/api/meetings/${meetingId}/messages`,
       method: 'post',
       data: { message }
     })
@@ -78,7 +78,7 @@ export default {
   // 获取会议聊天消息
   getMeetingMessages(meetingId, params) {
     return request({
-      url: `/meetings/${meetingId}/messages`,
+      url: `/api/meetings/${meetingId}/messages`,
       method: 'get',
       params
     })
@@ -87,7 +87,7 @@ export default {
   // 更新参与者状态（静音、视频等）
   updateParticipantStatus(meetingId, status) {
     return request({
-      url: `/meetings/${meetingId}/participant-status`,
+      url: `/api/meetings/${meetingId}/participant-status`,
       method: 'put',
       data: status
     })
@@ -96,7 +96,7 @@ export default {
   // 获取会议录制
   getMeetingRecording(meetingId) {
     return request({
-      url: `/meetings/${meetingId}/recording`,
+      url: `/api/meetings/${meetingId}/recording`,
       method: 'get'
     })
   },
@@ -104,7 +104,7 @@ export default {
   // 保存白板数据
   saveWhiteboardData(meetingId, data) {
     return request({
-      url: `/meetings/${meetingId}/whiteboard`,
+      url: `/api/meetings/${meetingId}/whiteboard`,
       method: 'post',
       data
     })
@@ -113,7 +113,7 @@ export default {
   // 获取白板数据
   getWhiteboardData(meetingId) {
     return request({
-      url: `/meetings/${meetingId}/whiteboard`,
+      url: `/api/meetings/${meetingId}/whiteboard`,
       method: 'get'
     })
   },
@@ -121,7 +121,7 @@ export default {
   // 检查会议状态
   checkMeetingStatus(meetingId) {
     return request({
-      url: `/meetings/${meetingId}/status`,
+      url: `/api/meetings/${meetingId}/status`,
       method: 'get'
     })
   },
@@ -129,7 +129,7 @@ export default {
   // 获取即将开始的会议
   getUpcomingMeetings() {
     return request({
-      url: '/meetings/upcoming',
+      url: '/api/meetings/upcoming',
       method: 'get'
     })
   },
@@ -137,7 +137,7 @@ export default {
   // 获取今日会议
   getTodayMeetings() {
     return request({
-      url: '/meetings/today',
+      url: '/api/meetings/today',
       method: 'get'
     })
   }

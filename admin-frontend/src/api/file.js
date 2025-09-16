@@ -6,7 +6,7 @@ export const uploadFile = (file, onUploadProgress) => {
   formData.append('file', file)
   
   return request({
-    url: '/api/files/upload',
+    url: '/files/upload',
     method: 'post',
     data: formData,
     headers: {
@@ -24,7 +24,7 @@ export const uploadFiles = (files, onUploadProgress) => {
   })
   
   return request({
-    url: '/api/files/upload/batch',
+    url: '/files/upload/batch',
     method: 'post',
     data: formData,
     headers: {
@@ -37,7 +37,7 @@ export const uploadFiles = (files, onUploadProgress) => {
 // 文件下载
 export const downloadFile = (fileId, fileName) => {
   return request({
-    url: `/api/files/download/${fileId}`,
+    url: `/files/download/${fileId}`,
     method: 'get',
     responseType: 'blob',
     params: { fileName }
@@ -47,7 +47,7 @@ export const downloadFile = (fileId, fileName) => {
 // 获取文件信息
 export const getFileInfo = (fileId) => {
   return request({
-    url: `/api/files/${fileId}`,
+    url: `/files/${fileId}`,
     method: 'get'
   })
 }
@@ -55,7 +55,7 @@ export const getFileInfo = (fileId) => {
 // 删除文件
 export const deleteFile = (fileId) => {
   return request({
-    url: `/api/files/${fileId}`,
+    url: `/files/${fileId}`,
     method: 'delete'
   })
 }
@@ -63,7 +63,7 @@ export const deleteFile = (fileId) => {
 // 获取文件列表
 export const getFileList = (params) => {
   return request({
-    url: '/api/files',
+    url: '/files',
     method: 'get',
     params
   })
@@ -72,7 +72,7 @@ export const getFileList = (params) => {
 // 文件预览
 export const previewFile = (fileId) => {
   return request({
-    url: `/api/files/preview/${fileId}`,
+    url: `/files/preview/${fileId}`,
     method: 'get',
     responseType: 'blob'
   })
@@ -80,12 +80,12 @@ export const previewFile = (fileId) => {
 
 // 获取文件预览URL
 export const getPreviewUrl = (fileId) => {
-  return `/api/files/preview/${fileId}`
+  return `/files/preview/${fileId}`
 }
 
 // 获取文件下载URL
 export const getDownloadUrl = (fileId, fileName) => {
-  return `/api/files/download/${fileId}?fileName=${encodeURIComponent(fileName)}`
+  return `/files/download/${fileId}?fileName=${encodeURIComponent(fileName)}`
 }
 
 export default {

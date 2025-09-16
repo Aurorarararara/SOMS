@@ -47,7 +47,7 @@ export const leaveManageApi = {
   // 获取请假统计报表数据
   getLeaveStatisticsReport(params) {
     return request({
-      url: '/api/admin/leave/applications/statistics/report',
+      url: '/admin/leave/applications/statistics/report',
       method: 'get',
       params
     })

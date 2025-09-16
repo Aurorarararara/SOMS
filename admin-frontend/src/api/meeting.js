@@ -7,7 +7,7 @@ export default {
   // 获取会议列表
   getMeetingList(params) {
     return request({
-      url: '/api/meetings',
+      url: '/meetings',
       method: 'get',
       params
     })
@@ -16,7 +16,7 @@ export default {
   // 创建会议
   createMeeting(data) {
     return request({
-      url: '/api/meetings',
+      url: '/meetings',
       method: 'post',
       data
     })
@@ -25,7 +25,7 @@ export default {
   // 获取会议详情
   getMeetingDetail(id) {
     return request({
-      url: `/api/meetings/${id}`,
+      url: `/meetings/${id}`,
       method: 'get'
     })
   },
@@ -33,7 +33,7 @@ export default {
   // 更新会议
   updateMeeting(id, data) {
     return request({
-      url: `/api/meetings/${id}`,
+      url: `/meetings/${id}`,
       method: 'put',
       data
     })
@@ -42,7 +42,7 @@ export default {
   // 删除会议
   deleteMeeting(id) {
     return request({
-      url: `/api/meetings/${id}`,
+      url: `/meetings/${id}`,
       method: 'delete'
     })
   },
@@ -50,7 +50,7 @@ export default {
   // 加入会议
   joinMeeting(id) {
     return request({
-      url: `/api/meetings/${id}/join`,
+      url: `/meetings/${id}/join`,
       method: 'post'
     })
   },
@@ -58,7 +58,7 @@ export default {
   // 离开会议
   leaveMeeting(id) {
     return request({
-      url: `/api/meetings/${id}/leave`,
+      url: `/meetings/${id}/leave`,
       method: 'post'
     })
   },
@@ -66,7 +66,7 @@ export default {
   // 开始会议
   startMeeting(id) {
     return request({
-      url: `/api/meetings/${id}/start`,
+      url: `/meetings/${id}/start`,
       method: 'post'
     })
   },
@@ -74,7 +74,7 @@ export default {
   // 结束会议
   endMeeting(id) {
     return request({
-      url: `/api/meetings/${id}/end`,
+      url: `/meetings/${id}/end`,
       method: 'post'
     })
   },
@@ -82,7 +82,7 @@ export default {
   // 获取会议参与者
   getMeetingParticipants(id) {
     return request({
-      url: `/api/meetings/${id}/participants`,
+      url: `/meetings/${id}/participants`,
       method: 'get'
     })
   },
@@ -90,7 +90,7 @@ export default {
   // 添加参与者
   addParticipant(id, userId) {
     return request({
-      url: `/api/meetings/${id}/participants`,
+      url: `/meetings/${id}/participants`,
       method: 'post',
       data: { userId }
     })
@@ -99,7 +99,7 @@ export default {
   // 移除参与者
   removeParticipant(id, userId) {
     return request({
-      url: `/api/meetings/${id}/participants/${userId}`,
+      url: `/meetings/${id}/participants/${userId}`,
       method: 'delete'
     })
   },
@@ -107,7 +107,7 @@ export default {
   // 获取会议室列表
   getMeetingRooms() {
     return request({
-      url: '/api/meetings/rooms',
+      url: '/meetings/rooms',
       method: 'get'
     })
   },
@@ -115,7 +115,7 @@ export default {
   // 检查会议室可用性
   checkRoomAvailability(roomId, startTime, endTime) {
     return request({
-      url: `/api/meetings/rooms/${roomId}/availability`,
+      url: `/meetings/rooms/${roomId}/availability`,
       method: 'get',
       params: { startTime, endTime }
     })
@@ -124,7 +124,7 @@ export default {
   // 预订会议室
   bookMeetingRoom(roomId, data) {
     return request({
-      url: `/api/meetings/rooms/${roomId}/book`,
+      url: `/meetings/rooms/${roomId}/book`,
       method: 'post',
       data
     })
@@ -133,7 +133,7 @@ export default {
   // 获取会议录制
   getMeetingRecording(id) {
     return request({
-      url: `/api/meetings/${id}/recording`,
+      url: `/meetings/${id}/recording`,
       method: 'get'
     })
   },
@@ -141,7 +141,7 @@ export default {
   // 开始录制
   startRecording(id) {
     return request({
-      url: `/api/meetings/${id}/recording/start`,
+      url: `/meetings/${id}/recording/start`,
       method: 'post'
     })
   },
@@ -149,7 +149,7 @@ export default {
   // 停止录制
   stopRecording(id) {
     return request({
-      url: `/api/meetings/${id}/recording/stop`,
+      url: `/meetings/${id}/recording/stop`,
       method: 'post'
     })
   }

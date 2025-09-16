@@ -10,7 +10,7 @@ export default {
     formData.append('file', file)
     
     return request({
-      url: '/files/upload',
+      url: '/api/files/upload',
       method: 'post',
       data: formData,
       headers: {
@@ -28,7 +28,7 @@ export default {
     })
     
     return request({
-      url: '/files/upload/batch',
+      url: '/api/files/upload/batch',
       method: 'post',
       data: formData,
       headers: {
@@ -45,7 +45,7 @@ export default {
     formData.append('applicationId', applicationId)
     
     return request({
-      url: '/files/upload/expense-voucher',
+      url: '/api/files/upload/expense-voucher',
       method: 'post',
       data: formData,
       headers: {
@@ -58,7 +58,7 @@ export default {
   // 删除文件
   deleteFile(fileId) {
     return request({
-      url: `/files/${fileId}`,
+      url: `/api/files/${fileId}`,
       method: 'delete'
     })
   },
@@ -66,7 +66,7 @@ export default {
   // 批量删除文件
   deleteFiles(fileIds) {
     return request({
-      url: '/files/batch-delete',
+      url: '/api/files/batch-delete',
       method: 'post',
       data: { fileIds }
     })
@@ -75,7 +75,7 @@ export default {
   // 下载文件
   downloadFile(fileId) {
     return request({
-      url: `/files/${fileId}/download`,
+      url: `/api/files/${fileId}/download`,
       method: 'get',
       responseType: 'blob'
     })
@@ -84,7 +84,7 @@ export default {
   // 预览文件
   previewFile(fileId) {
     return request({
-      url: `/files/${fileId}/preview`,
+      url: `/api/files/${fileId}/preview`,
       method: 'get'
     })
   },
@@ -92,7 +92,7 @@ export default {
   // 获取文件信息
   getFileInfo(fileId) {
     return request({
-      url: `/files/${fileId}/info`,
+      url: `/api/files/${fileId}/info`,
       method: 'get'
     })
   },
@@ -100,7 +100,7 @@ export default {
   // 验证文件类型
   validateFileType(file) {
     return request({
-      url: '/files/validate/type',
+      url: '/api/files/validate/type',
       method: 'post',
       data: {
         fileName: file.name,
@@ -113,7 +113,7 @@ export default {
   // 验证文件大小
   validateFileSize(file) {
     return request({
-      url: '/files/validate/size',
+      url: '/api/files/validate/size',
       method: 'post',
       data: {
         fileName: file.name,
@@ -125,7 +125,7 @@ export default {
   // 获取上传配置
   getUploadConfig() {
     return request({
-      url: '/files/upload/config',
+      url: '/api/files/upload/config',
       method: 'get'
     })
   },
@@ -133,7 +133,7 @@ export default {
   // 获取文件列表
   getFileList(params) {
     return request({
-      url: '/files',
+      url: '/api/files',
       method: 'get',
       params
     })
@@ -142,7 +142,7 @@ export default {
   // 获取报销申请的附件列表
   getExpenseAttachments(applicationId) {
     return request({
-      url: `/files/expense/${applicationId}/attachments`,
+      url: `/api/files/expense/${applicationId}/attachments`,
       method: 'get'
     })
   },
@@ -150,7 +150,7 @@ export default {
   // 生成文件访问URL
   generateFileUrl(fileId) {
     return request({
-      url: `/files/${fileId}/url`,
+      url: `/api/files/${fileId}/url`,
       method: 'get'
     })
   }

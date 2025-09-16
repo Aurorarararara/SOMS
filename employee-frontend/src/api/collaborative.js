@@ -7,7 +7,7 @@ const collaborativeApi = {
   // 文档管理
   createDocument(data) {
     return request({
-      url: '/collaborative/documents/create',
+      url: '/api/collaborative/documents/create',
       method: 'post',
       data
     })
@@ -15,7 +15,7 @@ const collaborativeApi = {
 
   getDocument(documentId, userId) {
     return request({
-      url: `/collaborative/documents/${documentId}`,
+      url: `/api/collaborative/documents/${documentId}`,
       method: 'get',
       params: { userId }
     })
@@ -23,14 +23,14 @@ const collaborativeApi = {
 
   getUserDocuments(userId) {
     return request({
-      url: `/collaborative/documents/user/${userId}`,
+      url: `/api/collaborative/documents/user/${userId}`,
       method: 'get'
     })
   },
 
   pageDocuments(params) {
     return request({
-      url: '/collaborative/documents/page',
+      url: '/api/collaborative/documents/page',
       method: 'get',
       params
     })
@@ -38,14 +38,14 @@ const collaborativeApi = {
 
   getDocumentsByType(documentType) {
     return request({
-      url: `/collaborative/documents/type/${documentType}`,
+      url: `/api/collaborative/documents/type/${documentType}`,
       method: 'get'
     })
   },
 
   deleteDocument(documentId, userId) {
     return request({
-      url: `/collaborative/documents/${documentId}`,
+      url: `/api/collaborative/documents/${documentId}`,
       method: 'delete',
       params: { userId }
     })
@@ -53,7 +53,7 @@ const collaborativeApi = {
 
   copyDocument(documentId, data) {
     return request({
-      url: `/collaborative/documents/${documentId}/copy`,
+      url: `/api/collaborative/documents/${documentId}/copy`,
       method: 'post',
       data
     })
@@ -62,7 +62,7 @@ const collaborativeApi = {
   // 会话管理
   joinSession(documentId, data) {
     return request({
-      url: `/collaborative/documents/${documentId}/join`,
+      url: `/api/collaborative/documents/${documentId}/join`,
       method: 'post',
       data
     })
@@ -70,7 +70,7 @@ const collaborativeApi = {
 
   leaveSession(data) {
     return request({
-      url: '/collaborative/documents/leave',
+      url: '/api/collaborative/documents/leave',
       method: 'post',
       data
     })
@@ -78,7 +78,7 @@ const collaborativeApi = {
 
   getActiveSessions(documentId) {
     return request({
-      url: `/collaborative/documents/${documentId}/sessions`,
+      url: `/api/collaborative/documents/${documentId}/sessions`,
       method: 'get'
     })
   },
@@ -86,7 +86,7 @@ const collaborativeApi = {
   // 内容同步
   syncDocument(documentId, data) {
     return request({
-      url: `/collaborative/documents/${documentId}/sync`,
+      url: `/api/collaborative/documents/${documentId}/sync`,
       method: 'post',
       data
     })
@@ -94,14 +94,14 @@ const collaborativeApi = {
 
   getDocumentVersion(documentId) {
     return request({
-      url: `/collaborative/documents/${documentId}/version`,
+      url: `/api/collaborative/documents/${documentId}/version`,
       method: 'get'
     })
   },
 
   getDocumentOperations(documentId, fromSequence) {
     return request({
-      url: `/collaborative/documents/${documentId}/operations`,
+      url: `/api/collaborative/documents/${documentId}/operations`,
       method: 'get',
       params: { fromSequence }
     })
@@ -110,7 +110,7 @@ const collaborativeApi = {
   // 权限管理
   setDocumentPermission(documentId, data) {
     return request({
-      url: `/collaborative/documents/${documentId}/permissions`,
+      url: `/api/collaborative/documents/${documentId}/permissions`,
       method: 'post',
       data
     })

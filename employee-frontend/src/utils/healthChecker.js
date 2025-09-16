@@ -30,7 +30,7 @@ class HealthChecker {
       
       // 尝试请求健康检查接口，超时时间设置较短
       await request({
-        url: '/health',  // 修复：移除/api前缀，因为request.js中已经设置了baseURL为/api
+        url: '/api/health', // 健康检查接口路径
         method: 'get',
         timeout: 5000
       });

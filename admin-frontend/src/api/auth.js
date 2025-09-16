@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 登录
 export const login = (data) => {
   return request({
-    url: '/auth/admin/login',
+    url: '/api/auth/admin/login',
     method: 'post',
     data
   })
@@ -12,7 +12,7 @@ export const login = (data) => {
 // 登出
 export const logout = () => {
   return request({
-    url: '/auth/admin/logout',
+    url: '/api/auth/admin/logout',
     method: 'post'
   })
 }
@@ -20,7 +20,7 @@ export const logout = () => {
 // 获取用户信息
 export const getUserInfo = () => {
   return request({
-    url: '/auth/admin/userinfo',
+    url: '/api/auth/admin/userinfo',
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export const getUserInfo = () => {
 // 更新用户信息
 export const updateUserInfo = (data) => {
   return request({
-    url: '/auth/admin/profile',
+    url: '/api/auth/admin/profile',
     method: 'put',
     data
   })
@@ -37,7 +37,7 @@ export const updateUserInfo = (data) => {
 // 修改密码
 export const changePassword = (data) => {
   return request({
-    url: '/auth/admin/password',
+    url: '/api/auth/admin/password',
     method: 'put',
     data
   })

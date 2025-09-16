@@ -7,7 +7,7 @@ export default {
   // 获取系统健康状态
   getHealthStatus() {
     return request({
-      url: '/health',
+      url: '/api/health',
       method: 'get'
     })
   },
@@ -15,7 +15,7 @@ export default {
   // 获取系统信息
   getSystemInfo() {
     return request({
-      url: '/health/info',
+      url: '/api/health/info',
       method: 'get'
     })
   },
@@ -23,7 +23,7 @@ export default {
   // 获取数据库连接状态
   getDatabaseStatus() {
     return request({
-      url: '/health/database',
+      url: '/api/health/database',
       method: 'get'
     })
   },
@@ -31,7 +31,7 @@ export default {
   // 获取Redis连接状态
   getRedisStatus() {
     return request({
-      url: '/health/redis',
+      url: '/api/health/redis',
       method: 'get'
     })
   },
@@ -39,7 +39,7 @@ export default {
   // 获取服务器性能指标
   getServerMetrics() {
     return request({
-      url: '/health/metrics',
+      url: '/api/health/metrics',
       method: 'get'
     })
   },
@@ -47,7 +47,7 @@ export default {
   // 检查网络连接
   checkNetworkConnection() {
     return request({
-      url: '/health/network',
+      url: '/api/health/network',
       method: 'get'
     })
   }

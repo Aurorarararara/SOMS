@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 登录
 export const login = (data) => {
   return request({
-    url: '/auth/login',  // 修复：移除多余的/api前缀
+    url: '/api/auth/login',
     method: 'post',
     data
   })
@@ -12,7 +12,7 @@ export const login = (data) => {
 // 登出
 export const logout = () => {
   return request({
-    url: '/auth/logout',  // 修复：移除多余的/api前缀
+    url: '/api/auth/logout',
     method: 'post'
   })
 }
@@ -20,7 +20,7 @@ export const logout = () => {
 // 获取用户信息
 export const getUserInfo = () => {
   return request({
-    url: '/auth/userinfo',  // 修复：移除多余的/api前缀
+    url: '/api/auth/userinfo',
     method: 'get'
   })
 }

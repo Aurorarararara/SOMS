@@ -4,7 +4,7 @@ import { useUserStore } from '@/stores/user'
 
 // 创建axios实例
 const request = axios.create({
-  baseURL: '/api', // 添加baseURL，确保所有请求都带/api前缀
+  baseURL: '', // 移除baseURL，避免双重/api前缀
   timeout: 10000
 })
 

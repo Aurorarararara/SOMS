@@ -7,7 +7,7 @@ export default {
   // 获取聊天列表
   getChatList(params) {
     return request({
-      url: '/api/chat',
+      url: '/chat',
       method: 'get',
       params
     })
@@ -16,7 +16,7 @@ export default {
   // 创建聊天群组
   createChatGroup(data) {
     return request({
-      url: '/api/chat/groups',
+      url: '/chat/groups',
       method: 'post',
       data
     })
@@ -25,7 +25,7 @@ export default {
   // 获取聊天群组详情
   getChatGroupDetail(id) {
     return request({
-      url: `/api/chat/groups/${id}`,
+      url: `/chat/groups/${id}`,
       method: 'get'
     })
   },
@@ -33,7 +33,7 @@ export default {
   // 更新聊天群组
   updateChatGroup(id, data) {
     return request({
-      url: `/api/chat/groups/${id}`,
+      url: `/chat/groups/${id}`,
       method: 'put',
       data
     })
@@ -42,7 +42,7 @@ export default {
   // 删除聊天群组
   deleteChatGroup(id) {
     return request({
-      url: `/api/chat/groups/${id}`,
+      url: `/chat/groups/${id}`,
       method: 'delete'
     })
   },
@@ -50,7 +50,7 @@ export default {
   // 发送消息
   sendMessage(data) {
     return request({
-      url: '/api/chat/messages',
+      url: '/chat/messages',
       method: 'post',
       data
     })
@@ -59,7 +59,7 @@ export default {
   // 获取聊天消息
   getChatMessages(chatId, params) {
     return request({
-      url: `/api/chat/${chatId}/messages`,
+      url: `/chat/${chatId}/messages`,
       method: 'get',
       params
     })
@@ -68,7 +68,7 @@ export default {
   // 删除消息
   deleteMessage(messageId) {
     return request({
-      url: `/api/chat/messages/${messageId}`,
+      url: `/chat/messages/${messageId}`,
       method: 'delete'
     })
   },
@@ -76,7 +76,7 @@ export default {
   // 撤回消息
   recallMessage(messageId) {
     return request({
-      url: `/api/chat/messages/${messageId}/recall`,
+      url: `/chat/messages/${messageId}/recall`,
       method: 'put'
     })
   },
@@ -84,7 +84,7 @@ export default {
   // 添加群组成员
   addGroupMember(groupId, userIds) {
     return request({
-      url: `/api/chat/groups/${groupId}/members`,
+      url: `/chat/groups/${groupId}/members`,
       method: 'post',
       data: { userIds }
     })
@@ -93,7 +93,7 @@ export default {
   // 移除群组成员
   removeGroupMember(groupId, userId) {
     return request({
-      url: `/api/chat/groups/${groupId}/members/${userId}`,
+      url: `/chat/groups/${groupId}/members/${userId}`,
       method: 'delete'
     })
   },
@@ -101,7 +101,7 @@ export default {
   // 获取群组成员
   getGroupMembers(groupId) {
     return request({
-      url: `/api/chat/groups/${groupId}/members`,
+      url: `/chat/groups/${groupId}/members`,
       method: 'get'
     })
   },
@@ -109,7 +109,7 @@ export default {
   // 设置群组管理员
   setGroupAdmin(groupId, userId, isAdmin) {
     return request({
-      url: `/api/chat/groups/${groupId}/admin`,
+      url: `/chat/groups/${groupId}/admin`,
       method: 'put',
       data: { userId, isAdmin }
     })
@@ -118,7 +118,7 @@ export default {
   // 禁言用户
   muteUser(groupId, userId, duration) {
     return request({
-      url: `/api/chat/groups/${groupId}/mute`,
+      url: `/chat/groups/${groupId}/mute`,
       method: 'put',
       data: { userId, duration }
     })
@@ -127,7 +127,7 @@ export default {
   // 取消禁言
   unmuteUser(groupId, userId) {
     return request({
-      url: `/api/chat/groups/${groupId}/unmute`,
+      url: `/chat/groups/${groupId}/unmute`,
       method: 'put',
       data: { userId }
     })
@@ -136,7 +136,7 @@ export default {
   // 获取聊天统计
   getChatStatistics() {
     return request({
-      url: '/api/chat/statistics',
+      url: '/chat/statistics',
       method: 'get'
     })
   },
@@ -144,7 +144,7 @@ export default {
   // 搜索聊天记录
   searchMessages(keyword, params) {
     return request({
-      url: '/api/chat/messages/search',
+      url: '/chat/messages/search',
       method: 'get',
       params: { keyword, ...params }
     })
@@ -153,7 +153,7 @@ export default {
   // 上传聊天文件
   uploadChatFile(formData) {
     return request({
-      url: '/api/chat/files/upload',
+      url: '/chat/files/upload',
       method: 'post',
       data: formData,
       headers: {
@@ -165,7 +165,7 @@ export default {
   // 下载聊天文件
   downloadChatFile(fileId) {
     return request({
-      url: `/api/chat/files/${fileId}/download`,
+      url: `/chat/files/${fileId}/download`,
       method: 'get',
       responseType: 'blob'
     })

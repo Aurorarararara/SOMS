@@ -7,7 +7,7 @@ export default {
   // 创建日程
   createSchedule(data) {
     return request({
-      url: '/schedule/create',
+      url: '/api/schedule/create',
       method: 'post',
       data
     })
@@ -16,7 +16,7 @@ export default {
   // 更新日程
   updateSchedule(id, data) {
     return request({
-      url: `/schedule/update/${id}`,
+      url: `/api/schedule/update/${id}`,
       method: 'put',
       data
     })
@@ -25,7 +25,7 @@ export default {
   // 删除日程
   deleteSchedule(id) {
     return request({
-      url: `/schedule/delete/${id}`,
+      url: `/api/schedule/delete/${id}`,
       method: 'delete'
     })
   },
@@ -33,7 +33,7 @@ export default {
   // 获取日程详情
   getScheduleDetail(id) {
     return request({
-      url: `/schedule/detail/${id}`,
+      url: `/api/schedule/detail/${id}`,
       method: 'get'
     })
   },
@@ -41,7 +41,7 @@ export default {
   // 获取用户日程列表
   getUserSchedules(params) {
     return request({
-      url: '/schedule/list',
+      url: '/api/schedule/list',
       method: 'get',
       params
     })
@@ -50,7 +50,7 @@ export default {
   // 获取今日日程
   getTodaySchedules() {
     return request({
-      url: '/schedule/today',
+      url: '/api/schedule/today',
       method: 'get'
     })
   },
@@ -58,7 +58,7 @@ export default {
   // 获取即将到来的日程
   getUpcomingSchedules(params) {
     return request({
-      url: '/schedule/upcoming',
+      url: '/api/schedule/upcoming',
       method: 'get',
       params
     })
@@ -67,7 +67,7 @@ export default {
   // 搜索日程
   searchSchedules(params) {
     return request({
-      url: '/schedule/search',
+      url: '/api/schedule/search',
       method: 'get',
       params
     })
@@ -76,7 +76,7 @@ export default {
   // 检查日程冲突
   checkScheduleConflict(params) {
     return request({
-      url: '/schedule/conflict-check',
+      url: '/api/schedule/conflict-check',
       method: 'get',
       params
     })
@@ -85,7 +85,7 @@ export default {
   // 获取日程统计
   getScheduleStatistics(params) {
     return request({
-      url: '/schedule/statistics',
+      url: '/api/schedule/statistics',
       method: 'get',
       params
     })
@@ -94,7 +94,7 @@ export default {
   // 更新日程状态
   updateScheduleStatus(id, status) {
     return request({
-      url: `/schedule/status/${id}`,
+      url: `/api/schedule/status/${id}`,
       method: 'put',
       params: { status }
     })
@@ -103,7 +103,7 @@ export default {
   // 复制日程
   copySchedule(id, newStartTime) {
     return request({
-      url: `/schedule/copy/${id}`,
+      url: `/api/schedule/copy/${id}`,
       method: 'post',
       params: { newStartTime }
     })
@@ -112,7 +112,7 @@ export default {
   // 批量删除日程
   batchDeleteSchedules(scheduleIds) {
     return request({
-      url: '/schedule/batch-delete',
+      url: '/api/schedule/batch-delete',
       method: 'delete',
       data: scheduleIds
     })
@@ -121,7 +121,7 @@ export default {
   // 导出日程
   exportSchedules(params) {
     return request({
-      url: '/schedule/export',
+      url: '/api/schedule/export',
       method: 'get',
       params
     })
@@ -130,7 +130,7 @@ export default {
   // 获取日程参与者
   getScheduleParticipants(id) {
     return request({
-      url: `/schedule/participants/${id}`,
+      url: `/api/schedule/participants/${id}`,
       method: 'get'
     })
   },
@@ -138,7 +138,7 @@ export default {
   // 更新参与状态
   updateParticipantStatus(id, status, notes) {
     return request({
-      url: `/schedule/participant-status/${id}`,
+      url: `/api/schedule/participant-status/${id}`,
       method: 'put',
       params: { status, notes }
     })
@@ -147,7 +147,7 @@ export default {
   // 获取今日提醒
   getTodayReminders() {
     return request({
-      url: '/schedule/reminders/today',
+      url: '/api/schedule/reminders/today',
       method: 'get'
     })
   },
@@ -155,7 +155,7 @@ export default {
   // 检查日程冲突
   checkConflicts() {
     return request({
-      url: '/schedule/conflicts',
+      url: '/api/schedule/conflicts',
       method: 'get'
     })
   },
@@ -163,7 +163,7 @@ export default {
   // 同步日程
   syncSchedules() {
     return request({
-      url: '/schedule/sync',
+      url: '/api/schedule/sync',
       method: 'post'
     })
   },
@@ -171,7 +171,7 @@ export default {
   // 获取同步设置
   getSyncSettings() {
     return request({
-      url: '/schedule/sync/settings',
+      url: '/api/schedule/sync/settings',
       method: 'get'
     })
   },
@@ -179,7 +179,7 @@ export default {
   // 更新同步设置
   updateSyncSettings(settings) {
     return request({
-      url: '/schedule/sync/settings',
+      url: '/api/schedule/sync/settings',
       method: 'put',
       data: settings
     })
