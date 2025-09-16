@@ -7,7 +7,7 @@ export default {
   // 获取消息列表
   getMessageList(params) {
     return request({
-      url: '/admin/messages',
+      url: '/api/admin/messages',
       method: 'get',
       params
     })
@@ -16,7 +16,7 @@ export default {
   // 发送消息
   sendMessage(data) {
     return request({
-      url: '/admin/messages',
+      url: '/api/admin/messages',
       method: 'post',
       data
     })
@@ -25,7 +25,7 @@ export default {
   // 获取消息详情
   getMessageDetail(id) {
     return request({
-      url: `/admin/messages/${id}`,
+      url: `/api/admin/messages/${id}`,
       method: 'get'
     })
   },
@@ -33,7 +33,7 @@ export default {
   // 删除消息
   deleteMessage(id) {
     return request({
-      url: `/admin/messages/${id}`,
+      url: `/api/admin/messages/${id}`,
       method: 'delete'
     })
   },
@@ -41,7 +41,7 @@ export default {
   // 批量发送消息
   batchSendMessage(data) {
     return request({
-      url: '/admin/messages/batch',
+      url: '/api/admin/messages/batch',
       method: 'post',
       data
     })
@@ -50,7 +50,7 @@ export default {
   // 标记消息为已读
   markAsRead(id) {
     return request({
-      url: `/admin/messages/${id}/read`,
+      url: `/api/admin/messages/${id}/read`,
       method: 'put'
     })
   },
@@ -58,7 +58,7 @@ export default {
   // 批量标记为已读
   batchMarkAsRead(messageIds) {
     return request({
-      url: '/admin/messages/batch/read',
+      url: '/api/admin/messages/batch/read',
       method: 'put',
       data: { messageIds }
     })
@@ -67,7 +67,7 @@ export default {
   // 获取未读消息数量
   getUnreadCount() {
     return request({
-      url: '/admin/messages/unread/count',
+      url: '/api/admin/messages/unread/count',
       method: 'get'
     })
   },
@@ -75,7 +75,7 @@ export default {
   // 获取消息统计
   getMessageStatistics() {
     return request({
-      url: '/admin/messages/statistics',
+      url: '/api/admin/messages/statistics',
       method: 'get'
     })
   },
@@ -83,7 +83,7 @@ export default {
   // 搜索消息
   searchMessages(keyword) {
     return request({
-      url: '/admin/messages/search',
+      url: '/api/admin/messages/search',
       method: 'get',
       params: { keyword }
     })
@@ -92,7 +92,7 @@ export default {
   // 获取系统通知
   getSystemNotifications() {
     return request({
-      url: '/admin/messages/notifications/system',
+      url: '/api/admin/messages/notifications/system',
       method: 'get'
     })
   },
@@ -100,7 +100,7 @@ export default {
   // 发送系统通知
   sendSystemNotification(data) {
     return request({
-      url: '/admin/messages/notifications/system',
+      url: '/api/admin/messages/notifications/system',
       method: 'post',
       data
     })

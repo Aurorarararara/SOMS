@@ -7,7 +7,7 @@ export default {
   // 获取所有部门
   getAllDepartments() {
     return request({
-      url: '/admin/departments',
+      url: '/api/admin/departments',
       method: 'get'
     })
   },
@@ -15,7 +15,7 @@ export default {
   // 获取部门详情
   getDepartmentDetail(id) {
     return request({
-      url: `/admin/departments/${id}`,
+      url: `/api/admin/departments/${id}`,
       method: 'get'
     })
   },
@@ -23,7 +23,7 @@ export default {
   // 创建部门
   createDepartment(data) {
     return request({
-      url: '/admin/departments',
+      url: '/api/admin/departments',
       method: 'post',
       data
     })
@@ -32,7 +32,7 @@ export default {
   // 更新部门
   updateDepartment(id, data) {
     return request({
-      url: `/admin/departments/${id}`,
+      url: `/api/admin/departments/${id}`,
       method: 'put',
       data
     })
@@ -41,7 +41,7 @@ export default {
   // 删除部门
   deleteDepartment(id) {
     return request({
-      url: `/admin/departments/${id}`,
+      url: `/api/admin/departments/${id}`,
       method: 'delete'
     })
   },
@@ -49,7 +49,7 @@ export default {
   // 获取部门树结构
   getDepartmentTree() {
     return request({
-      url: '/admin/departments/tree',
+      url: '/api/admin/departments/tree',
       method: 'get'
     })
   }

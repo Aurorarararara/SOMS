@@ -4,7 +4,7 @@ export const leaveManageApi = {
   // 分页查询所有请假申请（管理员）
   getLeaveApplications(params) {
     return request({
-      url: '/admin/leave/applications',
+      url: '/api/admin/leave/applications',
       method: 'get',
       params
     })
@@ -13,7 +13,7 @@ export const leaveManageApi = {
   // 获取请假申请详情
   getLeaveApplicationDetail(applicationId) {
     return request({
-      url: `/admin/leave/applications/${applicationId}`,
+      url: `/api/admin/leave/applications/${applicationId}`,
       method: 'get'
     })
   },
@@ -21,7 +21,7 @@ export const leaveManageApi = {
   // 审批请假申请
   approveLeaveApplication(applicationId, data) {
     return request({
-      url: `/admin/leave/applications/${applicationId}/approve`,
+      url: `/api/admin/leave/applications/${applicationId}/approve`,
       method: 'post',
       data
     })
@@ -30,7 +30,7 @@ export const leaveManageApi = {
   // 拒绝请假申请
   rejectLeaveApplication(applicationId, data) {
     return request({
-      url: `/admin/leave/applications/${applicationId}/reject`,
+      url: `/api/admin/leave/applications/${applicationId}/reject`,
       method: 'post',
       data
     })
@@ -39,7 +39,7 @@ export const leaveManageApi = {
   // 获取请假审批统计
   getLeaveStatistics() {
     return request({
-      url: '/admin/leave/statistics',
+      url: '/api/admin/leave/statistics',
       method: 'get'
     })
   },
@@ -47,7 +47,7 @@ export const leaveManageApi = {
   // 获取请假统计报表数据
   getLeaveStatisticsReport(params) {
     return request({
-      url: '/admin/leave/applications/statistics/report',
+      url: '/api/admin/leave/applications/statistics/report',
       method: 'get',
       params
     })
@@ -56,7 +56,7 @@ export const leaveManageApi = {
   // 批量审批
   batchApprove(applicationIds, data) {
     return request({
-      url: '/admin/leave/applications/batch-approve',
+      url: '/api/admin/leave/applications/batch-approve',
       method: 'post',
       data: {
         applicationIds,
@@ -68,7 +68,7 @@ export const leaveManageApi = {
   // 批量拒绝
   batchReject(applicationIds, data) {
     return request({
-      url: '/admin/leave/applications/batch-reject',
+      url: '/api/admin/leave/applications/batch-reject',
       method: 'post',
       data: {
         applicationIds,
@@ -80,7 +80,7 @@ export const leaveManageApi = {
   // 导出请假申请数据
   exportLeaveApplications(params) {
     return request({
-      url: '/admin/leave/applications/export',
+      url: '/api/admin/leave/applications/export',
       method: 'get',
       params,
       responseType: 'blob'

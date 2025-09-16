@@ -4,7 +4,7 @@ export const roleApi = {
   // 获取所有有效角色列表
   getAllRoles() {
     return request({
-      url: '/admin/roles',
+      url: '/api/admin/roles',
       method: 'get'
     })
   },
@@ -12,7 +12,7 @@ export const roleApi = {
   // 分页查询角色列表
   getRoleList(params) {
     return request({
-      url: '/admin/roles/page',
+      url: '/api/admin/roles/page',
       method: 'get',
       params
     })
@@ -21,7 +21,7 @@ export const roleApi = {
   // 获取角色详情
   getRoleDetail(roleId) {
     return request({
-      url: `/admin/roles/${roleId}`,
+      url: `/api/admin/roles/${roleId}`,
       method: 'get'
     })
   },
@@ -29,7 +29,7 @@ export const roleApi = {
   // 创建角色
   createRole(data) {
     return request({
-      url: '/admin/roles',
+      url: '/api/admin/roles',
       method: 'post',
       data
     })
@@ -38,7 +38,7 @@ export const roleApi = {
   // 更新角色
   updateRole(roleId, data) {
     return request({
-      url: `/admin/roles/${roleId}`,
+      url: `/api/admin/roles/${roleId}`,
       method: 'put',
       data
     })
@@ -47,7 +47,7 @@ export const roleApi = {
   // 删除角色
   deleteRole(roleId) {
     return request({
-      url: `/admin/roles/${roleId}`,
+      url: `/api/admin/roles/${roleId}`,
       method: 'delete'
     })
   },
@@ -55,7 +55,7 @@ export const roleApi = {
   // 启用/禁用角色
   toggleRoleStatus(roleId, status) {
     return request({
-      url: `/admin/roles/${roleId}/status`,
+      url: `/api/admin/roles/${roleId}/status`,
       method: 'put',
       params: { status }
     })
@@ -64,7 +64,7 @@ export const roleApi = {
   // 获取角色的用户数量
   getRoleUserCount(roleId) {
     return request({
-      url: `/admin/roles/${roleId}/users/count`,
+      url: `/api/admin/roles/${roleId}/users/count`,
       method: 'get'
     })
   },
@@ -72,7 +72,7 @@ export const roleApi = {
   // 为用户分配角色
   assignRoleToUser(userId, roleIds) {
     return request({
-      url: '/admin/roles/assign',
+      url: '/api/admin/roles/assign',
       method: 'post',
       data: { userId, roleIds }
     })
@@ -81,7 +81,7 @@ export const roleApi = {
   // 移除用户角色
   removeRoleFromUser(userId, roleId) {
     return request({
-      url: '/admin/roles/remove',
+      url: '/api/admin/roles/remove',
       method: 'post',
       data: { userId, roleId }
     })

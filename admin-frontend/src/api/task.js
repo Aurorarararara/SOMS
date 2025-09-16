@@ -7,7 +7,7 @@ export default {
   // 获取所有任务列表
   getAllTasks(params) {
     return request({
-      url: '/admin/tasks',
+      url: '/api/admin/tasks',
       method: 'get',
       params
     })
@@ -16,7 +16,7 @@ export default {
   // 创建任务
   createTask(data) {
     return request({
-      url: '/admin/tasks',
+      url: '/api/admin/tasks',
       method: 'post',
       data
     })
@@ -25,7 +25,7 @@ export default {
   // 获取任务详情
   getTaskDetail(id) {
     return request({
-      url: `/admin/tasks/${id}`,
+      url: `/api/admin/tasks/${id}`,
       method: 'get'
     })
   },
@@ -33,7 +33,7 @@ export default {
   // 更新任务
   updateTask(id, data) {
     return request({
-      url: `/admin/tasks/${id}`,
+      url: `/api/admin/tasks/${id}`,
       method: 'put',
       data
     })
@@ -42,7 +42,7 @@ export default {
   // 删除任务
   deleteTask(id) {
     return request({
-      url: `/admin/tasks/${id}`,
+      url: `/api/admin/tasks/${id}`,
       method: 'delete'
     })
   },
@@ -50,7 +50,7 @@ export default {
   // 批量分配任务
   batchAssignTasks(taskIds, assigneeId) {
     return request({
-      url: '/admin/tasks/batch/assign',
+      url: '/api/admin/tasks/batch/assign',
       method: 'post',
       data: { taskIds, assigneeId }
     })
@@ -59,7 +59,7 @@ export default {
   // 批量更新任务状态
   batchUpdateStatus(taskIds, status) {
     return request({
-      url: '/admin/tasks/batch/status',
+      url: '/api/admin/tasks/batch/status',
       method: 'post',
       data: { taskIds, status }
     })
@@ -68,7 +68,7 @@ export default {
   // 获取任务统计
   getTaskStatistics() {
     return request({
-      url: '/admin/tasks/statistics',
+      url: '/api/admin/tasks/statistics',
       method: 'get'
     })
   },
@@ -76,7 +76,7 @@ export default {
   // 按部门获取任务统计
   getTaskStatsByDepartment() {
     return request({
-      url: '/admin/tasks/statistics/department',
+      url: '/api/admin/tasks/statistics/department',
       method: 'get'
     })
   },
@@ -84,7 +84,7 @@ export default {
   // 按用户获取任务统计
   getTaskStatsByUser() {
     return request({
-      url: '/admin/tasks/statistics/user',
+      url: '/api/admin/tasks/statistics/user',
       method: 'get'
     })
   },
@@ -92,7 +92,7 @@ export default {
   // 获取逾期任务
   getOverdueTasks() {
     return request({
-      url: '/admin/tasks/overdue',
+      url: '/api/admin/tasks/overdue',
       method: 'get'
     })
   },
@@ -100,7 +100,7 @@ export default {
   // 获取高优先级任务
   getHighPriorityTasks() {
     return request({
-      url: '/admin/tasks/high-priority',
+      url: '/api/admin/tasks/high-priority',
       method: 'get'
     })
   },
@@ -108,7 +108,7 @@ export default {
   // 导出任务数据
   exportTasks(params) {
     return request({
-      url: '/admin/tasks/export',
+      url: '/api/admin/tasks/export',
       method: 'get',
       params,
       responseType: 'blob'
@@ -118,7 +118,7 @@ export default {
   // 搜索任务
   searchTasks(keyword) {
     return request({
-      url: '/admin/tasks/search',
+      url: '/api/admin/tasks/search',
       method: 'get',
       params: { keyword }
     })

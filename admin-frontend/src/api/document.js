@@ -7,7 +7,7 @@ export default {
   // 获取所有文档列表
   getAllDocuments(params) {
     return request({
-      url: '/admin/documents',
+      url: '/api/admin/documents',
       method: 'get',
       params
     })
@@ -16,7 +16,7 @@ export default {
   // 创建文档
   createDocument(data) {
     return request({
-      url: '/admin/documents',
+      url: '/api/admin/documents',
       method: 'post',
       data
     })
@@ -25,7 +25,7 @@ export default {
   // 获取文档详情
   getDocumentDetail(id) {
     return request({
-      url: `/admin/documents/${id}`,
+      url: `/api/admin/documents/${id}`,
       method: 'get'
     })
   },
@@ -33,7 +33,7 @@ export default {
   // 更新文档
   updateDocument(id, data) {
     return request({
-      url: `/admin/documents/${id}`,
+      url: `/api/admin/documents/${id}`,
       method: 'put',
       data
     })
@@ -42,7 +42,7 @@ export default {
   // 删除文档
   deleteDocument(id) {
     return request({
-      url: `/admin/documents/${id}`,
+      url: `/api/admin/documents/${id}`,
       method: 'delete'
     })
   },
@@ -50,7 +50,7 @@ export default {
   // 批量删除文档
   batchDeleteDocuments(documentIds) {
     return request({
-      url: '/admin/documents/batch/delete',
+      url: '/api/admin/documents/batch/delete',
       method: 'delete',
       data: { documentIds }
     })
@@ -59,7 +59,7 @@ export default {
   // 上传文档
   uploadDocument(formData) {
     return request({
-      url: '/admin/documents/upload',
+      url: '/api/admin/documents/upload',
       method: 'post',
       data: formData,
       headers: {
@@ -71,7 +71,7 @@ export default {
   // 下载文档
   downloadDocument(id) {
     return request({
-      url: `/admin/documents/${id}/download`,
+      url: `/api/admin/documents/${id}/download`,
       method: 'get',
       responseType: 'blob'
     })
@@ -80,7 +80,7 @@ export default {
   // 搜索文档
   searchDocuments(keyword) {
     return request({
-      url: '/admin/documents/search',
+      url: '/api/admin/documents/search',
       method: 'get',
       params: { keyword }
     })
@@ -89,7 +89,7 @@ export default {
   // 获取文档统计
   getDocumentStatistics() {
     return request({
-      url: '/admin/documents/statistics',
+      url: '/api/admin/documents/statistics',
       method: 'get'
     })
   },
@@ -97,7 +97,7 @@ export default {
   // 按部门获取文档统计
   getDocumentStatsByDepartment() {
     return request({
-      url: '/admin/documents/statistics/department',
+      url: '/api/admin/documents/statistics/department',
       method: 'get'
     })
   },
@@ -105,7 +105,7 @@ export default {
   // 按用户获取文档统计
   getDocumentStatsByUser() {
     return request({
-      url: '/admin/documents/statistics/user',
+      url: '/api/admin/documents/statistics/user',
       method: 'get'
     })
   },
@@ -113,7 +113,7 @@ export default {
   // 获取文档分类
   getDocumentCategories() {
     return request({
-      url: '/admin/documents/categories',
+      url: '/api/admin/documents/categories',
       method: 'get'
     })
   },
@@ -121,7 +121,7 @@ export default {
   // 创建文档分类
   createDocumentCategory(data) {
     return request({
-      url: '/admin/documents/categories',
+      url: '/api/admin/documents/categories',
       method: 'post',
       data
     })
@@ -130,7 +130,7 @@ export default {
   // 更新文档分类
   updateDocumentCategory(id, data) {
     return request({
-      url: `/admin/documents/categories/${id}`,
+      url: `/api/admin/documents/categories/${id}`,
       method: 'put',
       data
     })
@@ -139,7 +139,7 @@ export default {
   // 删除文档分类
   deleteDocumentCategory(id) {
     return request({
-      url: `/admin/documents/categories/${id}`,
+      url: `/api/admin/documents/categories/${id}`,
       method: 'delete'
     })
   },
@@ -147,7 +147,7 @@ export default {
   // 设置文档权限
   setDocumentPermissions(id, permissions) {
     return request({
-      url: `/admin/documents/${id}/permissions`,
+      url: `/api/admin/documents/${id}/permissions`,
       method: 'put',
       data: { permissions }
     })
@@ -156,7 +156,7 @@ export default {
   // 获取文档权限
   getDocumentPermissions(id) {
     return request({
-      url: `/admin/documents/${id}/permissions`,
+      url: `/api/admin/documents/${id}/permissions`,
       method: 'get'
     })
   },
@@ -164,7 +164,7 @@ export default {
   // 审核文档
   auditDocument(id, status, comment) {
     return request({
-      url: `/admin/documents/${id}/audit`,
+      url: `/api/admin/documents/${id}/audit`,
       method: 'put',
       data: { status, comment }
     })
@@ -173,7 +173,7 @@ export default {
   // 获取待审核文档
   getPendingDocuments() {
     return request({
-      url: '/admin/documents/pending',
+      url: '/api/admin/documents/pending',
       method: 'get'
     })
   },
@@ -181,7 +181,7 @@ export default {
   // 导出文档列表
   exportDocuments(params) {
     return request({
-      url: '/admin/documents/export',
+      url: '/api/admin/documents/export',
       method: 'get',
       params,
       responseType: 'blob'

@@ -11,7 +11,7 @@ const imApi = {
    */
   getUserToken(userId) {
     return request({
-      url: '/im/token',
+      url: '/api/im/token',
       method: 'post',
       params: { userId }
     })
@@ -23,7 +23,7 @@ const imApi = {
    */
   getOnlineUsers() {
     return request({
-      url: '/im/users/online',
+      url: '/api/im/users/online',
       method: 'get'
     })
   },
@@ -36,7 +36,7 @@ const imApi = {
    */
   updateUserStatus(userId, status) {
     return request({
-      url: `/im/users/${userId}/status`,
+      url: `/api/im/users/${userId}/status`,
       method: 'post',
       params: { status }
     })
@@ -49,7 +49,7 @@ const imApi = {
    */
   getUserStatus(userId) {
     return request({
-      url: `/im/users/${userId}/status`,
+      url: `/api/im/users/${userId}/status`,
       method: 'get'
     })
   },
@@ -61,7 +61,7 @@ const imApi = {
    */
   createChatRoom(data) {
     return request({
-      url: '/im/chatroom',
+      url: '/api/im/chatroom',
       method: 'post',
       data
     })
@@ -75,7 +75,7 @@ const imApi = {
    */
   getChatMessages(roomId, limit = 50) {
     return request({
-      url: '/im/messages',
+      url: '/api/im/messages',
       method: 'get',
       params: { roomId, limit }
     })
@@ -88,7 +88,7 @@ const imApi = {
    */
   sendMessage(data) {
     return request({
-      url: '/im/messages',
+      url: '/api/im/messages',
       method: 'post',
       data
     })

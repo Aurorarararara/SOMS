@@ -9,7 +9,7 @@ export const workflowTemplateApi = {
    */
   getTemplateList(params) {
     return request({
-      url: '/admin/workflow/templates',
+      url: '/api/admin/workflow/templates',
       method: 'get',
       params
     })
@@ -20,7 +20,7 @@ export const workflowTemplateApi = {
    */
   getTemplateDetail(templateId) {
     return request({
-      url: `/admin/workflow/templates/${templateId}`,
+      url: `/api/admin/workflow/templates/${templateId}`,
       method: 'get'
     })
   },
@@ -30,7 +30,7 @@ export const workflowTemplateApi = {
    */
   createTemplate(data) {
     return request({
-      url: '/admin/workflow/templates',
+      url: '/api/admin/workflow/templates',
       method: 'post',
       data
     })
@@ -41,7 +41,7 @@ export const workflowTemplateApi = {
    */
   updateTemplate(templateId, data) {
     return request({
-      url: `/admin/workflow/templates/${templateId}`,
+      url: `/api/admin/workflow/templates/${templateId}`,
       method: 'put',
       data
     })
@@ -52,7 +52,7 @@ export const workflowTemplateApi = {
    */
   deleteTemplate(templateId) {
     return request({
-      url: `/admin/workflow/templates/${templateId}`,
+      url: `/api/admin/workflow/templates/${templateId}`,
       method: 'delete'
     })
   },
@@ -62,7 +62,7 @@ export const workflowTemplateApi = {
    */
   toggleTemplateStatus(templateId, isActive) {
     return request({
-      url: `/admin/workflow/templates/${templateId}/toggle-status`,
+      url: `/api/admin/workflow/templates/${templateId}/toggle-status`,
       method: 'put',
       params: { isActive }
     })
@@ -73,7 +73,7 @@ export const workflowTemplateApi = {
    */
   setDefaultTemplate(templateId, businessType) {
     return request({
-      url: `/admin/workflow/templates/${templateId}/set-default`,
+      url: `/api/admin/workflow/templates/${templateId}/set-default`,
       method: 'put',
       params: { businessType }
     })
@@ -84,7 +84,7 @@ export const workflowTemplateApi = {
    */
   copyTemplate(templateId, newName) {
     return request({
-      url: `/admin/workflow/templates/${templateId}/copy`,
+      url: `/api/admin/workflow/templates/${templateId}/copy`,
       method: 'post',
       params: { newName }
     })
@@ -95,7 +95,7 @@ export const workflowTemplateApi = {
    */
   getAvailableTemplates(businessType) {
     return request({
-      url: '/admin/workflow/templates/available',
+      url: '/api/admin/workflow/templates/available',
       method: 'get',
       params: { businessType }
     })
@@ -106,7 +106,7 @@ export const workflowTemplateApi = {
    */
   getDefaultTemplate(businessType) {
     return request({
-      url: '/admin/workflow/templates/default',
+      url: '/api/admin/workflow/templates/default',
       method: 'get',
       params: { businessType }
     })
@@ -122,7 +122,7 @@ export const workflowEngineApi = {
    */
   startWorkflow(data) {
     return request({
-      url: '/admin/workflow/start',
+      url: '/api/admin/workflow/start',
       method: 'post',
       data
     })
@@ -133,7 +133,7 @@ export const workflowEngineApi = {
    */
   processTask(data) {
     return request({
-      url: '/admin/workflow/tasks/process',
+      url: '/api/admin/workflow/tasks/process',
       method: 'post',
       data
     })
@@ -144,7 +144,7 @@ export const workflowEngineApi = {
    */
   delegateTask(taskId, delegateToId, reason) {
     return request({
-      url: `/admin/workflow/tasks/${taskId}/delegate`,
+      url: `/api/admin/workflow/tasks/${taskId}/delegate`,
       method: 'post',
       params: { delegateToId, reason }
     })
@@ -155,7 +155,7 @@ export const workflowEngineApi = {
    */
   cancelWorkflow(instanceId, reason) {
     return request({
-      url: `/admin/workflow/instances/${instanceId}/cancel`,
+      url: `/api/admin/workflow/instances/${instanceId}/cancel`,
       method: 'post',
       params: { reason }
     })
@@ -166,7 +166,7 @@ export const workflowEngineApi = {
    */
   getPendingTasks(userId) {
     return request({
-      url: '/admin/workflow/tasks/pending',
+      url: '/api/admin/workflow/tasks/pending',
       method: 'get',
       params: { userId }
     })
@@ -177,7 +177,7 @@ export const workflowEngineApi = {
    */
   getProcessedTasks(userId) {
     return request({
-      url: '/admin/workflow/tasks/processed',
+      url: '/api/admin/workflow/tasks/processed',
       method: 'get',
       params: { userId }
     })
@@ -188,7 +188,7 @@ export const workflowEngineApi = {
    */
   getWorkflowDetail(instanceId) {
     return request({
-      url: `/admin/workflow/instances/${instanceId}`,
+      url: `/api/admin/workflow/instances/${instanceId}`,
       method: 'get'
     })
   },
@@ -198,7 +198,7 @@ export const workflowEngineApi = {
    */
   getWorkflowByBusinessKey(businessKey, businessType) {
     return request({
-      url: '/admin/workflow/instances/by-business-key',
+      url: '/api/admin/workflow/instances/by-business-key',
       method: 'get',
       params: { businessKey, businessType }
     })
@@ -209,7 +209,7 @@ export const workflowEngineApi = {
    */
   getInstanceList(params) {
     return request({
-      url: '/admin/workflow/instances',
+      url: '/api/admin/workflow/instances',
       method: 'get',
       params
     })
@@ -220,7 +220,7 @@ export const workflowEngineApi = {
    */
   checkTaskPermission(taskId, userId) {
     return request({
-      url: `/admin/workflow/tasks/${taskId}/check-permission`,
+      url: `/api/admin/workflow/tasks/${taskId}/check-permission`,
       method: 'get',
       params: { userId }
     })
@@ -236,7 +236,7 @@ export const workflowInstanceApi = {
    */
   startWorkflow(data) {
     return request({
-      url: '/workflow/instances/start',
+      url: '/api/workflow/instances/start',
       method: 'post',
       data
     })
@@ -247,7 +247,7 @@ export const workflowInstanceApi = {
    */
   processTask(taskId, data) {
     return request({
-      url: `/workflow/instances/tasks/${taskId}/process`,
+      url: `/api/workflow/instances/tasks/${taskId}/process`,
       method: 'post',
       data
     })
@@ -258,7 +258,7 @@ export const workflowInstanceApi = {
    */
   getMyInitiatedInstances(userId) {
     return request({
-      url: '/workflow/instances/my-initiated',
+      url: '/api/workflow/instances/my-initiated',
       method: 'get',
       params: { userId }
     })
@@ -269,7 +269,7 @@ export const workflowInstanceApi = {
    */
   getMyPendingTasks(userId) {
     return request({
-      url: '/workflow/instances/my-tasks',
+      url: '/api/workflow/instances/my-tasks',
       method: 'get',
       params: { userId }
     })
@@ -280,7 +280,7 @@ export const workflowInstanceApi = {
    */
   getInstanceHistory(instanceId) {
     return request({
-      url: `/workflow/instances/${instanceId}/history`,
+      url: `/api/workflow/instances/${instanceId}/history`,
       method: 'get'
     })
   },
@@ -290,7 +290,7 @@ export const workflowInstanceApi = {
    */
   withdrawInstance(instanceId, data) {
     return request({
-      url: `/workflow/instances/${instanceId}/withdraw`,
+      url: `/api/workflow/instances/${instanceId}/withdraw`,
       method: 'post',
       data
     })
@@ -301,7 +301,7 @@ export const workflowInstanceApi = {
    */
   getInstanceDetail(instanceId) {
     return request({
-      url: `/workflow/instances/${instanceId}`,
+      url: `/api/workflow/instances/${instanceId}`,
       method: 'get'
     })
   }
