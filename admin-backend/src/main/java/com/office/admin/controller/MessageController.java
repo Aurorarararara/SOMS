@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2024-01-01
  */
 @RestController
-@RequestMapping("/admin/messages")
+@RequestMapping("/api/admin/messages")
 public class MessageController {
 
     /**

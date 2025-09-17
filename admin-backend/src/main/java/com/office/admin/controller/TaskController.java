@@ -15,7 +15,7 @@ import java.util.List;
  * @since 2024-01-01
  */
 @RestController
-@RequestMapping("/admin/tasks")
+@RequestMapping("/api/admin/tasks")
 public class TaskController {
 
     @Autowired

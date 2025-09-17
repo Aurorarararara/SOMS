@@ -14,7 +14,7 @@ import java.util.*;
  * @since 2024-01-01
  */
 @RestController
-@RequestMapping("/admin/attendance/statistics")
+@RequestMapping("/api/admin/attendance/statistics")
 public class AttendanceStatsController {
 
     private final AnalyticsService analyticsService;

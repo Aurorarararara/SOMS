@@ -17,7 +17,7 @@ import java.util.Map;
  * @since 2024-01-01
  */
 @RestController
-@RequestMapping("/admin/departments")
+@RequestMapping("/api/admin/departments")
 public class DepartmentController {
 
     @Autowired

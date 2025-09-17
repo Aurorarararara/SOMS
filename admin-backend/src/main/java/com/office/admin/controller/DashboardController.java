@@ -23,7 +23,7 @@ import java.util.List;
  * @since 2024-01-01
  */
 @RestController
-@RequestMapping("/admin/dashboard")
+@RequestMapping("/api/admin/dashboard")
 public class DashboardController {
 
     @Autowired

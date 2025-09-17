@@ -11,52 +11,11 @@
  Target Server Version : 80037 (8.0.37)
  File Encoding         : 65001
 
- Date: 14/09/2025 18:51:52
+ Date: 17/09/2025 15:49:05
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for ai_assistants
--- ----------------------------
-DROP TABLE IF EXISTS `ai_assistants`;
-CREATE TABLE `ai_assistants`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `assistant_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '助手唯一标识',
-  `assistant_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '助手名称',
-  `assistant_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '助手类型：general,document,data,code,meeting,hr',
-  `assistant_avatar` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '助手头像',
-  `assistant_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '助手描述',
-  `model_config` json NOT NULL COMMENT '模型配置',
-  `prompt_template` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '提示词模板',
-  `capabilities` json NULL COMMENT '能力配置：chat,analysis,generation,translation,summary',
-  `knowledge_base_ids` json NULL COMMENT '关联知识库ID列表',
-  `tools_config` json NULL COMMENT '工具配置',
-  `personality_config` json NULL COMMENT '个性化配置',
-  `language_support` json NULL COMMENT '支持语言列表',
-  `is_active` tinyint(1) NULL DEFAULT 1 COMMENT '是否激活',
-  `is_public` tinyint(1) NULL DEFAULT 0 COMMENT '是否公开助手',
-  `usage_limit` json NULL COMMENT '使用限制配置',
-  `created_by` bigint NOT NULL COMMENT '创建者ID',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `assistant_id`(`assistant_id` ASC) USING BTREE,
-  INDEX `idx_assistant_type`(`assistant_type` ASC, `is_active` ASC) USING BTREE,
-  INDEX `idx_created_by`(`created_by` ASC) USING BTREE,
-  CONSTRAINT `ai_assistants_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'AI助手配置表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of ai_assistants
--- ----------------------------
-INSERT INTO `ai_assistants` VALUES (1, 'general-assistant', '通用助手', 'general', NULL, '智能通用助手，可以回答各种问题，协助日常工作', '{\"model\": \"gpt-4\", \"max_tokens\": 2000, \"temperature\": 0.7}', NULL, '[\"chat\", \"analysis\", \"generation\", \"translation\", \"summary\"]', NULL, NULL, NULL, NULL, 1, 1, NULL, 1, '2025-09-10 20:34:56', '2025-09-10 20:34:56');
-INSERT INTO `ai_assistants` VALUES (2, 'document-assistant', '文档助手', 'document', NULL, '专业文档处理助手，擅长文档分析、总结、翻译和格式转换', '{\"model\": \"gpt-4\", \"max_tokens\": 4000, \"temperature\": 0.5}', NULL, '[\"analysis\", \"summary\", \"translation\", \"generation\"]', NULL, NULL, NULL, NULL, 1, 1, NULL, 1, '2025-09-10 20:34:56', '2025-09-10 20:34:56');
-INSERT INTO `ai_assistants` VALUES (3, 'data-assistant', '数据分析助手', 'data', NULL, '数据分析专家，提供数据洞察、图表生成和报告分析', '{\"model\": \"gpt-4\", \"max_tokens\": 3000, \"temperature\": 0.3}', NULL, '[\"analysis\", \"generation\", \"visualization\"]', NULL, NULL, NULL, NULL, 1, 1, NULL, 1, '2025-09-10 20:34:56', '2025-09-10 20:34:56');
-INSERT INTO `ai_assistants` VALUES (4, 'code-assistant', '代码助手', 'code', NULL, '编程专家助手，提供代码审查、优化建议和技术支持', '{\"model\": \"gpt-4\", \"max_tokens\": 4000, \"temperature\": 0.2}', NULL, '[\"analysis\", \"generation\", \"review\", \"debug\"]', NULL, NULL, NULL, NULL, 1, 1, NULL, 1, '2025-09-10 20:34:56', '2025-09-10 20:34:56');
-INSERT INTO `ai_assistants` VALUES (5, 'meeting-assistant', '会议助手', 'meeting', NULL, '会议专用助手，提供会议纪要、行动项提取和会议总结', '{\"model\": \"gpt-4\", \"max_tokens\": 3000, \"temperature\": 0.4}', NULL, '[\"summary\", \"extraction\", \"analysis\"]', NULL, NULL, NULL, NULL, 1, 1, NULL, 1, '2025-09-10 20:34:56', '2025-09-10 20:34:56');
-INSERT INTO `ai_assistants` VALUES (6, 'hr-assistant', 'HR助手', 'hr', NULL, '人力资源专业助手，协助招聘、培训和员工管理工作', '{\"model\": \"gpt-4\", \"max_tokens\": 2500, \"temperature\": 0.6}', NULL, '[\"analysis\", \"generation\", \"recommendation\"]', NULL, NULL, NULL, NULL, 1, 1, NULL, 1, '2025-09-10 20:34:56', '2025-09-10 20:34:56');
 
 -- ----------------------------
 -- Table structure for ai_conversations
@@ -1299,6 +1258,80 @@ INSERT INTO `employees` VALUES (23, 23, 'EMP023', 13, '品牌专员', '2024-04-0
 INSERT INTO `employees` VALUES (24, 24, 'EMP024', 16, '招聘专员', '2024-05-01', 1, '2025-09-10 20:33:43', '2025-09-10 20:33:43');
 
 -- ----------------------------
+-- Table structure for expense_applications
+-- ----------------------------
+DROP TABLE IF EXISTS `expense_applications`;
+CREATE TABLE `expense_applications`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `employee_id` bigint NOT NULL COMMENT '申请人ID，关联用户表',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '申请标题',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '申请描述',
+  `total_amount` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '总金额',
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft' COMMENT '状态：draft-草稿，pending-待审批，approved-已通过，rejected-已拒绝',
+  `apply_date` datetime NULL DEFAULT NULL COMMENT '申请时间',
+  `approve_date` datetime NULL DEFAULT NULL COMMENT '审批时间',
+  `approver_id` bigint NULL DEFAULT NULL COMMENT '审批人ID',
+  `approve_comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '审批意见',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_employee_id`(`employee_id` ASC) USING BTREE,
+  INDEX `idx_status`(`status` ASC) USING BTREE,
+  INDEX `idx_apply_date`(`apply_date` ASC) USING BTREE,
+  INDEX `idx_created_time`(`created_time` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '报销申请主表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of expense_applications
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for expense_approvals
+-- ----------------------------
+DROP TABLE IF EXISTS `expense_approvals`;
+CREATE TABLE `expense_approvals`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `application_id` bigint NOT NULL COMMENT '关联申请表ID',
+  `approver_id` bigint NOT NULL COMMENT '审批人ID',
+  `action` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '操作：approve-通过，reject-拒绝',
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '审批意见',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '审批时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_application_id`(`application_id` ASC) USING BTREE,
+  INDEX `idx_approver_id`(`approver_id` ASC) USING BTREE,
+  INDEX `idx_created_time`(`created_time` ASC) USING BTREE,
+  CONSTRAINT `expense_approvals_ibfk_1` FOREIGN KEY (`application_id`) REFERENCES `expense_applications` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '审批记录表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of expense_approvals
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for expense_items
+-- ----------------------------
+DROP TABLE IF EXISTS `expense_items`;
+CREATE TABLE `expense_items`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `application_id` bigint NOT NULL COMMENT '关联申请表ID',
+  `expense_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '费用类型：transport-交通费，meal-餐费，accommodation-住宿费，other-其他',
+  `amount` decimal(10, 2) NOT NULL COMMENT '金额',
+  `expense_date` date NOT NULL COMMENT '费用发生日期',
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '费用描述',
+  `attachment_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '附件URL',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_application_id`(`application_id` ASC) USING BTREE,
+  INDEX `idx_expense_type`(`expense_type` ASC) USING BTREE,
+  INDEX `idx_expense_date`(`expense_date` ASC) USING BTREE,
+  CONSTRAINT `expense_items_ibfk_1` FOREIGN KEY (`application_id`) REFERENCES `expense_applications` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '报销明细表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of expense_items
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for file_access_logs
 -- ----------------------------
 DROP TABLE IF EXISTS `file_access_logs`;
@@ -1706,7 +1739,7 @@ CREATE TABLE `kpi_data`  (
   INDEX `idx_metric_period`(`metric_id` ASC, `period_type` ASC, `period_start` ASC) USING BTREE,
   INDEX `idx_target`(`target_type` ASC, `target_id` ASC) USING BTREE,
   CONSTRAINT `kpi_data_ibfk_1` FOREIGN KEY (`metric_id`) REFERENCES `kpi_metrics` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'KPI数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'KPI数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of kpi_data
@@ -1715,6 +1748,14 @@ INSERT INTO `kpi_data` VALUES (1, 2, 1, 'employee', 95.5000, 'daily', '2025-09-1
 INSERT INTO `kpi_data` VALUES (2, 2, 1, 'employee', 92.0000, 'daily', '2025-09-13', '2025-09-13', NULL, NULL, '2025-09-14 12:21:24');
 INSERT INTO `kpi_data` VALUES (3, 2, 1, 'employee', 88.5000, 'daily', '2025-09-12', '2025-09-12', NULL, NULL, '2025-09-14 12:21:24');
 INSERT INTO `kpi_data` VALUES (4, 2, 1, 'employee', 91.0000, 'daily', '2025-09-11', '2025-09-11', NULL, NULL, '2025-09-14 12:21:24');
+INSERT INTO `kpi_data` VALUES (5, 7, 1, 'employee', 85.0000, 'daily', '2025-09-14', '2025-09-14', NULL, NULL, '2025-09-14 12:21:24');
+INSERT INTO `kpi_data` VALUES (6, 7, 1, 'employee', 87.5000, 'daily', '2025-09-13', '2025-09-13', NULL, NULL, '2025-09-14 12:21:24');
+INSERT INTO `kpi_data` VALUES (7, 7, 1, 'employee', 82.0000, 'daily', '2025-09-12', '2025-09-12', NULL, NULL, '2025-09-14 12:21:24');
+INSERT INTO `kpi_data` VALUES (8, 7, 1, 'employee', 90.0000, 'daily', '2025-09-11', '2025-09-11', NULL, NULL, '2025-09-14 12:21:24');
+INSERT INTO `kpi_data` VALUES (9, 8, 1, 'employee', 80.0000, 'daily', '2025-09-14', '2025-09-14', NULL, NULL, '2025-09-14 12:21:24');
+INSERT INTO `kpi_data` VALUES (10, 8, 1, 'employee', 82.5000, 'daily', '2025-09-13', '2025-09-13', NULL, NULL, '2025-09-14 12:21:24');
+INSERT INTO `kpi_data` VALUES (11, 8, 1, 'employee', 78.0000, 'daily', '2025-09-12', '2025-09-12', NULL, NULL, '2025-09-14 12:21:24');
+INSERT INTO `kpi_data` VALUES (12, 8, 1, 'employee', 85.0000, 'daily', '2025-09-11', '2025-09-11', NULL, NULL, '2025-09-14 12:21:24');
 
 -- ----------------------------
 -- Table structure for kpi_metrics
@@ -1741,17 +1782,19 @@ CREATE TABLE `kpi_metrics`  (
   INDEX `idx_metric_category`(`metric_category` ASC, `is_active` ASC) USING BTREE,
   INDEX `created_by`(`created_by` ASC) USING BTREE,
   CONSTRAINT `kpi_metrics_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `employees` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'KPI指标定义表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'KPI指标定义表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of kpi_metrics
 -- ----------------------------
 INSERT INTO `kpi_metrics` VALUES (1, '员工出勤率', 'ATTENDANCE_RATE', 'efficiency', '实际出勤天数/应出勤天数*100', 95.0000, NULL, NULL, '%', NULL, 'daily', 1, 1, '2025-09-10 20:34:45', '2025-09-10 20:34:45');
-INSERT INTO `kpi_metrics` VALUES (2, '任务完成率', 'TASK_COMPLETION_RATE', 'efficiency', '已完成任务数/总任务数*100', 90.0000, NULL, NULL, '%', NULL, 'daily', 1, 1, '2025-09-10 20:34:45', '2025-09-10 20:34:45');
+INSERT INTO `kpi_metrics` VALUES (2, '任务完成率*', 'TASK_COMPLETION_RATE', 'efficiency', '已完成任务数/总任务数*100', 90.0000, NULL, NULL, '%', NULL, 'daily', 1, 1, '2025-09-10 20:34:45', '2025-09-16 18:08:07');
 INSERT INTO `kpi_metrics` VALUES (3, '会议参与率', 'MEETING_PARTICIPATION_RATE', 'efficiency', '参与会议次数/邀请会议次数*100', 85.0000, NULL, NULL, '%', NULL, 'weekly', 1, 1, '2025-09-10 20:34:45', '2025-09-10 20:34:45');
 INSERT INTO `kpi_metrics` VALUES (4, '文档协作活跃度', 'DOCUMENT_COLLABORATION_ACTIVITY', 'efficiency', '协作编辑次数/总编辑次数*100', 60.0000, NULL, NULL, '%', NULL, 'daily', 1, 1, '2025-09-10 20:34:45', '2025-09-10 20:34:45');
 INSERT INTO `kpi_metrics` VALUES (5, '员工满意度', 'EMPLOYEE_SATISFACTION', 'satisfaction', '满意度调研平均分', 4.0000, NULL, NULL, '分', NULL, 'monthly', 1, 1, '2025-09-10 20:34:45', '2025-09-10 20:34:45');
 INSERT INTO `kpi_metrics` VALUES (6, '离职风险指数', 'TURNOVER_RISK_INDEX', 'quality', 'AI模型预测离职概率', 0.2000, NULL, NULL, '概率', NULL, 'weekly', 1, 1, '2025-09-10 20:34:45', '2025-09-10 20:34:45');
+INSERT INTO `kpi_metrics` VALUES (7, '质量评分', 'QUALITY_SCORE', 'quality', '工作质量评估得分', 85.0000, NULL, NULL, '分', NULL, 'daily', 1, 1, '2025-09-10 20:34:45', '2025-09-10 20:34:45');
+INSERT INTO `kpi_metrics` VALUES (8, '效率评分', 'EFFICIENCY_SCORE', 'efficiency', '工作效率评估得分', 80.0000, NULL, NULL, '分', NULL, 'daily', 1, 1, '2025-09-10 20:34:45', '2025-09-10 20:34:45');
 
 -- ----------------------------
 -- Table structure for leave_applications
