@@ -16,7 +16,7 @@ import java.util.List;
  * @since 2024-01-01
  */
 @RestController
-@RequestMapping("/admin/announcements")
+@RequestMapping("/api/admin/announcements")
 public class AnnouncementController {
 
     @Autowired
