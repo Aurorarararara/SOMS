@@ -65,7 +65,7 @@
       <div class="chart-container" v-loading="loading">
         <div v-if="!chartData || chartData.length === 0" class="chart-placeholder">
           <el-icon size="64" color="#c0c4cc"><TrendCharts /></el-icon>
-          <p>{{ $t('reportsPerformance.chartPlaceholder') }}</p>
+          <p>{{ $t('reportsPerformance.noData') }}</p>
         </div>
         <div v-else>
           <div ref="chartRef" class="chart-wrapper"></div>
@@ -213,15 +213,33 @@ const loadReport = async () => {
     const response = await performanceApi.getPerformanceStatistics(params)
 
     if (response.data && response.data.data) {
-      chartData.value = response.data.data
-      renderChart()
+      // 检查数据是否为空或全为0
+      const hasData = response.data.data.length > 0 && response.data.data.some(item => 
+        (item.taskCompletion || 0) > 0 || 
+        (item.quality || 0) > 0 || 
+        (item.efficiency || 0) > 0 ||
+        (item.taskCompletionRate || 0) > 0 ||
+        (item.qualityScore || 0) > 0 ||
+        (item.efficiencyScore || 0) > 0
+      );
+      
+      if (hasData) {
+        chartData.value = response.data.data
+        renderChart()
+      } else {
+        chartData.value = []
+        tableData.value = []
+        ElMessage.info($t('reportsPerformance.noData'))
+      }
     } else {
       chartData.value = []
       tableData.value = []
-      ElMessage.warning($t('reportsPerformance.noData'))
+      ElMessage.info($t('reportsPerformance.noData'))
     }
   } catch (error) {
     console.error('加载报表失败:', error)
+    chartData.value = []
+    tableData.value = []
     ElMessage.error($t('reportsPerformance.loadFailed'))
   } finally {
     loading.value = false
@@ -229,8 +247,26 @@ const loadReport = async () => {
 }
 
 const renderChart = () => {
+  // 检查是否有数据
   if (!chartRef.value || !chartData.value || chartData.value.length === 0) {
     return
+  }
+
+  // 检查数据是否全为0
+  const hasNonZeroData = chartData.value.some(item => 
+    (item.taskCompletion || 0) > 0 || 
+    (item.quality || 0) > 0 || 
+    (item.efficiency || 0) > 0 ||
+    (item.taskCompletionRate || 0) > 0 ||
+    (item.qualityScore || 0) > 0 ||
+    (item.efficiencyScore || 0) > 0
+  );
+
+  // 如果没有非零数据，则不渲染图表
+  if (!hasNonZeroData) {
+    chartData.value = [];
+    tableData.value = [];
+    return;
   }
 
   // 初始化或获取图表实例
@@ -485,6 +521,18 @@ const renderChart = () => {
         qualityScore.push(total > 0 ? Math.round(((item.quality || 0) / total) * 10000) / 100 : 0)
         efficiencyScore.push(total > 0 ? Math.round(((item.efficiency || 0) / total) * 10000) / 100 : 0)
       })
+  }
+
+  // 检查处理后的数据是否全为0
+  const hasValidChartData = taskCompletionRate.some(val => val > 0) || 
+                           qualityScore.some(val => val > 0) || 
+                           efficiencyScore.some(val => val > 0);
+
+  // 如果处理后的数据也全为0，则不渲染图表
+  if (!hasValidChartData) {
+    chartData.value = [];
+    tableData.value = [];
+    return;
   }
 
   // 图表配置

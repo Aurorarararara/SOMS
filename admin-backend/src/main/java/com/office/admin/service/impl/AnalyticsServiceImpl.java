@@ -387,19 +387,157 @@ public class AnalyticsServiceImpl implements AnalyticsService {
      */
     @Override
     public List<Map<String, Object>> getMonthlyPerformanceStats(LocalDate startDate, LocalDate endDate) {
-        // 模拟数据 - 实际项目中应从数据库获取真实数据
+        // 获取任务完成率指标ID
+        QueryWrapper<KpiMetric> taskQueryWrapper = new QueryWrapper<>();
+        taskQueryWrapper.eq("metric_code", "TASK_COMPLETION_RATE");
+        KpiMetric taskCompletionMetric = kpiMetricMapper.selectOne(taskQueryWrapper);
+        
+        // 获取质量评分指标ID
+        QueryWrapper<KpiMetric> qualityQueryWrapper = new QueryWrapper<>();
+        qualityQueryWrapper.eq("metric_code", "QUALITY_SCORE");
+        KpiMetric qualityMetric = kpiMetricMapper.selectOne(qualityQueryWrapper);
+        
+        // 获取效率评分指标ID
+        QueryWrapper<KpiMetric> efficiencyQueryWrapper = new QueryWrapper<>();
+        efficiencyQueryWrapper.eq("metric_code", "EFFICIENCY_SCORE");
+        KpiMetric efficiencyMetric = kpiMetricMapper.selectOne(efficiencyQueryWrapper);
+        
+        // 从数据库获取任务完成率真实数据 (使用daily数据)
+        List<KpiData> taskCompletionDataList = new ArrayList<>();
+        if (taskCompletionMetric != null) {
+            // 获取daily类型的数据用于月度聚合
+            taskCompletionDataList = kpiDataMapper.getKpiDataByMetricIdAndDateRange(
+                taskCompletionMetric.getId(), startDate, endDate);
+        }
+        
+        // 从数据库获取质量评分真实数据 (使用daily数据)
+        List<KpiData> qualityDataList = new ArrayList<>();
+        if (qualityMetric != null) {
+            // 获取daily类型的数据用于月度聚合
+            qualityDataList = kpiDataMapper.getKpiDataByMetricIdAndDateRange(
+                qualityMetric.getId(), startDate, endDate);
+        }
+        
+        // 从数据库获取效率评分真实数据 (使用daily数据)
+        List<KpiData> efficiencyDataList = new ArrayList<>();
+        if (efficiencyMetric != null) {
+            // 获取daily类型的数据用于月度聚合
+            efficiencyDataList = kpiDataMapper.getKpiDataByMetricIdAndDateRange(
+                efficiencyMetric.getId(), startDate, endDate);
+        }
+        
+        // 将日数据按月份分组，用于计算月度平均值
+        Map<String, List<KpiData>> taskCompletionMonthlyMap = taskCompletionDataList.stream()
+                .collect(Collectors.groupingBy(data -> data.getPeriodStart().getYear() + "-" + 
+                        String.format("%02d", data.getPeriodStart().getMonthValue())));
+        
+        Map<String, List<KpiData>> qualityMonthlyMap = qualityDataList.stream()
+                .collect(Collectors.groupingBy(data -> data.getPeriodStart().getYear() + "-" + 
+                        String.format("%02d", data.getPeriodStart().getMonthValue())));
+        
+        Map<String, List<KpiData>> efficiencyMonthlyMap = efficiencyDataList.stream()
+                .collect(Collectors.groupingBy(data -> data.getPeriodStart().getYear() + "-" + 
+                        String.format("%02d", data.getPeriodStart().getMonthValue())));
+        
+        // 生成结果数据
         List<Map<String, Object>> result = new ArrayList<>();
         
-        String[] months = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-        for (String month : months) {
-            Map<String, Object> monthlyStats = new HashMap<>();
-            monthlyStats.put("month", "2024-" + month);
-            monthlyStats.put("taskCompletion", 80 + Math.random() * 20); // 80-100之间的随机数
-            monthlyStats.put("quality", 70 + Math.random() * 30); // 70-100之间的随机数
-            monthlyStats.put("efficiency", 75 + Math.random() * 25); // 75-100之间的随机数
-            monthlyStats.put("total", 3);
+        // 处理任务完成率数据
+        for (Map.Entry<String, List<KpiData>> entry : taskCompletionMonthlyMap.entrySet()) {
+            String month = entry.getKey();
+            List<KpiData> dataList = entry.getValue();
             
+            // 计算月度平均值
+            double taskAvg = dataList.stream()
+                    .mapToDouble(data -> data.getMetricValue() != null ? data.getMetricValue().doubleValue() : 0)
+                    .average()
+                    .orElse(0);
+            
+            Map<String, Object> monthlyStats = new HashMap<>();
+            monthlyStats.put("month", month);
+            monthlyStats.put("taskCompletion", Math.round(taskAvg));
+            
+            // 获取对应月份的质量评分数据
+            List<KpiData> qualityDataForMonth = qualityMonthlyMap.getOrDefault(month, new ArrayList<>());
+            double qualityAvg = qualityDataForMonth.stream()
+                    .mapToDouble(data -> data.getMetricValue() != null ? data.getMetricValue().doubleValue() : 0)
+                    .average()
+                    .orElse(0);
+            monthlyStats.put("quality", Math.round(qualityAvg));
+            
+            // 获取对应月份的效率评分数据
+            List<KpiData> efficiencyDataForMonth = efficiencyMonthlyMap.getOrDefault(month, new ArrayList<>());
+            double efficiencyAvg = efficiencyDataForMonth.stream()
+                    .mapToDouble(data -> data.getMetricValue() != null ? data.getMetricValue().doubleValue() : 0)
+                    .average()
+                    .orElse(0);
+            monthlyStats.put("efficiency", Math.round(efficiencyAvg));
+            
+            monthlyStats.put("total", 3);
             result.add(monthlyStats);
+        }
+        
+        // 处理只有质量评分数据的月份
+        for (Map.Entry<String, List<KpiData>> entry : qualityMonthlyMap.entrySet()) {
+            String month = entry.getKey();
+            // 如果该月份还没有处理过
+            if (result.stream().noneMatch(m -> month.equals(m.get("month")))) {
+                List<KpiData> dataList = entry.getValue();
+                
+                Map<String, Object> monthlyStats = new HashMap<>();
+                monthlyStats.put("month", month);
+                monthlyStats.put("taskCompletion", 0);
+                
+                // 计算月度平均值
+                double qualityAvg = dataList.stream()
+                        .mapToDouble(data -> data.getMetricValue() != null ? data.getMetricValue().doubleValue() : 0)
+                        .average()
+                        .orElse(0);
+                monthlyStats.put("quality", Math.round(qualityAvg));
+                
+                // 获取对应月份的效率评分数据
+                List<KpiData> efficiencyDataForMonth = efficiencyMonthlyMap.getOrDefault(month, new ArrayList<>());
+                double efficiencyAvg = efficiencyDataForMonth.stream()
+                        .mapToDouble(data -> data.getMetricValue() != null ? data.getMetricValue().doubleValue() : 0)
+                        .average()
+                        .orElse(0);
+                monthlyStats.put("efficiency", Math.round(efficiencyAvg));
+                
+                monthlyStats.put("total", 3);
+                result.add(monthlyStats);
+            }
+        }
+        
+        // 处理只有效率评分数据的月份
+        for (Map.Entry<String, List<KpiData>> entry : efficiencyMonthlyMap.entrySet()) {
+            String month = entry.getKey();
+            // 如果该月份还没有处理过
+            if (result.stream().noneMatch(m -> month.equals(m.get("month")))) {
+                List<KpiData> dataList = entry.getValue();
+                
+                Map<String, Object> monthlyStats = new HashMap<>();
+                monthlyStats.put("month", month);
+                monthlyStats.put("taskCompletion", 0);
+                monthlyStats.put("quality", 0);
+                
+                // 计算月度平均值
+                double efficiencyAvg = dataList.stream()
+                        .mapToDouble(data -> data.getMetricValue() != null ? data.getMetricValue().doubleValue() : 0)
+                        .average()
+                        .orElse(0);
+                monthlyStats.put("efficiency", Math.round(efficiencyAvg));
+                
+                monthlyStats.put("total", 3);
+                result.add(monthlyStats);
+            }
+        }
+        
+        // 按月份排序
+        result.sort(Comparator.comparing(m -> (String) m.get("month")));
+        
+        // 如果没有数据，不生成模拟数据，直接返回空列表
+        if (result.isEmpty()) {
+            return new ArrayList<>(); // 返回空列表而不是模拟数据
         }
         
         return result;
@@ -427,5 +565,182 @@ public class AnalyticsServiceImpl implements AnalyticsService {
             default:
                 return getDailyPerformanceStats(startDate, endDate);
         }
+    }
+
+    /**
+     * 获取每季度绩效统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每季度绩效统计数据
+     */
+    @Override
+    public List<Map<String, Object>> getQuarterlyPerformanceStats(LocalDate startDate, LocalDate endDate) {
+        // 首先生成所有月份的数据
+        List<Map<String, Object>> monthlyData = getMonthlyPerformanceStats(startDate, endDate);
+        
+        // 如果月度数据为空，直接返回空列表
+        if (monthlyData.isEmpty()) {
+            return new ArrayList<>(); // 返回空列表而不是模拟数据
+        }
+        
+        // 将月度数据按季度分组
+        Map<String, List<Map<String, Object>>> quarterlyMap = monthlyData.stream()
+                .collect(Collectors.groupingBy(data -> {
+                    String monthStr = (String) data.get("month");
+                    String[] parts = monthStr.split("-");
+                    int year = Integer.parseInt(parts[0]);
+                    int month = Integer.parseInt(parts[1]);
+                    int quarter = (month + 2) / 3;
+                    return year + "-Q" + quarter;
+                }));
+        
+        // 生成结果数据
+        List<Map<String, Object>> result = new ArrayList<>();
+        
+        // 处理每个季度的数据
+        for (Map.Entry<String, List<Map<String, Object>>> entry : quarterlyMap.entrySet()) {
+            String quarter = entry.getKey();
+            List<Map<String, Object>> dataList = entry.getValue();
+            
+            // 计算季度平均值
+            double taskAvg = dataList.stream()
+                    .mapToDouble(data -> ((Number) data.get("taskCompletion")).doubleValue())
+                    .average()
+                    .orElse(0);
+            
+            double qualityAvg = dataList.stream()
+                    .mapToDouble(data -> ((Number) data.get("quality")).doubleValue())
+                    .average()
+                    .orElse(0);
+            
+            double efficiencyAvg = dataList.stream()
+                    .mapToDouble(data -> ((Number) data.get("efficiency")).doubleValue())
+                    .average()
+                    .orElse(0);
+            
+            Map<String, Object> quarterlyStats = new HashMap<>();
+            quarterlyStats.put("quarter", quarter);
+            quarterlyStats.put("taskCompletion", Math.round(taskAvg));
+            quarterlyStats.put("quality", Math.round(qualityAvg));
+            quarterlyStats.put("efficiency", Math.round(efficiencyAvg));
+            quarterlyStats.put("total", 3);
+            result.add(quarterlyStats);
+        }
+        
+        // 按季度排序
+        result.sort(Comparator.comparing(m -> (String) m.get("quarter")));
+        
+        return result;
+    }
+
+    /**
+     * 获取每年度绩效统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每年度绩效统计数据
+     */
+    @Override
+    public List<Map<String, Object>> getYearlyPerformanceStats(LocalDate startDate, LocalDate endDate) {
+        // 首先生成所有月份的数据
+        List<Map<String, Object>> monthlyData = getMonthlyPerformanceStats(startDate, endDate);
+        
+        // 如果月度数据为空，直接返回空列表
+        if (monthlyData.isEmpty()) {
+            return new ArrayList<>(); // 返回空列表而不是模拟数据
+        }
+        
+        // 将月度数据按年份分组
+        Map<String, List<Map<String, Object>>> yearlyMap = monthlyData.stream()
+                .collect(Collectors.groupingBy(data -> {
+                    String monthStr = (String) data.get("month");
+                    return monthStr.substring(0, 4); // 提取年份部分
+                }));
+        
+        // 生成结果数据
+        List<Map<String, Object>> result = new ArrayList<>();
+        
+        // 处理每个年份的数据
+        for (Map.Entry<String, List<Map<String, Object>>> entry : yearlyMap.entrySet()) {
+            String year = entry.getKey();
+            List<Map<String, Object>> dataList = entry.getValue();
+            
+            // 计算年度平均值
+            double taskAvg = dataList.stream()
+                    .mapToDouble(data -> ((Number) data.get("taskCompletion")).doubleValue())
+                    .average()
+                    .orElse(0);
+            
+            double qualityAvg = dataList.stream()
+                    .mapToDouble(data -> ((Number) data.get("quality")).doubleValue())
+                    .average()
+                    .orElse(0);
+            
+            double efficiencyAvg = dataList.stream()
+                    .mapToDouble(data -> ((Number) data.get("efficiency")).doubleValue())
+                    .average()
+                    .orElse(0);
+            
+            Map<String, Object> yearlyStats = new HashMap<>();
+            yearlyStats.put("year", year);
+            yearlyStats.put("taskCompletion", Math.round(taskAvg));
+            yearlyStats.put("quality", Math.round(qualityAvg));
+            yearlyStats.put("efficiency", Math.round(efficiencyAvg));
+            yearlyStats.put("total", 3);
+            result.add(yearlyStats);
+        }
+        
+        // 按年份排序
+        result.sort(Comparator.comparing(m -> (String) m.get("year")));
+        
+        return result;
+    }
+
+    /**
+     * 生成分析报表
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @param type      报表类型
+     * @return 报表数据
+     */
+    @Override
+    public Map<String, Object> generateAnalyticsReport(LocalDate startDate, LocalDate endDate, String type) {
+        Map<String, Object> reportData = new HashMap<>();
+        
+        // 根据报表类型生成不同类型的报表数据
+        switch (type) {
+            case "daily":
+                reportData.put("attendanceStats", getDailyAttendanceStats(startDate, endDate));
+                reportData.put("performanceStats", getDailyPerformanceStats(startDate, endDate));
+                break;
+            case "weekly":
+                reportData.put("attendanceStats", getWeeklyAttendanceStats(startDate, endDate));
+                reportData.put("performanceStats", getWeeklyPerformanceStats(startDate, endDate));
+                break;
+            case "monthly":
+                reportData.put("attendanceStats", getMonthlyAttendanceStats(startDate, endDate));
+                reportData.put("performanceStats", getMonthlyPerformanceStats(startDate, endDate));
+                break;
+            case "quarterly":
+                reportData.put("attendanceStats", getMonthlyAttendanceStats(startDate, endDate));
+                reportData.put("performanceStats", getQuarterlyPerformanceStats(startDate, endDate));
+                break;
+            case "yearly":
+                reportData.put("attendanceStats", getMonthlyAttendanceStats(startDate, endDate));
+                reportData.put("performanceStats", getYearlyPerformanceStats(startDate, endDate));
+                break;
+            default:
+                reportData.put("attendanceStats", getDailyAttendanceStats(startDate, endDate));
+                reportData.put("performanceStats", getDailyPerformanceStats(startDate, endDate));
+                break;
+        }
+        
+        reportData.put("startDate", startDate.toString());
+        reportData.put("endDate", endDate.toString());
+        reportData.put("reportType", type);
+        
+        return reportData;
     }
 }

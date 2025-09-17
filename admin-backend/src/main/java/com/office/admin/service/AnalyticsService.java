@@ -207,4 +207,32 @@ public interface AnalyticsService {
      * @return 部门绩效统计数据
      */
     List<Map<String, Object>> getDepartmentPerformanceStats(Long departmentId, LocalDate startDate, LocalDate endDate, String type);
+
+    /**
+     * 获取每季度绩效统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每季度绩效统计数据
+     */
+    List<Map<String, Object>> getQuarterlyPerformanceStats(LocalDate startDate, LocalDate endDate);
+
+    /**
+     * 获取每年度绩效统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每年度绩效统计数据
+     */
+    List<Map<String, Object>> getYearlyPerformanceStats(LocalDate startDate, LocalDate endDate);
+
+    /**
+     * 生成分析报表
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @param type      报表类型
+     * @return 报表数据
+     */
+    Map<String, Object> generateAnalyticsReport(LocalDate startDate, LocalDate endDate, String type);
 }
