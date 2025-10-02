@@ -41,6 +41,24 @@ public interface AnalyticsService {
     List<Map<String, Object>> getMonthlyAttendanceStats(LocalDate startDate, LocalDate endDate);
 
     /**
+     * 获取每季度考勤统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每季度考勤统计数据
+     */
+    List<Map<String, Object>> getQuarterlyAttendanceStats(LocalDate startDate, LocalDate endDate);
+
+    /**
+     * 获取每年度考勤统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每年度考勤统计数据
+     */
+    List<Map<String, Object>> getYearlyAttendanceStats(LocalDate startDate, LocalDate endDate);
+
+    /**
      * 获取部门考勤统计数据
      *
      * @param departmentId 部门ID
@@ -81,13 +99,13 @@ public interface AnalyticsService {
     List<Map<String, Object>> getMonthlyPerformanceStats(LocalDate startDate, LocalDate endDate);
 
     /**
-     * 获取部门绩效统计数据
+     * 获取绩效统计数据
      *
      * @param departmentId 部门ID
      * @param startDate    开始日期
      * @param endDate      结束日期
      * @param type         统计类型
-     * @return 部门绩效统计数据
+     * @return 绩效统计数据
      */
     List<Map<String, Object>> getDepartmentPerformanceStats(Long departmentId, LocalDate startDate, LocalDate endDate, String type);
 

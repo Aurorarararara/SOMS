@@ -164,6 +164,104 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     /**
+     * 获取每季度考勤统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每季度考勤统计数据
+     */
+    @Override
+    public List<Map<String, Object>> getQuarterlyAttendanceStats(LocalDate startDate, LocalDate endDate) {
+        // 首先获取月度数据
+        List<Map<String, Object>> monthlyData = getMonthlyAttendanceStats(startDate, endDate);
+        
+        // 如果没有月度数据，直接返回空列表
+        if (monthlyData.isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        // 按季度分组聚合数据
+        Map<String, Map<String, Object>> quarterlyMap = new LinkedHashMap<>();
+        
+        for (Map<String, Object> monthData : monthlyData) {
+            String monthStr = (String) monthData.get("month");
+            String[] parts = monthStr.split("-");
+            int year = Integer.parseInt(parts[0]);
+            int month = Integer.parseInt(parts[1]);
+            int quarter = (month + 2) / 3; // 计算季度 (1-4)
+            
+            String quarterKey = year + "-Q" + quarter;
+            
+            if (!quarterlyMap.containsKey(quarterKey)) {
+                Map<String, Object> quarterData = new HashMap<>();
+                quarterData.put("year", year);
+                quarterData.put("quarter", quarter);
+                quarterData.put("normal", 0L);
+                quarterData.put("late", 0L);
+                quarterData.put("earlyLeave", 0L);
+                quarterData.put("absent", 0L);
+                quarterData.put("total", 0L);
+                quarterlyMap.put(quarterKey, quarterData);
+            }
+            
+            Map<String, Object> quarterData = quarterlyMap.get(quarterKey);
+            quarterData.put("normal", ((Long) quarterData.get("normal")) + ((Number) monthData.getOrDefault("normal", 0)).longValue());
+            quarterData.put("late", ((Long) quarterData.get("late")) + ((Number) monthData.getOrDefault("late", 0)).longValue());
+            quarterData.put("earlyLeave", ((Long) quarterData.get("earlyLeave")) + ((Number) monthData.getOrDefault("earlyLeave", 0)).longValue());
+            quarterData.put("absent", ((Long) quarterData.get("absent")) + ((Number) monthData.getOrDefault("absent", 0)).longValue());
+            quarterData.put("total", ((Long) quarterData.get("total")) + ((Number) monthData.getOrDefault("total", 0)).longValue());
+        }
+        
+        return new ArrayList<>(quarterlyMap.values());
+    }
+
+    /**
+     * 获取每年度考勤统计数据
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 每年度考勤统计数据
+     */
+    @Override
+    public List<Map<String, Object>> getYearlyAttendanceStats(LocalDate startDate, LocalDate endDate) {
+        // 首先获取月度数据
+        List<Map<String, Object>> monthlyData = getMonthlyAttendanceStats(startDate, endDate);
+        
+        // 如果没有月度数据，直接返回空列表
+        if (monthlyData.isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        // 按年份分组聚合数据
+        Map<Integer, Map<String, Object>> yearlyMap = new LinkedHashMap<>();
+        
+        for (Map<String, Object> monthData : monthlyData) {
+            String monthStr = (String) monthData.get("month");
+            int year = Integer.parseInt(monthStr.split("-")[0]);
+            
+            if (!yearlyMap.containsKey(year)) {
+                Map<String, Object> yearData = new HashMap<>();
+                yearData.put("year", year);
+                yearData.put("normal", 0L);
+                yearData.put("late", 0L);
+                yearData.put("earlyLeave", 0L);
+                yearData.put("absent", 0L);
+                yearData.put("total", 0L);
+                yearlyMap.put(year, yearData);
+            }
+            
+            Map<String, Object> yearData = yearlyMap.get(year);
+            yearData.put("normal", ((Long) yearData.get("normal")) + ((Number) monthData.getOrDefault("normal", 0)).longValue());
+            yearData.put("late", ((Long) yearData.get("late")) + ((Number) monthData.getOrDefault("late", 0)).longValue());
+            yearData.put("earlyLeave", ((Long) yearData.get("earlyLeave")) + ((Number) monthData.getOrDefault("earlyLeave", 0)).longValue());
+            yearData.put("absent", ((Long) yearData.get("absent")) + ((Number) monthData.getOrDefault("absent", 0)).longValue());
+            yearData.put("total", ((Long) yearData.get("total")) + ((Number) monthData.getOrDefault("total", 0)).longValue());
+        }
+        
+        return new ArrayList<>(yearlyMap.values());
+    }
+
+    /**
      * 获取部门考勤统计数据
      *
      * @param departmentId 部门ID
@@ -182,6 +280,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 return getWeeklyAttendanceStats(startDate, endDate);
             case "monthly":
                 return getMonthlyAttendanceStats(startDate, endDate);
+            case "quarterly":
+                return getQuarterlyAttendanceStats(startDate, endDate);
+            case "yearly":
+                return getYearlyAttendanceStats(startDate, endDate);
             default:
                 return getDailyAttendanceStats(startDate, endDate);
         }
@@ -448,13 +550,13 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     /**
-     * 获取部门绩效统计数据
+     * 获取绩效统计数据
      *
      * @param departmentId 部门ID
      * @param startDate    开始日期
      * @param endDate      结束日期
      * @param type         统计类型
-     * @return 部门绩效统计数据
+     * @return 绩效统计数据
      */
     @Override
     public List<Map<String, Object>> getDepartmentPerformanceStats(Long departmentId, LocalDate startDate, LocalDate endDate, String type) {

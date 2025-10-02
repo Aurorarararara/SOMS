@@ -182,13 +182,13 @@ public class PerformanceStatsController {
     }
 
     /**
-     * 获取部门绩效统计
+     * 获取绩效统计
      *
      * @param departmentId 部门ID
      * @param startDate    开始日期
      * @param endDate      结束日期
      * @param type         统计类型 (daily, weekly, monthly)
-     * @return 部门绩效统计数据
+     * @return 绩效统计数据
      */
     @GetMapping("/departments/{departmentId}")
     public Result<Map<String, Object>> getDepartmentStatistics(

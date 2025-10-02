@@ -28,7 +28,6 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8082',
         changeOrigin: true
-        // 移除路径重写，保持/api前缀
       }
     }
   }
